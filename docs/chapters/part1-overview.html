@@ -247,7 +247,8 @@ window.Quarto = {
   <li><a href="#episodes-and-continuing-tasks" id="toc-episodes-and-continuing-tasks" class="nav-link" data-scroll-target="#episodes-and-continuing-tasks"><span class="header-section-number">2.6</span> Episodes and Continuing Tasks</a></li>
   <li><a href="#model-based-and-model-free-learning" id="toc-model-based-and-model-free-learning" class="nav-link" data-scroll-target="#model-based-and-model-free-learning"><span class="header-section-number">2.7</span> Model-Based and Model-Free Learning</a></li>
   <li><a href="#why-reinforcement-learning-matters" id="toc-why-reinforcement-learning-matters" class="nav-link" data-scroll-target="#why-reinforcement-learning-matters"><span class="header-section-number">2.8</span> Why Reinforcement Learning Matters</a></li>
-  <li><a href="#how-to-read-this-book-with-the-code" id="toc-how-to-read-this-book-with-the-code" class="nav-link" data-scroll-target="#how-to-read-this-book-with-the-code"><span class="header-section-number">2.9</span> How to Read This Book with the Code</a></li>
+  <li><a href="#a-beginner-reading-route" id="toc-a-beginner-reading-route" class="nav-link" data-scroll-target="#a-beginner-reading-route"><span class="header-section-number">2.9</span> A Beginner Reading Route</a></li>
+  <li><a href="#how-to-read-this-book-with-the-code" id="toc-how-to-read-this-book-with-the-code" class="nav-link" data-scroll-target="#how-to-read-this-book-with-the-code"><span class="header-section-number">2.10</span> How to Read This Book with the Code</a></li>
   </ul>
 </nav>
     </div>
@@ -342,8 +343,29 @@ G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots
 <p>Reinforcement learning matters because many real-world problems involve decisions, feedback, uncertainty, and long-term consequences. The framework gives us a language for these problems even when perfect solutions are impossible.</p>
 <p>At the same time, reinforcement learning should not be treated as a universal hammer. It is often hard to train, expensive in data, and sensitive to problem design. A major part of real expertise is knowing when reinforcement learning is appropriate and when a simpler method would be better.</p>
 </section>
-<section id="how-to-read-this-book-with-the-code" class="level2" data-number="2.9">
-<h2 data-number="2.9" class="anchored" data-anchor-id="how-to-read-this-book-with-the-code"><span class="header-section-number">2.9</span> How to Read This Book with the Code</h2>
+<section id="a-beginner-reading-route" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="a-beginner-reading-route"><span class="header-section-number">2.9</span> A Beginner Reading Route</h2>
+<p>The full book is ordered logically, but a first-time reader should still know what to focus on at each stage.</p>
+<p>In the first pass:</p>
+<ol type="1">
+<li>Read the overview, bandits, MDP, and control chapters for the big picture.</li>
+<li>Do not worry if every Bellman equation does not feel natural immediately.</li>
+<li>Use the tabular examples to see the update loops in small scripts.</li>
+<li>Treat function approximation and DQN as a second pass where the same ideas are reused under a harder representation.</li>
+</ol>
+<p>In other words, the first goal is not “master all RL notation.” The first goal is:</p>
+<p>Understand the difference between acting, evaluating, bootstrapping, and improving.</p>
+<p>If those verbs are clear, the later chapters become much less intimidating.</p>
+<p>It is also worth saying what not to do. A common beginner mistake is:</p>
+<ol type="1">
+<li>jump directly to DQN or PPO,</li>
+<li>copy code that runs,</li>
+<li>and then try to infer the meaning afterward.</li>
+</ol>
+<p>That route often produces confusion because the code contains many practical details before the underlying logic is stable in the reader’s mind.</p>
+</section>
+<section id="how-to-read-this-book-with-the-code" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="how-to-read-this-book-with-the-code"><span class="header-section-number">2.10</span> How to Read This Book with the Code</h2>
 <p>This book is meant to be read together with the maintained code in <code>examples/</code>. The goal is not to treat the code as a decorative appendix. The goal is to use the code to make the ideas operational.</p>
 <p>The structure of the repository mirrors the conceptual arc of the book:</p>
 <ol type="1">
@@ -365,6 +387,20 @@ G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots
 <li>Where does that principle appear in code?</li>
 <li>Is this code meant as a minimal transparent implementation, a practical baseline, or a maintained third-party-backed reference?</li>
 </ol>
+<p>For beginners, one more question is worth adding:</p>
+<ol start="4" type="1">
+<li>If I had to explain this script in six lines, what would the six lines be?</li>
+</ol>
+<p>That exercise forces the reader to reduce a file to its teaching skeleton. For example, a small value-based control script usually reduces to:</p>
+<ol type="1">
+<li>choose an action,</li>
+<li>step the environment,</li>
+<li>build a target,</li>
+<li>update the estimate,</li>
+<li>repeat,</li>
+<li>evaluate the learned behavior.</li>
+</ol>
+<p>If a chapter and its code can both be summarized that way, then the main idea is probably in reach.</p>
 <p>The next chapter pauses before full MDPs and studies multi-armed bandits. Bandits strip away state transitions and long-horizon planning so that the exploration-exploitation trade-off can be examined in its simplest form. After that, we will move into the MDP framework that organizes the rest of reinforcement learning.</p>
 
 

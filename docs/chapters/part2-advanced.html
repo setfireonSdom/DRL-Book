@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>11&nbsp; Advanced Deep Reinforcement Learning – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
+<title>12&nbsp; Advanced Deep Reinforcement Learning – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -112,7 +147,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part2-advanced.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part2-advanced.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -159,62 +194,68 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/part1-bandits.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multi-Armed Bandits</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/part1-mdp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-dp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-mc-td.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-function-approx.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-dqn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-policy-gradient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-actor-critic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-advanced.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part3-practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -233,16 +274,22 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#double-dqn" id="toc-double-dqn" class="nav-link active" data-scroll-target="#double-dqn"><span class="header-section-number">11.1</span> Double DQN</a></li>
-  <li><a href="#dueling-networks" id="toc-dueling-networks" class="nav-link" data-scroll-target="#dueling-networks"><span class="header-section-number">11.2</span> Dueling Networks</a></li>
-  <li><a href="#prioritized-replay" id="toc-prioritized-replay" class="nav-link" data-scroll-target="#prioritized-replay"><span class="header-section-number">11.3</span> Prioritized Replay</a></li>
-  <li><a href="#deterministic-policy-gradients-and-ddpg" id="toc-deterministic-policy-gradients-and-ddpg" class="nav-link" data-scroll-target="#deterministic-policy-gradients-and-ddpg"><span class="header-section-number">11.4</span> Deterministic Policy Gradients and DDPG</a></li>
-  <li><a href="#td3" id="toc-td3" class="nav-link" data-scroll-target="#td3"><span class="header-section-number">11.5</span> TD3</a></li>
-  <li><a href="#sac" id="toc-sac" class="nav-link" data-scroll-target="#sac"><span class="header-section-number">11.6</span> SAC</a></li>
-  <li><a href="#ppo" id="toc-ppo" class="nav-link" data-scroll-target="#ppo"><span class="header-section-number">11.7</span> PPO</a></li>
-  <li><a href="#distributional-and-rainbow-style-ideas" id="toc-distributional-and-rainbow-style-ideas" class="nav-link" data-scroll-target="#distributional-and-rainbow-style-ideas"><span class="header-section-number">11.8</span> Distributional and Rainbow-Style Ideas</a></li>
-  <li><a href="#how-to-organize-the-algorithm-landscape" id="toc-how-to-organize-the-algorithm-landscape" class="nav-link" data-scroll-target="#how-to-organize-the-algorithm-landscape"><span class="header-section-number">11.9</span> How to Organize the Algorithm Landscape</a></li>
-  <li><a href="#a-practical-interpretation-of-advanced" id="toc-a-practical-interpretation-of-advanced" class="nav-link" data-scroll-target="#a-practical-interpretation-of-advanced"><span class="header-section-number">11.10</span> A Practical Interpretation of “Advanced”</a></li>
+  <li><a href="#double-dqn" id="toc-double-dqn" class="nav-link active" data-scroll-target="#double-dqn"><span class="header-section-number">12.1</span> Double DQN</a></li>
+  <li><a href="#a-beginner-way-to-read-this-chapter" id="toc-a-beginner-way-to-read-this-chapter" class="nav-link" data-scroll-target="#a-beginner-way-to-read-this-chapter"><span class="header-section-number">12.2</span> A Beginner Way to Read This Chapter</a></li>
+  <li><a href="#dueling-networks" id="toc-dueling-networks" class="nav-link" data-scroll-target="#dueling-networks"><span class="header-section-number">12.3</span> Dueling Networks</a></li>
+  <li><a href="#prioritized-replay" id="toc-prioritized-replay" class="nav-link" data-scroll-target="#prioritized-replay"><span class="header-section-number">12.4</span> Prioritized Replay</a></li>
+  <li><a href="#deterministic-policy-gradients-and-ddpg" id="toc-deterministic-policy-gradients-and-ddpg" class="nav-link" data-scroll-target="#deterministic-policy-gradients-and-ddpg"><span class="header-section-number">12.5</span> Deterministic Policy Gradients and DDPG</a></li>
+  <li><a href="#td3" id="toc-td3" class="nav-link" data-scroll-target="#td3"><span class="header-section-number">12.6</span> TD3</a></li>
+  <li><a href="#sac" id="toc-sac" class="nav-link" data-scroll-target="#sac"><span class="header-section-number">12.7</span> SAC</a></li>
+  <li><a href="#ppo" id="toc-ppo" class="nav-link" data-scroll-target="#ppo"><span class="header-section-number">12.8</span> PPO</a></li>
+  <li><a href="#distributional-and-rainbow-style-ideas" id="toc-distributional-and-rainbow-style-ideas" class="nav-link" data-scroll-target="#distributional-and-rainbow-style-ideas"><span class="header-section-number">12.9</span> Distributional and Rainbow-Style Ideas</a></li>
+  <li><a href="#how-to-organize-the-algorithm-landscape" id="toc-how-to-organize-the-algorithm-landscape" class="nav-link" data-scroll-target="#how-to-organize-the-algorithm-landscape"><span class="header-section-number">12.10</span> How to Organize the Algorithm Landscape</a></li>
+  <li><a href="#common-beginner-confusions-about-advanced-methods" id="toc-common-beginner-confusions-about-advanced-methods" class="nav-link" data-scroll-target="#common-beginner-confusions-about-advanced-methods"><span class="header-section-number">12.11</span> Common Beginner Confusions About “Advanced” Methods</a>
+  <ul class="collapse">
+  <li><a href="#do-i-need-to-master-all-of-these-before-i-can-do-reinforcement-learning" id="toc-do-i-need-to-master-all-of-these-before-i-can-do-reinforcement-learning" class="nav-link" data-scroll-target="#do-i-need-to-master-all-of-these-before-i-can-do-reinforcement-learning"><span class="header-section-number">12.11.1</span> “Do I need to master all of these before I can do reinforcement learning?”</a></li>
+  <li><a href="#does-advanced-just-mean-better" id="toc-does-advanced-just-mean-better" class="nav-link" data-scroll-target="#does-advanced-just-mean-better"><span class="header-section-number">12.11.2</span> “Does advanced just mean better?”</a></li>
+  </ul></li>
+  <li><a href="#a-practical-interpretation-of-advanced" id="toc-a-practical-interpretation-of-advanced" class="nav-link" data-scroll-target="#a-practical-interpretation-of-advanced"><span class="header-section-number">12.12</span> A Practical Interpretation of “Advanced”</a></li>
   </ul>
 </nav>
     </div>
@@ -251,7 +298,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></h1>
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></h1>
 </div>
 
 
@@ -278,8 +325,10 @@ window.Quarto = {
 <li>Difficulty handling continuous action spaces.</li>
 <li>Mismatch between elegant theory and practical optimization.</li>
 </ol>
-<section id="double-dqn" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="double-dqn"><span class="header-section-number">11.1</span> Double DQN</h2>
+<p>If you remember one thing from this whole chapter, let it be this:</p>
+<p>Most “advanced” methods are not new worlds. They are repairs, refinements, or stabilizers added to older ideas.</p>
+<section id="double-dqn" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="double-dqn"><span class="header-section-number">12.1</span> Double DQN</h2>
 <p>Basic DQN tends to overestimate action values because the same estimates are used both to select and to evaluate the maximizing action. This issue arises from the max operator in the bootstrap target.</p>
 <p><strong>Double DQN</strong> reduces this bias by decoupling action selection from action evaluation. In one common form, the online network selects the action, while the target network evaluates it.</p>
 <p>The key idea is not complicated:</p>
@@ -296,8 +345,26 @@ window.Quarto = {
 </ol>
 <p>The architectural skeleton is almost the same. The important change is in the target: the online network selects the next action, while the target network evaluates that action.</p>
 </section>
-<section id="dueling-networks" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="dueling-networks"><span class="header-section-number">11.2</span> Dueling Networks</h2>
+<section id="a-beginner-way-to-read-this-chapter" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="a-beginner-way-to-read-this-chapter"><span class="header-section-number">12.2</span> A Beginner Way to Read This Chapter</h2>
+<p>This chapter is easier if you do not treat it as “now the book becomes a list of fancy names.” A better strategy is:</p>
+<p>For each method, ask what weakness of an earlier method it is trying to fix.</p>
+<p>That gives a simpler map:</p>
+<ol type="1">
+<li>Double DQN tries to reduce overestimation.</li>
+<li>Dueling networks try to improve representation of value structure.</li>
+<li>Prioritized replay tries to use data more selectively.</li>
+<li>DDPG, TD3, and SAC extend actor-critic ideas into continuous control.</li>
+<li>PPO tries to make policy updates more stable and practical.</li>
+</ol>
+<p>Once organized that way, the chapter becomes a set of responses to recurring problems rather than a wall of acronyms.</p>
+<p>For beginners, the cleanest comparison is to look directly at the target code difference:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>next_actions <span class="op">=</span> q_network(next_state_tensor).argmax(dim<span class="op">=</span><span class="dv">1</span>, keepdim<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>next_q_values <span class="op">=</span> target_network(next_state_tensor).gather(<span class="dv">1</span>, next_actions).squeeze(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Compared with basic DQN, that is a tiny edit. Pedagogically, it is a very good reminder that deep RL improvements often come from changing target construction rather than replacing the whole algorithm.</p>
+</section>
+<section id="dueling-networks" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="dueling-networks"><span class="header-section-number">12.3</span> Dueling Networks</h2>
 <p>Another extension of DQN is the <strong>dueling network</strong> architecture.</p>
 <p>Instead of predicting action values in a single undifferentiated stream, the network separates:</p>
 <ol type="1">
@@ -307,9 +374,14 @@ window.Quarto = {
 <p>These are then combined to produce action-value estimates.</p>
 <p>The motivation is that in many states, it is useful to estimate how good the state is even when the exact choice among similar actions matters less. This architectural decomposition can improve representation learning and make value estimation more efficient in some settings.</p>
 <p>Dueling networks also show that progress in DRL often comes not only from new loss functions, but from better structural biases in the function approximator itself.</p>
+<p>In plain language, the network is being encouraged to separate:</p>
+<ol type="1">
+<li>how good this state seems overall,</li>
+<li>from which action is better inside that state.</li>
+</ol>
 </section>
-<section id="prioritized-replay" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="prioritized-replay"><span class="header-section-number">11.3</span> Prioritized Replay</h2>
+<section id="prioritized-replay" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="prioritized-replay"><span class="header-section-number">12.4</span> Prioritized Replay</h2>
 <p>Standard replay buffers sample transitions uniformly. But not all transitions are equally informative. Some contain large prediction errors or learning opportunities that may deserve more attention.</p>
 <p><strong>Prioritized experience replay</strong> changes the sampling distribution so that more informative transitions are replayed more often.</p>
 <p>This can improve learning efficiency, but it also introduces new issues:</p>
@@ -319,9 +391,11 @@ window.Quarto = {
 <li>The system becomes more sensitive to replay design.</li>
 </ol>
 <p>This is another recurring DRL lesson: better sample usage often comes at the cost of more complicated training dynamics.</p>
+<p>In plain language, prioritized replay says:</p>
+<p>Do not replay every transition equally if some transitions are teaching you much more than others.</p>
 </section>
-<section id="deterministic-policy-gradients-and-ddpg" class="level2" data-number="11.4">
-<h2 data-number="11.4" class="anchored" data-anchor-id="deterministic-policy-gradients-and-ddpg"><span class="header-section-number">11.4</span> Deterministic Policy Gradients and DDPG</h2>
+<section id="deterministic-policy-gradients-and-ddpg" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="deterministic-policy-gradients-and-ddpg"><span class="header-section-number">12.5</span> Deterministic Policy Gradients and DDPG</h2>
 <p>Policy gradients naturally support continuous action spaces, but stochastic policy methods are not the only option. In some settings, a deterministic policy can be more efficient:</p>
 <p><span class="math display">\[
 a = \mu_\theta(s)
@@ -337,8 +411,8 @@ a = \mu_\theta(s)
 <p>This hybrid structure made DDPG historically important. It brought together value-based stabilization ideas and actor-critic structure in continuous action settings.</p>
 <p>However, DDPG is also known for being sensitive and sometimes brittle in practice. Its importance lies both in what it achieved and in what later methods learned from its weaknesses.</p>
 </section>
-<section id="td3" class="level2" data-number="11.5">
-<h2 data-number="11.5" class="anchored" data-anchor-id="td3"><span class="header-section-number">11.5</span> TD3</h2>
+<section id="td3" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="td3"><span class="header-section-number">12.6</span> TD3</h2>
 <p><strong>TD3</strong> (Twin Delayed Deep Deterministic Policy Gradient) was designed in part to address weaknesses in DDPG.</p>
 <p>Its main ideas include:</p>
 <ol type="1">
@@ -348,9 +422,11 @@ a = \mu_\theta(s)
 </ol>
 <p>The broader lesson is familiar by now: once a method becomes unstable or biased, later work often improves it by adding redundancy, delay, or smoothing to the target-generation process.</p>
 <p>TD3 is a strong example of how practical deep reinforcement learning often advances through careful control of approximation error rather than through entirely new conceptual frameworks.</p>
+<p>For beginners, TD3 can be read very simply:</p>
+<p>DDPG was useful but brittle, so TD3 adds safeguards.</p>
 </section>
-<section id="sac" class="level2" data-number="11.6">
-<h2 data-number="11.6" class="anchored" data-anchor-id="sac"><span class="header-section-number">11.6</span> SAC</h2>
+<section id="sac" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="sac"><span class="header-section-number">12.7</span> SAC</h2>
 <p><strong>Soft Actor-Critic</strong> (SAC) is one of the most influential modern actor-critic methods for continuous control.</p>
 <p>Its defining idea is to optimize not only expected return, but also policy entropy. Informally, SAC encourages the policy to remain appropriately stochastic while still pursuing reward.</p>
 <p>This leads to an objective that values both:</p>
@@ -360,10 +436,12 @@ a = \mu_\theta(s)
 </ol>
 <p>Entropy regularization can improve exploration and make training more robust. SAC also uses off-policy learning and critic-based updates, making it both powerful and relatively sample-efficient compared with many earlier policy-gradient methods.</p>
 <p>SAC is important because it shows that exploration does not always need to be treated as an external add-on like <span class="math inline">\(\epsilon\)</span>-greedy noise. It can be built directly into the optimization objective.</p>
+<p>In plain language, SAC says:</p>
+<p>Try to get reward, but do not become prematurely narrow or overconfident.</p>
 <p>In the current repository, the continuous-control positions for DDPG, TD3, and SAC are represented by local Pendulum scripts. At the time of writing, these files have shown clear learning behavior in manual project runs, so they can now be treated as validated self-implemented references for the continuous-control portion of the codebase. Even so, it is worth keeping the level of the claim precise: this is a practical project-level validation, not a claim of benchmark-grade evaluation across many seeds and configurations.</p>
 </section>
-<section id="ppo" class="level2" data-number="11.7">
-<h2 data-number="11.7" class="anchored" data-anchor-id="ppo"><span class="header-section-number">11.7</span> PPO</h2>
+<section id="ppo" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="ppo"><span class="header-section-number">12.8</span> PPO</h2>
 <p>While DQN-style methods and deterministic actor-critic methods each solve certain problems well, many practitioners also need a robust and practical policy optimization algorithm that works across a wide range of tasks.</p>
 <p><strong>PPO</strong> (Proximal Policy Optimization) became popular largely because it is relatively simple, strong in practice, and easier to implement reliably than some earlier trust-region methods.</p>
 <p>The core PPO idea is to update the policy while limiting how far it moves in a single step. In practice, this is often done through a clipped objective that discourages excessively large policy changes.</p>
@@ -373,6 +451,8 @@ a = \mu_\theta(s)
 <li>Do not let the update change behavior too abruptly.</li>
 </ol>
 <p>This helps stabilize training. PPO is often used with actor-critic structure, advantage estimates, and minibatch optimization over collected rollouts.</p>
+<p>That is why PPO is often the first modern policy optimization method people can use successfully in practice. Its core message is simple even if the full implementation is not:</p>
+<p>Improve the policy, but keep the step conservative.</p>
 <p>Although PPO is not the final answer for every problem, it became a practical default in many settings because it sits in a useful balance between sophistication and implementation simplicity.</p>
 <p>In the maintained code for this project, PPO is currently represented by:</p>
 <ol type="1">
@@ -380,9 +460,22 @@ a = \mu_\theta(s)
 </ol>
 <p>This example is backed by Stable-Baselines3 rather than a local from-scratch implementation. That choice reflects a practical lesson from the project: for modern on-policy methods, a mature implementation can be far more reliable than a compact hand-written reimplementation that only looks correct on paper. In other words, the algorithmic idea still belongs in the book, but the maintained code path now favors a verified PPO baseline over a fragile minimal script.</p>
 <p>At the time of writing, this is also the most reliable maintained policy-optimization baseline in the repository. That does not make PPO universally superior to every other actor-critic-family method. It means only that, in this codebase, PPO on LunarLander is currently the clearest place where the underlying ideas and practical training behavior meet in a way that has actually been checked.</p>
+<p>For beginners reading the maintained PPO file, the important thing to notice is that it is not teaching PPO through a local low-level loss implementation. It is teaching PPO through a practical integration boundary:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> train_sb3_lunarlander(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    algo_name<span class="op">=</span><span class="st">"ppo_lunarlander"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    algo_class<span class="op">=</span>PPO,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    total_timesteps<span class="op">=</span>config.total_timesteps,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That means the file is best read as:</p>
+<ol type="1">
+<li>evidence of which PPO configuration the project trusts,</li>
+<li>evidence of how training and evaluation are packaged,</li>
+<li>not as the first-principles place to learn the clipped objective itself.</li>
+</ol>
 </section>
-<section id="distributional-and-rainbow-style-ideas" class="level2" data-number="11.8">
-<h2 data-number="11.8" class="anchored" data-anchor-id="distributional-and-rainbow-style-ideas"><span class="header-section-number">11.8</span> Distributional and Rainbow-Style Ideas</h2>
+<section id="distributional-and-rainbow-style-ideas" class="level2" data-number="12.9">
+<h2 data-number="12.9" class="anchored" data-anchor-id="distributional-and-rainbow-style-ideas"><span class="header-section-number">12.9</span> Distributional and Rainbow-Style Ideas</h2>
 <p>Another important direction in value-based deep reinforcement learning is <strong>distributional RL</strong>. Instead of predicting only the expected return, distributional methods model a distribution over possible returns.</p>
 <p>This shift provides richer learning signals and can improve performance in some settings.</p>
 <p>When several improvements to DQN are combined, including Double DQN, dueling networks, prioritized replay, multi-step returns, and distributional ideas, the resulting system is often described in the spirit of <strong>Rainbow</strong>.</p>
@@ -398,8 +491,8 @@ a = \mu_\theta(s)
 <p>The final script is intentionally described as “Rainbow-ish” rather than a full Rainbow reproduction. It combines several major value-based refinements without claiming to be a complete benchmark-grade Rainbow implementation.</p>
 <p>That naming discipline is important. Advanced reinforcement learning code often accumulates features gradually, and it is easy to overstate what has actually been implemented. In this book, the better habit is to describe an implementation as precisely as possible, even when the precise description is less glamorous than the paper title that inspired it.</p>
 </section>
-<section id="how-to-organize-the-algorithm-landscape" class="level2" data-number="11.9">
-<h2 data-number="11.9" class="anchored" data-anchor-id="how-to-organize-the-algorithm-landscape"><span class="header-section-number">11.9</span> How to Organize the Algorithm Landscape</h2>
+<section id="how-to-organize-the-algorithm-landscape" class="level2" data-number="12.10">
+<h2 data-number="12.10" class="anchored" data-anchor-id="how-to-organize-the-algorithm-landscape"><span class="header-section-number">12.10</span> How to Organize the Algorithm Landscape</h2>
 <p>At this stage, the algorithm landscape can start to feel crowded. A useful way to stay organized is to group methods by the question they are trying to answer.</p>
 <p>Value-based refinements:</p>
 <ol type="1">
@@ -419,8 +512,19 @@ a = \mu_\theta(s)
 </ol>
 <p>Once you see methods through those lenses, the field becomes less like a list of names and more like a sequence of design responses to recurring problems.</p>
 </section>
-<section id="a-practical-interpretation-of-advanced" class="level2" data-number="11.10">
-<h2 data-number="11.10" class="anchored" data-anchor-id="a-practical-interpretation-of-advanced"><span class="header-section-number">11.10</span> A Practical Interpretation of “Advanced”</h2>
+<section id="common-beginner-confusions-about-advanced-methods" class="level2" data-number="12.11">
+<h2 data-number="12.11" class="anchored" data-anchor-id="common-beginner-confusions-about-advanced-methods"><span class="header-section-number">12.11</span> Common Beginner Confusions About “Advanced” Methods</h2>
+<section id="do-i-need-to-master-all-of-these-before-i-can-do-reinforcement-learning" class="level3" data-number="12.11.1">
+<h3 data-number="12.11.1" class="anchored" data-anchor-id="do-i-need-to-master-all-of-these-before-i-can-do-reinforcement-learning"><span class="header-section-number">12.11.1</span> “Do I need to master all of these before I can do reinforcement learning?”</h3>
+<p>No.&nbsp;The purpose of this chapter is to organize the landscape, not to make every method equally central for a first pass.</p>
+</section>
+<section id="does-advanced-just-mean-better" class="level3" data-number="12.11.2">
+<h3 data-number="12.11.2" class="anchored" data-anchor-id="does-advanced-just-mean-better"><span class="header-section-number">12.11.2</span> “Does advanced just mean better?”</h3>
+<p>Not automatically. In this book, advanced usually means a method was designed to handle a specific weakness, constraint, or instability more effectively. Whether it is better depends on the task and on the quality of the implementation.</p>
+</section>
+</section>
+<section id="a-practical-interpretation-of-advanced" class="level2" data-number="12.12">
+<h2 data-number="12.12" class="anchored" data-anchor-id="a-practical-interpretation-of-advanced"><span class="header-section-number">12.12</span> A Practical Interpretation of “Advanced”</h2>
 <p>In deep reinforcement learning, “advanced” does not simply mean mathematically more complicated. Often it means:</p>
 <ol type="1">
 <li>Better control of bias and variance.</li>
@@ -840,12 +944,12 @@ a = \mu_\theta(s)
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../chapters/part2-actor-critic.html" class="pagination-link" aria-label="Actor-Critic Methods">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../chapters/part3-practice.html" class="pagination-link" aria-label="Deep Reinforcement Learning in Practice">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

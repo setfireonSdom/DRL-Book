@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Dynamic Programming – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
+<title>5&nbsp; Dynamic Programming – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -112,7 +147,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part1-dp.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part1-dp.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -159,62 +194,68 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/part1-bandits.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multi-Armed Bandits</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/part1-mdp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-dp.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-mc-td.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-function-approx.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-dqn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-policy-gradient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-actor-critic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part3-practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -233,14 +274,20 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#why-study-dynamic-programming" id="toc-why-study-dynamic-programming" class="nav-link active" data-scroll-target="#why-study-dynamic-programming"><span class="header-section-number">4.1</span> Why Study Dynamic Programming?</a></li>
-  <li><a href="#policy-evaluation" id="toc-policy-evaluation" class="nav-link" data-scroll-target="#policy-evaluation"><span class="header-section-number">4.2</span> Policy Evaluation</a></li>
-  <li><a href="#policy-improvement" id="toc-policy-improvement" class="nav-link" data-scroll-target="#policy-improvement"><span class="header-section-number">4.3</span> Policy Improvement</a></li>
-  <li><a href="#policy-iteration" id="toc-policy-iteration" class="nav-link" data-scroll-target="#policy-iteration"><span class="header-section-number">4.4</span> Policy Iteration</a></li>
-  <li><a href="#value-iteration" id="toc-value-iteration" class="nav-link" data-scroll-target="#value-iteration"><span class="header-section-number">4.5</span> Value Iteration</a></li>
-  <li><a href="#synchronous-and-in-place-updates" id="toc-synchronous-and-in-place-updates" class="nav-link" data-scroll-target="#synchronous-and-in-place-updates"><span class="header-section-number">4.6</span> Synchronous and In-Place Updates</a></li>
-  <li><a href="#the-limits-of-dynamic-programming" id="toc-the-limits-of-dynamic-programming" class="nav-link" data-scroll-target="#the-limits-of-dynamic-programming"><span class="header-section-number">4.7</span> The Limits of Dynamic Programming</a></li>
-  <li><a href="#from-planning-to-learning" id="toc-from-planning-to-learning" class="nav-link" data-scroll-target="#from-planning-to-learning"><span class="header-section-number">4.8</span> From Planning to Learning</a></li>
+  <li><a href="#why-study-dynamic-programming" id="toc-why-study-dynamic-programming" class="nav-link active" data-scroll-target="#why-study-dynamic-programming"><span class="header-section-number">5.1</span> Why Study Dynamic Programming?</a></li>
+  <li><a href="#policy-evaluation" id="toc-policy-evaluation" class="nav-link" data-scroll-target="#policy-evaluation"><span class="header-section-number">5.2</span> Policy Evaluation</a></li>
+  <li><a href="#a-beginner-walkthrough-of-the-bellman-sweep" id="toc-a-beginner-walkthrough-of-the-bellman-sweep" class="nav-link" data-scroll-target="#a-beginner-walkthrough-of-the-bellman-sweep"><span class="header-section-number">5.3</span> A Beginner Walkthrough of the Bellman Sweep</a></li>
+  <li><a href="#policy-improvement" id="toc-policy-improvement" class="nav-link" data-scroll-target="#policy-improvement"><span class="header-section-number">5.4</span> Policy Improvement</a></li>
+  <li><a href="#policy-iteration" id="toc-policy-iteration" class="nav-link" data-scroll-target="#policy-iteration"><span class="header-section-number">5.5</span> Policy Iteration</a></li>
+  <li><a href="#value-iteration" id="toc-value-iteration" class="nav-link" data-scroll-target="#value-iteration"><span class="header-section-number">5.6</span> Value Iteration</a></li>
+  <li><a href="#common-beginner-confusions-about-dynamic-programming" id="toc-common-beginner-confusions-about-dynamic-programming" class="nav-link" data-scroll-target="#common-beginner-confusions-about-dynamic-programming"><span class="header-section-number">5.7</span> Common Beginner Confusions About Dynamic Programming</a>
+  <ul class="collapse">
+  <li><a href="#if-dynamic-programming-needs-the-whole-model-why-study-it" id="toc-if-dynamic-programming-needs-the-whole-model-why-study-it" class="nav-link" data-scroll-target="#if-dynamic-programming-needs-the-whole-model-why-study-it"><span class="header-section-number">5.7.1</span> “If dynamic programming needs the whole model, why study it?”</a></li>
+  <li><a href="#what-is-the-real-difference-between-policy-iteration-and-value-iteration" id="toc-what-is-the-real-difference-between-policy-iteration-and-value-iteration" class="nav-link" data-scroll-target="#what-is-the-real-difference-between-policy-iteration-and-value-iteration"><span class="header-section-number">5.7.2</span> “What is the real difference between policy iteration and value iteration?”</a></li>
+  </ul></li>
+  <li><a href="#synchronous-and-in-place-updates" id="toc-synchronous-and-in-place-updates" class="nav-link" data-scroll-target="#synchronous-and-in-place-updates"><span class="header-section-number">5.8</span> Synchronous and In-Place Updates</a></li>
+  <li><a href="#the-limits-of-dynamic-programming" id="toc-the-limits-of-dynamic-programming" class="nav-link" data-scroll-target="#the-limits-of-dynamic-programming"><span class="header-section-number">5.9</span> The Limits of Dynamic Programming</a></li>
+  <li><a href="#from-planning-to-learning" id="toc-from-planning-to-learning" class="nav-link" data-scroll-target="#from-planning-to-learning"><span class="header-section-number">5.10</span> From Planning to Learning</a></li>
   </ul>
 </nav>
     </div>
@@ -249,7 +296,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></h1>
 </div>
 
 
@@ -268,8 +315,8 @@ window.Quarto = {
 
 <p>Dynamic programming is one of the cleanest entry points into reinforcement learning. It is not the most realistic setting for large-scale applications, because it assumes access to the full environment model. But it provides an ideal laboratory for understanding value functions, Bellman equations, and policy improvement.</p>
 <p>In an MDP, if we know the transition dynamics and reward function, then we can often compute value functions by repeated updates rather than by pure trial-and-error interaction. This is the basic idea of dynamic programming.</p>
-<section id="why-study-dynamic-programming" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="why-study-dynamic-programming"><span class="header-section-number">4.1</span> Why Study Dynamic Programming?</h2>
+<section id="why-study-dynamic-programming" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="why-study-dynamic-programming"><span class="header-section-number">5.1</span> Why Study Dynamic Programming?</h2>
 <p>Dynamic programming matters for three reasons.</p>
 <ol type="1">
 <li>It makes the Bellman equations operational.</li>
@@ -278,9 +325,11 @@ window.Quarto = {
 </ol>
 <p>Even when we cannot use dynamic programming directly, its logic remains everywhere in reinforcement learning. Temporal-difference learning uses Bellman-style targets. Q-learning uses an optimality backup that mirrors dynamic programming. DQN approximates those same updates with a neural network.</p>
 <p>So while dynamic programming is not the final practical answer, it is one of the best conceptual starting points.</p>
+<p>If you remember one thing from this chapter, it should be this:</p>
+<p>Dynamic programming is where Bellman equations stop being definitions and start becoming procedures.</p>
 </section>
-<section id="policy-evaluation" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="policy-evaluation"><span class="header-section-number">4.2</span> Policy Evaluation</h2>
+<section id="policy-evaluation" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="policy-evaluation"><span class="header-section-number">5.2</span> Policy Evaluation</h2>
 <p>Suppose we are given a policy <span class="math inline">\(\pi\)</span>. Policy evaluation asks a single question:</p>
 <p>How good is this policy?</p>
 <p>More precisely, we want to compute the value function <span class="math inline">\(V^\pi(s)\)</span> for each state. From the Bellman expectation equation, we know that:</p>
@@ -293,6 +342,8 @@ V_{k+1}(s) \leftarrow \sum_a \pi(a \mid s)\sum_{s',r} P(s', r \mid s, a)\left[r 
 \]</span></p>
 <p>The idea is simple. Start with an initial guess for the value function, often all zeros. Then repeatedly apply the Bellman update until the values stabilize.</p>
 <p>Each update uses the current estimate <span class="math inline">\(V_k\)</span> to produce a better estimate <span class="math inline">\(V_{k+1}\)</span>. Under standard conditions, this process converges to the true value function of the policy.</p>
+<p>In plain language, policy evaluation means:</p>
+<p>Keep asking “if I keep behaving this way, how good is each state?” until the answers stop changing much.</p>
 <p>In the maintained code for this book, this idea appears directly in:</p>
 <ol type="1">
 <li><code>examples/tabular/policy_evaluation.py</code></li>
@@ -300,8 +351,25 @@ V_{k+1}(s) \leftarrow \sum_a \pi(a \mid s)\sum_{s',r} P(s', r \mid s, a)\left[r 
 <p>The key function is <code>evaluate_deterministic_policy(...)</code>. It does exactly what the equation above says: for each non-terminal state, it loops over actions and next states, computes the Bellman expectation backup, and repeats until the largest change across states falls below a tolerance threshold.</p>
 <p>This is worth pausing over. In many books, iterative policy evaluation is presented only as a formula. In code, the crucial operational detail is the stopping condition. The implementation does not stop because it knows the true answer. It stops because successive sweeps stop changing the value function by much.</p>
 </section>
-<section id="policy-improvement" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="policy-improvement"><span class="header-section-number">4.3</span> Policy Improvement</h2>
+<section id="a-beginner-walkthrough-of-the-bellman-sweep" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="a-beginner-walkthrough-of-the-bellman-sweep"><span class="header-section-number">5.3</span> A Beginner Walkthrough of the Bellman Sweep</h2>
+<p>If you want to see policy evaluation as executable logic, the heart of the implementation is this pattern:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> state <span class="kw">in</span> grid.all_states():</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> next_state <span class="kw">in</span> grid.all_states():</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        new_value <span class="op">+=</span> action_prob <span class="op">*</span> transition_prob <span class="op">*</span> (reward <span class="op">+</span> gamma <span class="op">*</span> values[next_state])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That is the Bellman equation turned into a loop.</p>
+<p>For beginners, the key insight is not the nested loop structure itself. It is the meaning:</p>
+<ol type="1">
+<li>consider a state,</li>
+<li>consider what action the policy takes there,</li>
+<li>consider where that action can lead,</li>
+<li>average immediate reward plus discounted next-state value.</li>
+</ol>
+<p>Once that meaning is clear, dynamic programming stops feeling mysterious.</p>
+</section>
+<section id="policy-improvement" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="policy-improvement"><span class="header-section-number">5.4</span> Policy Improvement</h2>
 <p>Once we know how good a policy is, the next natural step is to improve it.</p>
 <p>Suppose we already have <span class="math inline">\(V^\pi\)</span>. For each state, we can ask which action gives the highest expected return if we act once and then continue according to the old policy. That leads to a greedy improvement step:</p>
 <p><span class="math display">\[
@@ -315,9 +383,15 @@ V_{k+1}(s) \leftarrow \sum_a \pi(a \mid s)\sum_{s',r} P(s', r \mid s, a)\left[r 
 <li>Repeat.</li>
 </ol>
 <p>That alternating structure is the heart of policy iteration.</p>
+<p>This is also the first clean example in the book of a general RL pattern:</p>
+<ol type="1">
+<li>estimate,</li>
+<li>improve,</li>
+<li>repeat.</li>
+</ol>
 </section>
-<section id="policy-iteration" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="policy-iteration"><span class="header-section-number">4.4</span> Policy Iteration</h2>
+<section id="policy-iteration" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="policy-iteration"><span class="header-section-number">5.5</span> Policy Iteration</h2>
 <p><strong>Policy iteration</strong> combines policy evaluation and policy improvement into a loop.</p>
 <p>The procedure is:</p>
 <ol type="1">
@@ -338,9 +412,14 @@ V_{k+1}(s) \leftarrow \sum_a \pi(a \mid s)\sum_{s',r} P(s', r \mid s, a)\left[r 
 <li><code>improve_policy(...)</code></li>
 </ol>
 <p>The first orchestrates the outer loop. The second is where the greedy improvement step actually happens. If you want to see the policy improvement theorem in code form, this file is one of the cleanest places in the project to do it. The code evaluates the current policy, then for each state compares all available actions under the current value estimates, and replaces the old action with the best one.</p>
+<p>For many beginners, this is the first moment when reinforcement learning starts to feel algorithmic rather than purely definitional. The loop is no longer just “compute values.” It is:</p>
+<ol type="1">
+<li>understand the current policy,</li>
+<li>then replace it with a better one.</li>
+</ol>
 </section>
-<section id="value-iteration" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="value-iteration"><span class="header-section-number">4.5</span> Value Iteration</h2>
+<section id="value-iteration" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="value-iteration"><span class="header-section-number">5.6</span> Value Iteration</h2>
 <p>Policy iteration is conceptually clean, but full policy evaluation can be expensive. <strong>Value iteration</strong> compresses the evaluation and improvement steps into a single update.</p>
 <p>Instead of fully evaluating the current policy, value iteration directly applies the Bellman optimality update:</p>
 <p><span class="math display">\[
@@ -358,23 +437,36 @@ V_{k+1}(s) \leftarrow \max_a \sum_{s',r} P(s', r \mid s, a)\left[r + \gamma V_k(
 </ol>
 <p>Compared with policy iteration, the important conceptual difference in code is this: the update takes a <code>max</code> inside the sweep itself. In other words, policy improvement is no longer a separate outer step. The Bellman optimality operator is applied directly during value updates.</p>
 <p>That difference is visible in <code>run_value_iteration(...)</code>, where each state update computes the value of every possible action and immediately keeps only the largest one. After convergence, the script performs one more greedy pass to extract the policy explicitly.</p>
+<p>In plain language, value iteration says:</p>
+<p>Do not fully evaluate the current policy first. Just keep pushing every state toward the best-looking action immediately.</p>
 </section>
-<section id="synchronous-and-in-place-updates" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="synchronous-and-in-place-updates"><span class="header-section-number">4.6</span> Synchronous and In-Place Updates</h2>
+<section id="common-beginner-confusions-about-dynamic-programming" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="common-beginner-confusions-about-dynamic-programming"><span class="header-section-number">5.7</span> Common Beginner Confusions About Dynamic Programming</h2>
+<section id="if-dynamic-programming-needs-the-whole-model-why-study-it" class="level3" data-number="5.7.1">
+<h3 data-number="5.7.1" class="anchored" data-anchor-id="if-dynamic-programming-needs-the-whole-model-why-study-it"><span class="header-section-number">5.7.1</span> “If dynamic programming needs the whole model, why study it?”</h3>
+<p>Because it makes the Bellman logic transparent. Later methods often remove the full-model assumption, but they keep the same backup structure.</p>
+</section>
+<section id="what-is-the-real-difference-between-policy-iteration-and-value-iteration" class="level3" data-number="5.7.2">
+<h3 data-number="5.7.2" class="anchored" data-anchor-id="what-is-the-real-difference-between-policy-iteration-and-value-iteration"><span class="header-section-number">5.7.2</span> “What is the real difference between policy iteration and value iteration?”</h3>
+<p>Policy iteration alternates between evaluating a policy and improving it. Value iteration folds improvement directly into the value update with a <code>max</code>. That is the core difference to watch for in code.</p>
+</section>
+</section>
+<section id="synchronous-and-in-place-updates" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="synchronous-and-in-place-updates"><span class="header-section-number">5.8</span> Synchronous and In-Place Updates</h2>
 <p>There are several ways to implement dynamic programming updates. In <strong>synchronous</strong> updates, every state is updated using values from the previous sweep. In <strong>in-place</strong> updates, the algorithm overwrites values as soon as they are computed, allowing later states in the same sweep to use fresher information.</p>
 <p>This detail may seem minor, but it affects convergence speed. In-place updates often propagate useful information faster. More advanced planning methods build on this idea by choosing which states to update in more strategic ways.</p>
 <p>The current tabular dynamic-programming examples in this project use straightforward sweep-based updates. That is a good choice for a foundation text. It keeps the Bellman logic visible and avoids burying the main idea under optimization tricks.</p>
 </section>
-<section id="the-limits-of-dynamic-programming" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="the-limits-of-dynamic-programming"><span class="header-section-number">4.7</span> The Limits of Dynamic Programming</h2>
+<section id="the-limits-of-dynamic-programming" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="the-limits-of-dynamic-programming"><span class="header-section-number">5.9</span> The Limits of Dynamic Programming</h2>
 <p>Dynamic programming is powerful, but its assumptions are strong.</p>
 <p>First, it requires a model of the environment. In many real-world problems, we do not know the transition probabilities or reward function exactly.</p>
 <p>Second, it assumes the state space is manageable. If the number of states is huge, storing and updating a value for every state becomes infeasible.</p>
 <p>Third, it depends on repeated sweeps over the entire state space. This is difficult in high-dimensional or continuous domains.</p>
 <p>These limitations explain why dynamic programming is not the dominant method in modern large-scale reinforcement learning. Still, the logic of Bellman backups and iterative improvement survives in almost every major algorithm family.</p>
 </section>
-<section id="from-planning-to-learning" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="from-planning-to-learning"><span class="header-section-number">4.8</span> From Planning to Learning</h2>
+<section id="from-planning-to-learning" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="from-planning-to-learning"><span class="header-section-number">5.10</span> From Planning to Learning</h2>
 <p>Dynamic programming is often described as a <strong>planning</strong> method rather than a learning method. That distinction is useful:</p>
 <ol type="1">
 <li>Planning uses a known model to compute good behavior.</li>
@@ -790,12 +882,12 @@ V_{k+1}(s) \leftarrow \max_a \sum_{s',r} P(s', r \mid s, a)\left[r + \gamma V_k(
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../chapters/part1-mdp.html" class="pagination-link" aria-label="Markov Decision Processes">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../chapters/part1-mc-td.html" class="pagination-link" aria-label="Monte Carlo Methods and Temporal-Difference Learning">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

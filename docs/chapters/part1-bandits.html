@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -242,11 +277,17 @@ window.Quarto = {
   <li><a href="#why-study-bandits-first" id="toc-why-study-bandits-first" class="nav-link active" data-scroll-target="#why-study-bandits-first"><span class="header-section-number">3.1</span> Why Study Bandits First?</a></li>
   <li><a href="#the-bandit-setup" id="toc-the-bandit-setup" class="nav-link" data-scroll-target="#the-bandit-setup"><span class="header-section-number">3.2</span> The Bandit Setup</a></li>
   <li><a href="#action-value-estimates-in-bandits" id="toc-action-value-estimates-in-bandits" class="nav-link" data-scroll-target="#action-value-estimates-in-bandits"><span class="header-section-number">3.3</span> Action-Value Estimates in Bandits</a></li>
-  <li><a href="#epsilon-greedy-exploration" id="toc-epsilon-greedy-exploration" class="nav-link" data-scroll-target="#epsilon-greedy-exploration"><span class="header-section-number">3.4</span> Epsilon-Greedy Exploration</a></li>
-  <li><a href="#optimistic-initial-values" id="toc-optimistic-initial-values" class="nav-link" data-scroll-target="#optimistic-initial-values"><span class="header-section-number">3.5</span> Optimistic Initial Values</a></li>
-  <li><a href="#upper-confidence-bounds" id="toc-upper-confidence-bounds" class="nav-link" data-scroll-target="#upper-confidence-bounds"><span class="header-section-number">3.6</span> Upper Confidence Bounds</a></li>
-  <li><a href="#what-bandits-do-not-capture" id="toc-what-bandits-do-not-capture" class="nav-link" data-scroll-target="#what-bandits-do-not-capture"><span class="header-section-number">3.7</span> What Bandits Do Not Capture</a></li>
-  <li><a href="#the-bridge-to-reinforcement-learning-proper" id="toc-the-bridge-to-reinforcement-learning-proper" class="nav-link" data-scroll-target="#the-bridge-to-reinforcement-learning-proper"><span class="header-section-number">3.8</span> The Bridge to Reinforcement Learning Proper</a></li>
+  <li><a href="#a-beginner-way-to-read-the-bandit-code" id="toc-a-beginner-way-to-read-the-bandit-code" class="nav-link" data-scroll-target="#a-beginner-way-to-read-the-bandit-code"><span class="header-section-number">3.4</span> A Beginner Way to Read the Bandit Code</a></li>
+  <li><a href="#epsilon-greedy-exploration" id="toc-epsilon-greedy-exploration" class="nav-link" data-scroll-target="#epsilon-greedy-exploration"><span class="header-section-number">3.5</span> Epsilon-Greedy Exploration</a></li>
+  <li><a href="#optimistic-initial-values" id="toc-optimistic-initial-values" class="nav-link" data-scroll-target="#optimistic-initial-values"><span class="header-section-number">3.6</span> Optimistic Initial Values</a></li>
+  <li><a href="#upper-confidence-bounds" id="toc-upper-confidence-bounds" class="nav-link" data-scroll-target="#upper-confidence-bounds"><span class="header-section-number">3.7</span> Upper Confidence Bounds</a></li>
+  <li><a href="#what-bandits-do-not-capture" id="toc-what-bandits-do-not-capture" class="nav-link" data-scroll-target="#what-bandits-do-not-capture"><span class="header-section-number">3.8</span> What Bandits Do Not Capture</a></li>
+  <li><a href="#common-beginner-confusions-about-bandits" id="toc-common-beginner-confusions-about-bandits" class="nav-link" data-scroll-target="#common-beginner-confusions-about-bandits"><span class="header-section-number">3.9</span> Common Beginner Confusions About Bandits</a>
+  <ul class="collapse">
+  <li><a href="#why-is-this-in-a-reinforcement-learning-book-if-there-is-no-state" id="toc-why-is-this-in-a-reinforcement-learning-book-if-there-is-no-state" class="nav-link" data-scroll-target="#why-is-this-in-a-reinforcement-learning-book-if-there-is-no-state"><span class="header-section-number">3.9.1</span> “Why is this in a reinforcement learning book if there is no state?”</a></li>
+  <li><a href="#is-the-estimate-update-already-a-kind-of-value-learning" id="toc-is-the-estimate-update-already-a-kind-of-value-learning" class="nav-link" data-scroll-target="#is-the-estimate-update-already-a-kind-of-value-learning"><span class="header-section-number">3.9.2</span> “Is the estimate update already a kind of value learning?”</a></li>
+  </ul></li>
+  <li><a href="#the-bridge-to-reinforcement-learning-proper" id="toc-the-bridge-to-reinforcement-learning-proper" class="nav-link" data-scroll-target="#the-bridge-to-reinforcement-learning-proper"><span class="header-section-number">3.10</span> The Bridge to Reinforcement Learning Proper</a></li>
   </ul>
 </nav>
     </div>
@@ -326,8 +367,22 @@ p_1, p_2, \dots, p_K
 </ol>
 <p>Its <code>update(...)</code> method performs the incremental averaging step directly. This is a good example of how even very small code can embody a central RL idea.</p>
 </section>
-<section id="epsilon-greedy-exploration" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="epsilon-greedy-exploration"><span class="header-section-number">3.4</span> Epsilon-Greedy Exploration</h2>
+<section id="a-beginner-way-to-read-the-bandit-code" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="a-beginner-way-to-read-the-bandit-code"><span class="header-section-number">3.4</span> A Beginner Way to Read the Bandit Code</h2>
+<p>Bandits are a good first coding chapter because the main loop is extremely small. If a beginner wants the teaching skeleton, it is almost this exact pattern:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>arm_index <span class="op">=</span> select_arm(step, bandits, rng)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>reward <span class="op">=</span> bandits[arm_index].pull(rng)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bandits[arm_index].update(reward)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That is nearly the whole learning story.</p>
+<ol type="1">
+<li>Choose an arm.</li>
+<li>Observe a reward.</li>
+<li>Update the estimate for that arm.</li>
+</ol>
+<p>This is useful because later reinforcement learning code often feels larger than it really is. The basic rhythm of learning from action and reward is already visible here in miniature.</p>
+</section>
+<section id="epsilon-greedy-exploration" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="epsilon-greedy-exploration"><span class="header-section-number">3.5</span> Epsilon-Greedy Exploration</h2>
 <p>One of the simplest exploration rules is <span class="math inline">\(\epsilon\)</span>-greedy action selection.</p>
 <p>With probability <span class="math inline">\(1 - \epsilon\)</span>, choose the arm with the highest current estimate. With probability <span class="math inline">\(\epsilon\)</span>, choose a random arm.</p>
 <p>This rule is easy to state and easy to implement:</p>
@@ -341,9 +396,16 @@ p_1, p_2, \dots, p_K
 </ol>
 <p>The function <code>select_epsilon_greedy_arm(...)</code> captures the rule almost literally. It is also a useful conceptual preview of later RL code. The same basic idea reappears in tabular Q-learning and DQN, except that later the choice is conditioned on a state and the values come from a table or network rather than from one estimate per arm.</p>
 <p>The main weakness of <span class="math inline">\(\epsilon\)</span>-greedy is that its exploration is crude. Random exploration does not distinguish between arms that are nearly understood and arms that are still highly uncertain. It explores, but not intelligently.</p>
+<p>For beginners, this is the right place to notice a durable pattern:</p>
+<ol type="1">
+<li>estimate something,</li>
+<li>act using the estimate,</li>
+<li>keep some mechanism for trying uncertain alternatives.</li>
+</ol>
+<p>That pattern survives almost all the way to DQN.</p>
 </section>
-<section id="optimistic-initial-values" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="optimistic-initial-values"><span class="header-section-number">3.5</span> Optimistic Initial Values</h2>
+<section id="optimistic-initial-values" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="optimistic-initial-values"><span class="header-section-number">3.6</span> Optimistic Initial Values</h2>
 <p>Another exploration strategy is to initialize value estimates optimistically.</p>
 <p>The idea is simple:</p>
 <ol type="1">
@@ -359,8 +421,8 @@ p_1, p_2, \dots, p_K
 <p>This method is conceptually useful because it shows that exploration is not always added through randomization. Sometimes it can be induced indirectly through the initial conditions of learning.</p>
 <p>Its limitation is that the strategy depends strongly on the reward scale and on whether optimistic estimates are a sensible assumption. It is elegant in small teaching problems, but less universal than it may first appear.</p>
 </section>
-<section id="upper-confidence-bounds" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="upper-confidence-bounds"><span class="header-section-number">3.6</span> Upper Confidence Bounds</h2>
+<section id="upper-confidence-bounds" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="upper-confidence-bounds"><span class="header-section-number">3.7</span> Upper Confidence Bounds</h2>
 <p>A more principled exploration strategy is the <strong>upper confidence bound</strong> idea, usually abbreviated <strong>UCB</strong>.</p>
 <p>Instead of exploring randomly, UCB prefers actions that are either:</p>
 <ol type="1">
@@ -379,8 +441,8 @@ p_1, p_2, \dots, p_K
 </ol>
 <p>Bandits are a good place to encounter this idea because the uncertainty bonus is easy to interpret. Later in reinforcement learning, exploration often becomes harder to formalize cleanly, but the same ambition remains: explore where uncertainty may still hide useful information.</p>
 </section>
-<section id="what-bandits-do-not-capture" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="what-bandits-do-not-capture"><span class="header-section-number">3.7</span> What Bandits Do Not Capture</h2>
+<section id="what-bandits-do-not-capture" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="what-bandits-do-not-capture"><span class="header-section-number">3.8</span> What Bandits Do Not Capture</h2>
 <p>Bandits are not full reinforcement learning.</p>
 <p>They omit several central ingredients:</p>
 <ol type="1">
@@ -392,8 +454,19 @@ p_1, p_2, \dots, p_K
 <p>This means bandits cannot teach everything. They cannot explain dynamic programming, temporal-difference learning, or planning. They cannot express the difference between immediate reward and long-term return in a stateful environment.</p>
 <p>Still, they teach something extremely important: before an agent can exploit value estimates, it has to decide how those estimates will be learned in the first place.</p>
 </section>
-<section id="the-bridge-to-reinforcement-learning-proper" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="the-bridge-to-reinforcement-learning-proper"><span class="header-section-number">3.8</span> The Bridge to Reinforcement Learning Proper</h2>
+<section id="common-beginner-confusions-about-bandits" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="common-beginner-confusions-about-bandits"><span class="header-section-number">3.9</span> Common Beginner Confusions About Bandits</h2>
+<section id="why-is-this-in-a-reinforcement-learning-book-if-there-is-no-state" class="level3" data-number="3.9.1">
+<h3 data-number="3.9.1" class="anchored" data-anchor-id="why-is-this-in-a-reinforcement-learning-book-if-there-is-no-state"><span class="header-section-number">3.9.1</span> “Why is this in a reinforcement learning book if there is no state?”</h3>
+<p>Because bandits isolate the exploration problem very cleanly. They remove transitions and delayed consequences so the reader can focus on how an agent balances trying new options against exploiting current knowledge.</p>
+</section>
+<section id="is-the-estimate-update-already-a-kind-of-value-learning" class="level3" data-number="3.9.2">
+<h3 data-number="3.9.2" class="anchored" data-anchor-id="is-the-estimate-update-already-a-kind-of-value-learning"><span class="header-section-number">3.9.2</span> “Is the estimate update already a kind of value learning?”</h3>
+<p>Yes. It is the simplest value-learning example in the book. The estimate for each arm is a learned prediction of expected reward from data.</p>
+</section>
+</section>
+<section id="the-bridge-to-reinforcement-learning-proper" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="the-bridge-to-reinforcement-learning-proper"><span class="header-section-number">3.10</span> The Bridge to Reinforcement Learning Proper</h2>
 <p>Bandits are best understood as the front door to reinforcement learning, not as the whole house.</p>
 <p>They teach the exploration problem in a setting where value estimation is almost trivial. The next chapter introduces Markov decision processes, where the problem becomes richer:</p>
 <ol type="1">

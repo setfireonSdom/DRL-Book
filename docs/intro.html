@@ -213,7 +213,9 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#why-start-with-classical-reinforcement-learning" id="toc-why-start-with-classical-reinforcement-learning" class="nav-link active" data-scroll-target="#why-start-with-classical-reinforcement-learning"><span class="header-section-number">1.1</span> Why Start with Classical Reinforcement Learning?</a></li>
   <li><a href="#why-deep-reinforcement-learning-is-hard" id="toc-why-deep-reinforcement-learning-is-hard" class="nav-link" data-scroll-target="#why-deep-reinforcement-learning-is-hard"><span class="header-section-number">1.2</span> Why Deep Reinforcement Learning Is Hard</a></li>
   <li><a href="#how-to-read-this-book" id="toc-how-to-read-this-book" class="nav-link" data-scroll-target="#how-to-read-this-book"><span class="header-section-number">1.3</span> How to Read This Book</a></li>
-  <li><a href="#a-note-on-the-example-code" id="toc-a-note-on-the-example-code" class="nav-link" data-scroll-target="#a-note-on-the-example-code"><span class="header-section-number">1.4</span> A Note on the Example Code</a></li>
+  <li><a href="#how-a-beginner-should-read-this-book" id="toc-how-a-beginner-should-read-this-book" class="nav-link" data-scroll-target="#how-a-beginner-should-read-this-book"><span class="header-section-number">1.4</span> How a Beginner Should Read This Book</a></li>
+  <li><a href="#what-to-do-when-a-chapter-feels-hard" id="toc-what-to-do-when-a-chapter-feels-hard" class="nav-link" data-scroll-target="#what-to-do-when-a-chapter-feels-hard"><span class="header-section-number">1.5</span> What To Do When a Chapter Feels Hard</a></li>
+  <li><a href="#a-note-on-the-example-code" id="toc-a-note-on-the-example-code" class="nav-link" data-scroll-target="#a-note-on-the-example-code"><span class="header-section-number">1.6</span> A Note on the Example Code</a></li>
   </ul>
 </nav>
     </div>
@@ -278,8 +280,54 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <p>Those three questions are useful almost everywhere in reinforcement learning. A value-based method estimates values and improves a policy indirectly. A policy-based method improves the policy directly but may still estimate returns or advantages. An actor-critic method does both. If you keep track of those roles, the algorithm landscape becomes much easier to organize.</p>
 </section>
-<section id="a-note-on-the-example-code" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="a-note-on-the-example-code"><span class="header-section-number">1.4</span> A Note on the Example Code</h2>
+<section id="how-a-beginner-should-read-this-book" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="how-a-beginner-should-read-this-book"><span class="header-section-number">1.4</span> How a Beginner Should Read This Book</h2>
+<p>If you are new to reinforcement learning, an important warning comes first:</p>
+<p>This is not a book that should be read as if every sentence deserves equal attention on the first pass.</p>
+<p>Some parts of reinforcement learning only become clear after you have seen the same idea three different ways: once in plain language, once in an equation, and once in code. If a section feels dense, that does not necessarily mean you are missing something fundamental. Often it means the idea has not become concrete yet.</p>
+<p>A practical beginner route is:</p>
+<ol type="1">
+<li>Read for the main question of the chapter, not for every detail.</li>
+<li>Find the one core object being estimated or improved.</li>
+<li>Open the matching <code>examples/</code> file and locate the update rule or action-selection rule.</li>
+<li>Return to the chapter and reread the equations after seeing the code path once.</li>
+</ol>
+<p>For example:</p>
+<ol type="1">
+<li>In the MDP chapter, the main question is “what objects define the decision problem?”</li>
+<li>In the control chapter, the main question is “what target is the agent learning toward?”</li>
+<li>In the DQN chapter, the main question is “what made Q-learning unstable once the table became a neural network?”</li>
+</ol>
+<p>That is a better reading strategy than trying to memorize all notation immediately.</p>
+<p>It is also useful to separate three levels of understanding:</p>
+<ol type="1">
+<li>I can repeat the definition.</li>
+<li>I can explain why the algorithm needs that object.</li>
+<li>I can point to the exact place in code where it appears.</li>
+</ol>
+<p>Real understanding usually begins around the second and third levels, not the first.</p>
+</section>
+<section id="what-to-do-when-a-chapter-feels-hard" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="what-to-do-when-a-chapter-feels-hard"><span class="header-section-number">1.5</span> What To Do When a Chapter Feels Hard</h2>
+<p>Reinforcement learning often becomes confusing in the gap between a compact equation and a running script. When that happens, it helps to slow down and ask a smaller set of questions:</p>
+<ol type="1">
+<li>What are the inputs to the update?</li>
+<li>What quantity is being predicted?</li>
+<li>What quantity is being used as the target?</li>
+<li>What changes after one training step?</li>
+</ol>
+<p>If you can answer those four questions, then the chapter is already starting to become operational rather than purely verbal.</p>
+<p>This is especially important in the deep reinforcement learning part of the book. Many readers first feel that DQN, policy gradients, or actor-critic methods are “more advanced” because the names sound larger. In practice, they are often easier to follow once the reader keeps the update ingredients visible:</p>
+<ol type="1">
+<li>data,</li>
+<li>prediction,</li>
+<li>target,</li>
+<li>optimization step.</li>
+</ol>
+<p>That is the lens this book should be read through.</p>
+</section>
+<section id="a-note-on-the-example-code" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="a-note-on-the-example-code"><span class="header-section-number">1.6</span> A Note on the Example Code</h2>
 <p>The main code path for this book is the maintained <code>examples/</code> directory. That is the codebase the chapters are primarily written against. It contains the tabular examples, the function-approximation bridge examples, the maintained PyTorch DQN path, and the current policy-gradient baseline used by the project.</p>
 <p>Older reinforcement learning examples can still have value, especially when a compact implementation exposes an algorithmic skeleton clearly. But the software stack has changed, and many older tutorials assume earlier Gym APIs, TensorFlow 1.x, or older training conventions. In this book, that older style of material is used only as conceptual background:</p>
 <ol type="1">

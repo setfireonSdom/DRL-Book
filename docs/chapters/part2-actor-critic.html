@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>10&nbsp; Actor-Critic Methods – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
+<title>11&nbsp; Actor-Critic Methods – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -112,7 +147,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part2-actor-critic.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part2-actor-critic.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -159,62 +194,68 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/part1-bandits.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multi-Armed Bandits</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/part1-mdp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-dp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-mc-td.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-function-approx.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-dqn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-policy-gradient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-actor-critic.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part3-practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -233,16 +274,29 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-main-idea" id="toc-the-main-idea" class="nav-link active" data-scroll-target="#the-main-idea"><span class="header-section-number">10.1</span> The Main Idea</a></li>
-  <li><a href="#why-add-a-critic" id="toc-why-add-a-critic" class="nav-link" data-scroll-target="#why-add-a-critic"><span class="header-section-number">10.2</span> Why Add a Critic?</a></li>
-  <li><a href="#the-advantage-function" id="toc-the-advantage-function" class="nav-link" data-scroll-target="#the-advantage-function"><span class="header-section-number">10.3</span> The Advantage Function</a></li>
-  <li><a href="#temporal-difference-critics" id="toc-temporal-difference-critics" class="nav-link" data-scroll-target="#temporal-difference-critics"><span class="header-section-number">10.4</span> Temporal-Difference Critics</a></li>
-  <li><a href="#a-basic-actor-critic-update" id="toc-a-basic-actor-critic-update" class="nav-link" data-scroll-target="#a-basic-actor-critic-update"><span class="header-section-number">10.5</span> A Basic Actor-Critic Update</a></li>
-  <li><a href="#synchronous-and-asynchronous-variants" id="toc-synchronous-and-asynchronous-variants" class="nav-link" data-scroll-target="#synchronous-and-asynchronous-variants"><span class="header-section-number">10.6</span> Synchronous and Asynchronous Variants</a></li>
-  <li><a href="#a2c-and-the-simplification-of-a3c" id="toc-a2c-and-the-simplification-of-a3c" class="nav-link" data-scroll-target="#a2c-and-the-simplification-of-a3c"><span class="header-section-number">10.7</span> A2C and the Simplification of A3C</a></li>
-  <li><a href="#why-actor-critic-became-central" id="toc-why-actor-critic-became-central" class="nav-link" data-scroll-target="#why-actor-critic-became-central"><span class="header-section-number">10.8</span> Why Actor-Critic Became Central</a></li>
-  <li><a href="#remaining-challenges" id="toc-remaining-challenges" class="nav-link" data-scroll-target="#remaining-challenges"><span class="header-section-number">10.9</span> Remaining Challenges</a></li>
-  <li><a href="#from-actor-critic-to-modern-drl" id="toc-from-actor-critic-to-modern-drl" class="nav-link" data-scroll-target="#from-actor-critic-to-modern-drl"><span class="header-section-number">10.10</span> From Actor-Critic to Modern DRL</a></li>
+  <li><a href="#the-main-idea" id="toc-the-main-idea" class="nav-link active" data-scroll-target="#the-main-idea"><span class="header-section-number">11.1</span> The Main Idea</a></li>
+  <li><a href="#why-add-a-critic" id="toc-why-add-a-critic" class="nav-link" data-scroll-target="#why-add-a-critic"><span class="header-section-number">11.2</span> Why Add a Critic?</a></li>
+  <li><a href="#why-actor-critic-is-easier-to-misread-than-reinforce" id="toc-why-actor-critic-is-easier-to-misread-than-reinforce" class="nav-link" data-scroll-target="#why-actor-critic-is-easier-to-misread-than-reinforce"><span class="header-section-number">11.3</span> Why Actor-Critic Is Easier to Misread Than REINFORCE</a></li>
+  <li><a href="#the-advantage-function" id="toc-the-advantage-function" class="nav-link" data-scroll-target="#the-advantage-function"><span class="header-section-number">11.4</span> The Advantage Function</a></li>
+  <li><a href="#temporal-difference-critics" id="toc-temporal-difference-critics" class="nav-link" data-scroll-target="#temporal-difference-critics"><span class="header-section-number">11.5</span> Temporal-Difference Critics</a></li>
+  <li><a href="#a-basic-actor-critic-update" id="toc-a-basic-actor-critic-update" class="nav-link" data-scroll-target="#a-basic-actor-critic-update"><span class="header-section-number">11.6</span> A Basic Actor-Critic Update</a></li>
+  <li><a href="#a-beginner-mental-model" id="toc-a-beginner-mental-model" class="nav-link" data-scroll-target="#a-beginner-mental-model"><span class="header-section-number">11.7</span> A Beginner Mental Model</a></li>
+  <li><a href="#synchronous-and-asynchronous-variants" id="toc-synchronous-and-asynchronous-variants" class="nav-link" data-scroll-target="#synchronous-and-asynchronous-variants"><span class="header-section-number">11.8</span> Synchronous and Asynchronous Variants</a></li>
+  <li><a href="#a2c-and-the-simplification-of-a3c" id="toc-a2c-and-the-simplification-of-a3c" class="nav-link" data-scroll-target="#a2c-and-the-simplification-of-a3c"><span class="header-section-number">11.9</span> A2C and the Simplification of A3C</a></li>
+  <li><a href="#why-actor-critic-became-central" id="toc-why-actor-critic-became-central" class="nav-link" data-scroll-target="#why-actor-critic-became-central"><span class="header-section-number">11.10</span> Why Actor-Critic Became Central</a></li>
+  <li><a href="#remaining-challenges" id="toc-remaining-challenges" class="nav-link" data-scroll-target="#remaining-challenges"><span class="header-section-number">11.11</span> Remaining Challenges</a></li>
+  <li><a href="#from-actor-critic-to-modern-drl" id="toc-from-actor-critic-to-modern-drl" class="nav-link" data-scroll-target="#from-actor-critic-to-modern-drl"><span class="header-section-number">11.12</span> From Actor-Critic to Modern DRL</a></li>
+  <li><a href="#how-to-read-the-maintained-code-without-getting-lost" id="toc-how-to-read-the-maintained-code-without-getting-lost" class="nav-link" data-scroll-target="#how-to-read-the-maintained-code-without-getting-lost"><span class="header-section-number">11.13</span> How to Read the Maintained Code Without Getting Lost</a>
+  <ul class="collapse">
+  <li><a href="#first-read-reinforce_cartpole.py" id="toc-first-read-reinforce_cartpole.py" class="nav-link" data-scroll-target="#first-read-reinforce_cartpole.py"><span class="header-section-number">11.13.1</span> First read <code>reinforce_cartpole.py</code></a></li>
+  <li><a href="#then-read-the-sb3-backed-lunarlander-wrappers" id="toc-then-read-the-sb3-backed-lunarlander-wrappers" class="nav-link" data-scroll-target="#then-read-the-sb3-backed-lunarlander-wrappers"><span class="header-section-number">11.13.2</span> Then read the SB3-backed LunarLander wrappers</a></li>
+  </ul></li>
+  <li><a href="#common-beginner-confusions-about-actor-critic" id="toc-common-beginner-confusions-about-actor-critic" class="nav-link" data-scroll-target="#common-beginner-confusions-about-actor-critic"><span class="header-section-number">11.14</span> Common Beginner Confusions About Actor-Critic</a>
+  <ul class="collapse">
+  <li><a href="#is-actor-critic-just-reinforce-plus-a-value-network" id="toc-is-actor-critic-just-reinforce-plus-a-value-network" class="nav-link" data-scroll-target="#is-actor-critic-just-reinforce-plus-a-value-network"><span class="header-section-number">11.14.1</span> “Is actor-critic just REINFORCE plus a value network?”</a></li>
+  <li><a href="#why-can-a-bad-critic-hurt-the-actor-so-much" id="toc-why-can-a-bad-critic-hurt-the-actor-so-much" class="nav-link" data-scroll-target="#why-can-a-bad-critic-hurt-the-actor-so-much"><span class="header-section-number">11.14.2</span> “Why can a bad critic hurt the actor so much?”</a></li>
+  <li><a href="#why-are-the-local-code-examples-thinner-here-than-in-dqn" id="toc-why-are-the-local-code-examples-thinner-here-than-in-dqn" class="nav-link" data-scroll-target="#why-are-the-local-code-examples-thinner-here-than-in-dqn"><span class="header-section-number">11.14.3</span> “Why are the local code examples thinner here than in DQN?”</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -251,7 +305,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></h1>
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></h1>
 </div>
 
 
@@ -271,8 +325,8 @@ window.Quarto = {
 <p>Policy gradient methods optimize the policy directly, which gives them flexibility and conceptual clarity. But pure policy gradients often suffer from high variance and poor sample efficiency. Value-based methods, on the other hand, use bootstrapping to learn more efficiently, but they may be less natural in continuous action settings and can be unstable in other ways.</p>
 <p>Actor-critic methods combine the strengths of both approaches.</p>
 <p>This is one of the most important design patterns in modern reinforcement learning.</p>
-<section id="the-main-idea" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="the-main-idea"><span class="header-section-number">10.1</span> The Main Idea</h2>
+<section id="the-main-idea" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="the-main-idea"><span class="header-section-number">11.1</span> The Main Idea</h2>
 <p>An actor-critic method has two components:</p>
 <ol type="1">
 <li>The <strong>actor</strong>, which represents the policy.</li>
@@ -286,8 +340,8 @@ window.Quarto = {
 </ol>
 <p>In deep reinforcement learning, both actor and critic are often neural networks, though their exact forms vary across algorithms.</p>
 </section>
-<section id="why-add-a-critic" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="why-add-a-critic"><span class="header-section-number">10.2</span> Why Add a Critic?</h2>
+<section id="why-add-a-critic" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="why-add-a-critic"><span class="header-section-number">11.2</span> Why Add a Critic?</h2>
 <p>The main reason to add a critic is variance reduction and improved learning efficiency.</p>
 <p>Instead of waiting for a full Monte Carlo return as in REINFORCE, the critic can provide a learned estimate of future return. That estimate becomes a stronger, more immediate training signal for the actor.</p>
 <p>In its simplest form, the actor update may look like:</p>
@@ -298,8 +352,20 @@ window.Quarto = {
 <p>This already shows the core relationship:</p>
 <p>The actor changes the policy, and the critic supplies the signal that says whether the chosen action was better or worse than expected.</p>
 </section>
-<section id="the-advantage-function" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="the-advantage-function"><span class="header-section-number">10.3</span> The Advantage Function</h2>
+<section id="why-actor-critic-is-easier-to-misread-than-reinforce" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="why-actor-critic-is-easier-to-misread-than-reinforce"><span class="header-section-number">11.3</span> Why Actor-Critic Is Easier to Misread Than REINFORCE</h2>
+<p>For beginners, actor-critic often feels more confusing than either Q-learning or REINFORCE because it mixes two learning stories at once.</p>
+<ol type="1">
+<li>The actor is trying to improve behavior.</li>
+<li>The critic is trying to estimate a value signal.</li>
+<li>Each one depends on the other.</li>
+</ol>
+<p>That means a reader can no longer ask only “what is the update?” The better question is:</p>
+<p>Which network is learning what, and what signal passes between them?</p>
+<p>If that interface is not clear, actor-critic quickly turns into a blur of names.</p>
+</section>
+<section id="the-advantage-function" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="the-advantage-function"><span class="header-section-number">11.4</span> The Advantage Function</h2>
 <p>The advantage function is one of the central ideas in actor-critic methods. It is defined as:</p>
 <p><span class="math display">\[
 A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s)
@@ -308,8 +374,8 @@ A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s)
 <p>This is useful because raw returns alone do not tell us whether an action was surprisingly good. A large return may simply reflect that the state itself was favorable. The advantage function tries to isolate the contribution of the action relative to the baseline expectation.</p>
 <p>This is precisely the kind of signal that helps reduce variance in policy updates.</p>
 </section>
-<section id="temporal-difference-critics" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="temporal-difference-critics"><span class="header-section-number">10.4</span> Temporal-Difference Critics</h2>
+<section id="temporal-difference-critics" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="temporal-difference-critics"><span class="header-section-number">11.5</span> Temporal-Difference Critics</h2>
 <p>Many actor-critic methods use TD learning for the critic. For example, the critic may update a state-value estimate using:</p>
 <p><span class="math display">\[
 V(S_t) \leftarrow V(S_t) + \alpha \left(R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\right)
@@ -324,9 +390,17 @@ V(S_t) \leftarrow V(S_t) + \alpha \left(R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\rig
 <li>It acts as a policy learning signal for the actor.</li>
 </ol>
 <p>This is elegant because the same one-step surprise signal helps both components learn together.</p>
+<p>For beginners, the TD error is often the first place where actor-critic becomes concrete.</p>
+<ol type="1">
+<li>If <span class="math inline">\(\delta_t\)</span> is positive, the outcome was better than the critic expected.</li>
+<li>If <span class="math inline">\(\delta_t\)</span> is negative, the outcome was worse than the critic expected.</li>
+<li>The critic uses that signal to fix its value estimate.</li>
+<li>The actor uses that signal to decide whether to reinforce or weaken the chosen action.</li>
+</ol>
+<p>That is the teaching core of actor-critic in one place: one signal, two jobs.</p>
 </section>
-<section id="a-basic-actor-critic-update" class="level2" data-number="10.5">
-<h2 data-number="10.5" class="anchored" data-anchor-id="a-basic-actor-critic-update"><span class="header-section-number">10.5</span> A Basic Actor-Critic Update</h2>
+<section id="a-basic-actor-critic-update" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="a-basic-actor-critic-update"><span class="header-section-number">11.6</span> A Basic Actor-Critic Update</h2>
 <p>A simple actor-critic algorithm might follow this loop:</p>
 <ol type="1">
 <li>Observe state <span class="math inline">\(S_t\)</span>.</li>
@@ -339,16 +413,30 @@ V(S_t) \leftarrow V(S_t) + \alpha \left(R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\rig
 </ol>
 <p>This structure is one of the cleanest examples of how reinforcement learning combines prediction and control in a single learning system.</p>
 </section>
-<section id="synchronous-and-asynchronous-variants" class="level2" data-number="10.6">
-<h2 data-number="10.6" class="anchored" data-anchor-id="synchronous-and-asynchronous-variants"><span class="header-section-number">10.6</span> Synchronous and Asynchronous Variants</h2>
+<section id="a-beginner-mental-model" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="a-beginner-mental-model"><span class="header-section-number">11.7</span> A Beginner Mental Model</h2>
+<p>If REINFORCE says:</p>
+<p>“This action led to good return, so increase its probability,”</p>
+<p>then actor-critic says:</p>
+<p>“This action did better or worse than the critic expected, so adjust the policy accordingly.”</p>
+<p>That difference matters because it explains why actor-critic is usually less noisy than pure REINFORCE. The critic provides a learned baseline instead of forcing the actor to rely only on raw full-episode returns.</p>
+<p>Another way to say it is:</p>
+<ol type="1">
+<li>REINFORCE waits for the whole story.</li>
+<li>Actor-critic listens to a running reviewer.</li>
+</ol>
+<p>That reviewer can be helpful or harmful depending on whether the critic is learning well.</p>
+</section>
+<section id="synchronous-and-asynchronous-variants" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="synchronous-and-asynchronous-variants"><span class="header-section-number">11.8</span> Synchronous and Asynchronous Variants</h2>
 <p>Historically, actor-critic ideas appeared in several forms, including synchronous and asynchronous training.</p>
 <p>One notable family was <strong>A3C</strong> (Asynchronous Advantage Actor-Critic), where multiple workers interacted with environments in parallel and updated shared global parameters. This approach helped reduce correlation in experience and made training more efficient at the time.</p>
 <p>Older repositories often contain A3C-style implementations with threaded workers, local copies of policy and value networks, and periodic synchronization. Even though the software style may look dated, the conceptual lesson remains important:</p>
 <p>Parallel data collection and advantage-based policy updates can make actor-critic methods much more practical.</p>
 <p>Later systems often moved toward synchronous batched training, but the actor-critic principle remained intact.</p>
 </section>
-<section id="a2c-and-the-simplification-of-a3c" class="level2" data-number="10.7">
-<h2 data-number="10.7" class="anchored" data-anchor-id="a2c-and-the-simplification-of-a3c"><span class="header-section-number">10.7</span> A2C and the Simplification of A3C</h2>
+<section id="a2c-and-the-simplification-of-a3c" class="level2" data-number="11.9">
+<h2 data-number="11.9" class="anchored" data-anchor-id="a2c-and-the-simplification-of-a3c"><span class="header-section-number">11.9</span> A2C and the Simplification of A3C</h2>
 <p><strong>A2C</strong> (Advantage Actor-Critic) is often described as a synchronous counterpart to A3C. Instead of many asynchronous workers updating parameters independently, data is often collected in parallel and then used in more coordinated batch updates.</p>
 <p>This simplification can make implementations easier to reason about and debug. It also aligns better with modern accelerator-based training workflows.</p>
 <p>The deeper point is not the naming difference between A2C and A3C. The deeper point is that both rely on the same core structure:</p>
@@ -358,8 +446,8 @@ V(S_t) \leftarrow V(S_t) + \alpha \left(R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\rig
 <li>The actor is updated in the direction of actions that appear better than expected.</li>
 </ol>
 </section>
-<section id="why-actor-critic-became-central" class="level2" data-number="10.8">
-<h2 data-number="10.8" class="anchored" data-anchor-id="why-actor-critic-became-central"><span class="header-section-number">10.8</span> Why Actor-Critic Became Central</h2>
+<section id="why-actor-critic-became-central" class="level2" data-number="11.10">
+<h2 data-number="11.10" class="anchored" data-anchor-id="why-actor-critic-became-central"><span class="header-section-number">11.10</span> Why Actor-Critic Became Central</h2>
 <p>Actor-critic methods became central because they occupy a strong middle ground.</p>
 <p>Compared with pure policy gradients, they usually reduce variance and improve sample efficiency.</p>
 <p>Compared with purely value-based methods, they often handle stochastic or continuous policies more naturally.</p>
@@ -367,8 +455,8 @@ V(S_t) \leftarrow V(S_t) + \alpha \left(R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\rig
 <p>This balance explains why so many modern deep reinforcement learning algorithms are actor-critic variants in one form or another.</p>
 <p>It also explains why actor-critic is harder to implement robustly than its pseudocode may suggest. Once a policy update depends on a learned value signal, the system becomes a coupled optimization problem. The actor depends on the critic for guidance, and the critic depends on data generated by the actor. That feedback loop is powerful, but it is also where many implementation failures come from.</p>
 </section>
-<section id="remaining-challenges" class="level2" data-number="10.9">
-<h2 data-number="10.9" class="anchored" data-anchor-id="remaining-challenges"><span class="header-section-number">10.9</span> Remaining Challenges</h2>
+<section id="remaining-challenges" class="level2" data-number="11.11">
+<h2 data-number="11.11" class="anchored" data-anchor-id="remaining-challenges"><span class="header-section-number">11.11</span> Remaining Challenges</h2>
 <p>Actor-critic methods are powerful, but they are not automatically stable.</p>
 <p>They inherit complexity from both sides:</p>
 <ol type="1">
@@ -380,8 +468,8 @@ V(S_t) \leftarrow V(S_t) + \alpha \left(R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\rig
 <p>In practice, a weak critic can damage the actor badly, because the policy update depends on the critic’s signal. This creates a feedback loop similar in spirit to the issues seen in deep value learning.</p>
 <p>That is why later actor-critic methods often include additional design choices such as clipping, trust-region style constraints, entropy regularization, target networks, replay buffers, or delayed updates.</p>
 </section>
-<section id="from-actor-critic-to-modern-drl" class="level2" data-number="10.10">
-<h2 data-number="10.10" class="anchored" data-anchor-id="from-actor-critic-to-modern-drl"><span class="header-section-number">10.10</span> From Actor-Critic to Modern DRL</h2>
+<section id="from-actor-critic-to-modern-drl" class="level2" data-number="11.12">
+<h2 data-number="11.12" class="anchored" data-anchor-id="from-actor-critic-to-modern-drl"><span class="header-section-number">11.12</span> From Actor-Critic to Modern DRL</h2>
 <p>Actor-critic is less a single algorithm than a broad framework. Many influential deep reinforcement learning methods can be understood as actor-critic descendants or refinements.</p>
 <p>Examples include:</p>
 <ol type="1">
@@ -411,9 +499,62 @@ V(S_t) \leftarrow V(S_t) + \alpha \left(R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\rig
 <li><code>ppo_lunarlander.py</code> is currently the strongest maintained actor-critic-family baseline in the repository.</li>
 <li><code>actor_critic_lunarlander.py</code> and <code>a2c_lunarlander.py</code> preserve the algorithmic positions in the codebase, but they should be read with the same practical caution used elsewhere in this book: an algorithm name in the repository is not automatically a claim that every variant is equally validated.</li>
 </ol>
+</section>
+<section id="how-to-read-the-maintained-code-without-getting-lost" class="level2" data-number="11.13">
+<h2 data-number="11.13" class="anchored" data-anchor-id="how-to-read-the-maintained-code-without-getting-lost"><span class="header-section-number">11.13</span> How to Read the Maintained Code Without Getting Lost</h2>
+<p>The maintained actor-critic-facing files in this repository are not all serving the same teaching role, so beginners should read them differently.</p>
+<section id="first-read-reinforce_cartpole.py" class="level3" data-number="11.13.1">
+<h3 data-number="11.13.1" class="anchored" data-anchor-id="first-read-reinforce_cartpole.py"><span class="header-section-number">11.13.1</span> First read <code>reinforce_cartpole.py</code></h3>
+<p>That file is still the best place to understand:</p>
+<ol type="1">
+<li>what a policy network looks like,</li>
+<li>what a log-probability update looks like,</li>
+<li>how rewards turn into a policy-learning signal.</li>
+</ol>
+<p>It is not actor-critic yet, but it makes the actor side legible.</p>
+</section>
+<section id="then-read-the-sb3-backed-lunarlander-wrappers" class="level3" data-number="11.13.2">
+<h3 data-number="11.13.2" class="anchored" data-anchor-id="then-read-the-sb3-backed-lunarlander-wrappers"><span class="header-section-number">11.13.2</span> Then read the SB3-backed LunarLander wrappers</h3>
+<p>Files such as <code>actor_critic_lunarlander.py</code> and <code>a2c_lunarlander.py</code> are much thinner.</p>
+<p>They mainly show:</p>
+<ol type="1">
+<li>which algorithm class is being used,</li>
+<li>what high-level hyperparameters are chosen,</li>
+<li>and how training and evaluation are wired into the repository.</li>
+</ol>
+<p>For example, the key lines in <code>a2c_lunarlander.py</code> are not a hand-written actor update. They are the configuration boundary:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> train_sb3_lunarlander(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    algo_name<span class="op">=</span><span class="st">"a2c_lunarlander"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    algo_class<span class="op">=</span>A2C,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    total_timesteps<span class="op">=</span>config.total_timesteps,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>So the right beginner reading is:</p>
+<ol type="1">
+<li>use the local REINFORCE file to understand the actor side,</li>
+<li>use this chapter to understand what the critic adds,</li>
+<li>use the SB3-backed files to see how the repository packages a practical actor-critic baseline.</li>
+</ol>
+<p>That order is much less confusing than expecting the wrapper files themselves to teach actor-critic from first principles.</p>
+</section>
+</section>
+<section id="common-beginner-confusions-about-actor-critic" class="level2" data-number="11.14">
+<h2 data-number="11.14" class="anchored" data-anchor-id="common-beginner-confusions-about-actor-critic"><span class="header-section-number">11.14</span> Common Beginner Confusions About Actor-Critic</h2>
+<section id="is-actor-critic-just-reinforce-plus-a-value-network" class="level3" data-number="11.14.1">
+<h3 data-number="11.14.1" class="anchored" data-anchor-id="is-actor-critic-just-reinforce-plus-a-value-network"><span class="header-section-number">11.14.1</span> “Is actor-critic just REINFORCE plus a value network?”</h3>
+<p>At a high level, that is a useful first approximation. The critic provides a learned value-based signal that replaces or improves upon raw return-only policy updates. But the resulting training dynamics are more coupled than that phrase suggests.</p>
+</section>
+<section id="why-can-a-bad-critic-hurt-the-actor-so-much" class="level3" data-number="11.14.2">
+<h3 data-number="11.14.2" class="anchored" data-anchor-id="why-can-a-bad-critic-hurt-the-actor-so-much"><span class="header-section-number">11.14.2</span> “Why can a bad critic hurt the actor so much?”</h3>
+<p>Because the actor is trusting the critic’s signal. If the critic says a weak action was better than expected, the policy may become more likely to repeat it. So actor-critic stability depends heavily on critic quality.</p>
+</section>
+<section id="why-are-the-local-code-examples-thinner-here-than-in-dqn" class="level3" data-number="11.14.3">
+<h3 data-number="11.14.3" class="anchored" data-anchor-id="why-are-the-local-code-examples-thinner-here-than-in-dqn"><span class="header-section-number">11.14.3</span> “Why are the local code examples thinner here than in DQN?”</h3>
+<p>Because in this project, the actor-critic family was more sensitive to engineering details. The repository now prefers stable maintained baselines over pretending that every algorithm has an equally clean from-scratch local implementation.</p>
 <p>The next chapter surveys more advanced deep reinforcement learning methods and shows how they extend the ideas introduced so far.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -820,12 +961,12 @@ V(S_t) \leftarrow V(S_t) + \alpha \left(R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\rig
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../chapters/part2-policy-gradient.html" class="pagination-link" aria-label="Policy Gradient Methods">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../chapters/part2-advanced.html" class="pagination-link" aria-label="Advanced Deep Reinforcement Learning">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

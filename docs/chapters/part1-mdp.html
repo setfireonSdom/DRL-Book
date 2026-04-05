@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Markov Decision Processes – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
+<title>4&nbsp; Markov Decision Processes – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,7 +66,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../chapters/part1-dp.html" rel="next">
-<link href="../chapters/part1-overview.html" rel="prev">
+<link href="../chapters/part1-bandits.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -112,7 +147,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part1-mdp.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part1-mdp.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -159,62 +194,68 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/part1-bandits.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multi-Armed Bandits</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/part1-mdp.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-dp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-mc-td.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-function-approx.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-dqn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-policy-gradient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-actor-critic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part3-practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -233,14 +274,21 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-markov-property" id="toc-the-markov-property" class="nav-link active" data-scroll-target="#the-markov-property"><span class="header-section-number">3.1</span> The Markov Property</a></li>
-  <li><a href="#the-mdp-components" id="toc-the-mdp-components" class="nav-link" data-scroll-target="#the-mdp-components"><span class="header-section-number">3.2</span> The MDP Components</a></li>
-  <li><a href="#policies-inside-an-mdp" id="toc-policies-inside-an-mdp" class="nav-link" data-scroll-target="#policies-inside-an-mdp"><span class="header-section-number">3.3</span> Policies Inside an MDP</a></li>
-  <li><a href="#returns-and-objectives" id="toc-returns-and-objectives" class="nav-link" data-scroll-target="#returns-and-objectives"><span class="header-section-number">3.4</span> Returns and Objectives</a></li>
-  <li><a href="#state-value-and-action-value-functions" id="toc-state-value-and-action-value-functions" class="nav-link" data-scroll-target="#state-value-and-action-value-functions"><span class="header-section-number">3.5</span> State-Value and Action-Value Functions</a></li>
-  <li><a href="#bellman-equations" id="toc-bellman-equations" class="nav-link" data-scroll-target="#bellman-equations"><span class="header-section-number">3.6</span> Bellman Equations</a></li>
-  <li><a href="#optimal-value-functions" id="toc-optimal-value-functions" class="nav-link" data-scroll-target="#optimal-value-functions"><span class="header-section-number">3.7</span> Optimal Value Functions</a></li>
-  <li><a href="#why-mdps-matter-for-deep-reinforcement-learning" id="toc-why-mdps-matter-for-deep-reinforcement-learning" class="nav-link" data-scroll-target="#why-mdps-matter-for-deep-reinforcement-learning"><span class="header-section-number">3.8</span> Why MDPs Matter for Deep Reinforcement Learning</a></li>
+  <li><a href="#the-markov-property" id="toc-the-markov-property" class="nav-link active" data-scroll-target="#the-markov-property"><span class="header-section-number">4.1</span> The Markov Property</a></li>
+  <li><a href="#the-mdp-components" id="toc-the-mdp-components" class="nav-link" data-scroll-target="#the-mdp-components"><span class="header-section-number">4.2</span> The MDP Components</a></li>
+  <li><a href="#a-beginner-mental-model-for-mdps" id="toc-a-beginner-mental-model-for-mdps" class="nav-link" data-scroll-target="#a-beginner-mental-model-for-mdps"><span class="header-section-number">4.3</span> A Beginner Mental Model for MDPs</a></li>
+  <li><a href="#policies-inside-an-mdp" id="toc-policies-inside-an-mdp" class="nav-link" data-scroll-target="#policies-inside-an-mdp"><span class="header-section-number">4.4</span> Policies Inside an MDP</a></li>
+  <li><a href="#returns-and-objectives" id="toc-returns-and-objectives" class="nav-link" data-scroll-target="#returns-and-objectives"><span class="header-section-number">4.5</span> Returns and Objectives</a></li>
+  <li><a href="#state-value-and-action-value-functions" id="toc-state-value-and-action-value-functions" class="nav-link" data-scroll-target="#state-value-and-action-value-functions"><span class="header-section-number">4.6</span> State-Value and Action-Value Functions</a></li>
+  <li><a href="#bellman-equations" id="toc-bellman-equations" class="nav-link" data-scroll-target="#bellman-equations"><span class="header-section-number">4.7</span> Bellman Equations</a></li>
+  <li><a href="#what-a-beginner-should-look-for-in-the-code" id="toc-what-a-beginner-should-look-for-in-the-code" class="nav-link" data-scroll-target="#what-a-beginner-should-look-for-in-the-code"><span class="header-section-number">4.8</span> What a Beginner Should Look For in the Code</a></li>
+  <li><a href="#optimal-value-functions" id="toc-optimal-value-functions" class="nav-link" data-scroll-target="#optimal-value-functions"><span class="header-section-number">4.9</span> Optimal Value Functions</a></li>
+  <li><a href="#why-mdps-matter-for-deep-reinforcement-learning" id="toc-why-mdps-matter-for-deep-reinforcement-learning" class="nav-link" data-scroll-target="#why-mdps-matter-for-deep-reinforcement-learning"><span class="header-section-number">4.10</span> Why MDPs Matter for Deep Reinforcement Learning</a></li>
+  <li><a href="#common-beginner-confusions-about-mdps" id="toc-common-beginner-confusions-about-mdps" class="nav-link" data-scroll-target="#common-beginner-confusions-about-mdps"><span class="header-section-number">4.11</span> Common Beginner Confusions About MDPs</a>
+  <ul class="collapse">
+  <li><a href="#does-an-mdp-mean-the-environment-is-simple" id="toc-does-an-mdp-mean-the-environment-is-simple" class="nav-link" data-scroll-target="#does-an-mdp-mean-the-environment-is-simple"><span class="header-section-number">4.11.1</span> “Does an MDP mean the environment is simple?”</a></li>
+  <li><a href="#why-do-we-need-this-formalism-before-learning-algorithms" id="toc-why-do-we-need-this-formalism-before-learning-algorithms" class="nav-link" data-scroll-target="#why-do-we-need-this-formalism-before-learning-algorithms"><span class="header-section-number">4.11.2</span> “Why do we need this formalism before learning algorithms?”</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -249,7 +297,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></h1>
 </div>
 
 
@@ -268,16 +316,18 @@ window.Quarto = {
 
 <p>The agent-environment framework gives us intuition, but we still need a mathematical structure that makes reinforcement learning precise. The standard framework is the <strong>Markov decision process</strong> (MDP). It provides a clean way to describe states, actions, rewards, transitions, and long-term objectives.</p>
 <p>Many reinforcement learning algorithms can be understood as different ways of solving, approximating, or learning within an MDP.</p>
-<section id="the-markov-property" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="the-markov-property"><span class="header-section-number">3.1</span> The Markov Property</h2>
+<section id="the-markov-property" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="the-markov-property"><span class="header-section-number">4.1</span> The Markov Property</h2>
 <p>The defining assumption behind an MDP is the <strong>Markov property</strong>. Informally, it says that the future depends on the present state, not on the full past history, once the present state is known.</p>
 <p>In words:</p>
 <p>The current state contains all information needed for predicting the next step.</p>
 <p>This does not mean the past is irrelevant in general. It means the state has already summarized the relevant parts of the past. If the state representation fails to do that, then the process is not fully Markov from the agent’s point of view.</p>
 <p>This point is important in practice. Many real environments are only approximately Markov. Partial observability, noisy sensors, hidden variables, and missing context can all break the assumption. Deep reinforcement learning often deals with this by learning richer representations, stacking observations, or using recurrent models.</p>
+<p>If you remember one thing from this section, it can be stated very simply:</p>
+<p>A good state is supposed to summarize the past well enough that the agent can decide what matters next.</p>
 </section>
-<section id="the-mdp-components" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="the-mdp-components"><span class="header-section-number">3.2</span> The MDP Components</h2>
+<section id="the-mdp-components" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="the-mdp-components"><span class="header-section-number">4.2</span> The MDP Components</h2>
 <p>An MDP is often described by the tuple:</p>
 <p><span class="math display">\[
 (\mathcal{S}, \mathcal{A}, P, R, \gamma)
@@ -311,8 +361,27 @@ P(s', r \mid s, a)
 </ol>
 <p>This is a useful point pedagogically. Before reinforcement learning becomes deep or statistical, an MDP is simply a structured description of what can happen next and what reward is attached to it.</p>
 </section>
-<section id="policies-inside-an-mdp" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="policies-inside-an-mdp"><span class="header-section-number">3.3</span> Policies Inside an MDP</h2>
+<section id="a-beginner-mental-model-for-mdps" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="a-beginner-mental-model-for-mdps"><span class="header-section-number">4.3</span> A Beginner Mental Model for MDPs</h2>
+<p>Many beginners first meet MDP notation and feel that the subject suddenly became more abstract than the bandit chapter. A helpful way to resist that feeling is to translate the tuple back into plain language:</p>
+<ol type="1">
+<li>What situations can I be in?</li>
+<li>What choices do I have there?</li>
+<li>What tends to happen after each choice?</li>
+<li>What reward do I receive?</li>
+<li>How much do I care about the future?</li>
+</ol>
+<p>That is all the MDP formalism is trying to pin down. The notation is important, but the purpose of the notation is simply to make those five questions precise.</p>
+<p>In code, the same idea is much less intimidating:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rewards <span class="op">=</span> {(<span class="dv">0</span>, <span class="dv">3</span>): <span class="fl">1.0</span>, (<span class="dv">1</span>, <span class="dv">3</span>): <span class="op">-</span><span class="fl">1.0</span>}</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>actions <span class="op">=</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">0</span>, <span class="dv">0</span>): (<span class="st">"D"</span>, <span class="st">"R"</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That is why <code>gridworld.py</code> is such a good companion file. It turns the abstract tuple into concrete Python objects.</p>
+</section>
+<section id="policies-inside-an-mdp" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="policies-inside-an-mdp"><span class="header-section-number">4.4</span> Policies Inside an MDP</h2>
 <p>Once an MDP is defined, the agent still needs a policy. A policy determines how actions are selected in each state. If <span class="math inline">\(\pi\)</span> is a policy, then:</p>
 <p><span class="math display">\[
 \pi(a \mid s)
@@ -320,8 +389,8 @@ P(s', r \mid s, a)
 <p>is the probability that the agent chooses action <span class="math inline">\(a\)</span> in state <span class="math inline">\(s\)</span>.</p>
 <p>The policy and the environment together induce a distribution over trajectories. That is why reinforcement learning is fundamentally probabilistic even when the environment or policy is deterministic in special cases.</p>
 </section>
-<section id="returns-and-objectives" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="returns-and-objectives"><span class="header-section-number">3.4</span> Returns and Objectives</h2>
+<section id="returns-and-objectives" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="returns-and-objectives"><span class="header-section-number">4.5</span> Returns and Objectives</h2>
 <p>The main objective in an MDP is usually to maximize expected return. Starting at time <span class="math inline">\(t\)</span>, the discounted return is:</p>
 <p><span class="math display">\[
 G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}
@@ -334,9 +403,11 @@ G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}
 <li>It can reduce sensitivity to very distant uncertainty.</li>
 </ol>
 <p>In episodic tasks, the return may terminate naturally at the end of an episode. In continuing tasks, discounting often plays a larger role.</p>
+<p>In plain language, return is just the answer to this question:</p>
+<p>How good was this situation when future consequences are included, not just the next reward?</p>
 </section>
-<section id="state-value-and-action-value-functions" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="state-value-and-action-value-functions"><span class="header-section-number">3.5</span> State-Value and Action-Value Functions</h2>
+<section id="state-value-and-action-value-functions" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="state-value-and-action-value-functions"><span class="header-section-number">4.6</span> State-Value and Action-Value Functions</h2>
 <p>Value functions describe expected future return under a policy. They translate the long-term objective into quantities that can be estimated and improved.</p>
 <p>The <strong>state-value function</strong> is:</p>
 <p><span class="math display">\[
@@ -350,8 +421,8 @@ Q^\pi(s, a) = \mathbb{E}_\pi [G_t \mid S_t = s, A_t = a]
 <p>It tells us how good it is to take action <span class="math inline">\(a\)</span> in state <span class="math inline">\(s\)</span> and then follow policy <span class="math inline">\(\pi\)</span>.</p>
 <p>These functions are central because they support both evaluation and control. If we know which states and actions have high long-term value, we can improve decisions accordingly.</p>
 </section>
-<section id="bellman-equations" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="bellman-equations"><span class="header-section-number">3.6</span> Bellman Equations</h2>
+<section id="bellman-equations" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="bellman-equations"><span class="header-section-number">4.7</span> Bellman Equations</h2>
 <p>One of the most important ideas in reinforcement learning is that value functions satisfy recursive relationships. This is the core insight behind the <strong>Bellman equations</strong>.</p>
 <p>For the state-value function:</p>
 <p><span class="math display">\[
@@ -363,6 +434,8 @@ V^\pi(s) = \sum_a \pi(a \mid s) \sum_{s', r} P(s', r \mid s, a) \left[r + \gamma
 Q^\pi(s, a) = \sum_{s', r} P(s', r \mid s, a) \left[r + \gamma \sum_{a'} \pi(a' \mid s') Q^\pi(s', a')\right]
 \]</span></p>
 <p>These recursive forms are powerful because they allow value estimation to be built from local consistency conditions rather than from full trajectory enumeration.</p>
+<p>This is often the first intimidating equation in reinforcement learning, but the idea behind it is much smaller than the notation:</p>
+<p>The value now should match immediate reward plus the value of what happens next.</p>
 <p>In this repository, that recursive structure is not hidden behind a framework. It is written out directly in the tabular examples. The most transparent places to inspect are:</p>
 <ol type="1">
 <li><code>examples/tabular/policy_evaluation.py</code></li>
@@ -370,8 +443,19 @@ Q^\pi(s, a) = \sum_{s', r} P(s', r \mid s, a) \left[r + \gamma \sum_{a'} \pi(a' 
 </ol>
 <p>Those files are worth reading slowly. The Bellman equations are not only identities on paper. In code, they become loops over states, actions, and possible next states. The theory says a value should satisfy a recursive consistency relation. The implementation turns that statement into repeated sweeps until the estimates stop moving very much.</p>
 </section>
-<section id="optimal-value-functions" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="optimal-value-functions"><span class="header-section-number">3.7</span> Optimal Value Functions</h2>
+<section id="what-a-beginner-should-look-for-in-the-code" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="what-a-beginner-should-look-for-in-the-code"><span class="header-section-number">4.8</span> What a Beginner Should Look For in the Code</h2>
+<p>When reading the tabular files connected to this chapter, do not try to memorize every loop. Instead, ask:</p>
+<ol type="1">
+<li>Where are the states represented?</li>
+<li>Where are the actions represented?</li>
+<li>Where does the reward enter the computation?</li>
+<li>Where does the next-state value appear?</li>
+</ol>
+<p>If those four pieces are visible, then the Bellman equation has already become concrete.</p>
+</section>
+<section id="optimal-value-functions" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="optimal-value-functions"><span class="header-section-number">4.9</span> Optimal Value Functions</h2>
 <p>So far, the value functions have been defined relative to a fixed policy <span class="math inline">\(\pi\)</span>. But reinforcement learning usually aims to find the best possible policy.</p>
 <p>The optimal state-value function is:</p>
 <p><span class="math display">\[
@@ -390,6 +474,7 @@ V^*(s) = \max_a \sum_{s', r} P(s', r \mid s, a)\left[r + \gamma V^*(s')\right]
 Q^*(s, a) = \sum_{s', r} P(s', r \mid s, a)\left[r + \gamma \max_{a'} Q^*(s', a')\right]
 \]</span></p>
 <p>These equations replace the policy expectation with a maximization over actions. That single change leads directly to many control algorithms, including Q-learning and DQN.</p>
+<p>That is the turning point from “how good is this policy?” to “what is the best action to aim for here?”</p>
 <p>That single change is easy to underestimate. In fact, it is one of the most important transitions in the whole book. When a policy expectation is replaced by a maximization, the problem changes from evaluating a given behavior to searching for the best behavior.</p>
 <p>You can already see this shift in the maintained code before any learning from data begins:</p>
 <ol type="1">
@@ -403,8 +488,8 @@ Q^*(s, a) = \sum_{s', r} P(s', r \mid s, a)\left[r + \gamma \max_{a'} Q^*(s', a'
 </ol>
 <p>So the Bellman optimality equation should not be read here as an isolated theorem. It is the mathematical ancestor of the greedy bootstrap target used much later in Q-learning and DQN.</p>
 </section>
-<section id="why-mdps-matter-for-deep-reinforcement-learning" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="why-mdps-matter-for-deep-reinforcement-learning"><span class="header-section-number">3.8</span> Why MDPs Matter for Deep Reinforcement Learning</h2>
+<section id="why-mdps-matter-for-deep-reinforcement-learning" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="why-mdps-matter-for-deep-reinforcement-learning"><span class="header-section-number">4.10</span> Why MDPs Matter for Deep Reinforcement Learning</h2>
 <p>At first glance, deep reinforcement learning may seem far away from the clean equations in this chapter. In practice, however, the deep part mostly changes how value functions, policies, or models are represented. It does not change the core logic of the problem.</p>
 <p>DQN still tries to approximate an action-value function. Policy gradient methods still optimize a policy in an MDP. Actor-critic methods still rely on value estimates defined through expected return. Even advanced algorithms remain built on the same foundational objects.</p>
 <p>This is why MDPs matter. They provide the conceptual skeleton of the entire field.</p>
@@ -417,9 +502,20 @@ Q^*(s, a) = \sum_{s', r} P(s', r \mid s, a)\left[r + \gamma \max_{a'} Q^*(s', a'
 <li>Where is the Bellman or policy objective appearing in the update?</li>
 </ol>
 <p>If those questions are kept visible, the later algorithms stay interpretable. If they are forgotten, deep reinforcement learning can easily collapse into a collection of names and engineering recipes.</p>
+</section>
+<section id="common-beginner-confusions-about-mdps" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="common-beginner-confusions-about-mdps"><span class="header-section-number">4.11</span> Common Beginner Confusions About MDPs</h2>
+<section id="does-an-mdp-mean-the-environment-is-simple" class="level3" data-number="4.11.1">
+<h3 data-number="4.11.1" class="anchored" data-anchor-id="does-an-mdp-mean-the-environment-is-simple"><span class="header-section-number">4.11.1</span> “Does an MDP mean the environment is simple?”</h3>
+<p>No.&nbsp;It only means the problem is being described in a structured way. An MDP can still be large, stochastic, partially observed from the agent’s point of view, or hard to solve.</p>
+</section>
+<section id="why-do-we-need-this-formalism-before-learning-algorithms" class="level3" data-number="4.11.2">
+<h3 data-number="4.11.2" class="anchored" data-anchor-id="why-do-we-need-this-formalism-before-learning-algorithms"><span class="header-section-number">4.11.2</span> “Why do we need this formalism before learning algorithms?”</h3>
+<p>Because later algorithms are all trying to estimate or optimize something defined inside this framework. Without the MDP view, it becomes much harder to tell what a policy, value function, or Bellman update is actually about.</p>
 <p>The next chapter studies dynamic programming, which assumes the environment model is known and shows how value functions can be evaluated and improved systematically.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -825,13 +921,13 @@ Q^*(s, a) = \sum_{s', r} P(s', r \mid s, a)\left[r + \gamma \max_{a'} Q^*(s', a'
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/part1-overview.html" class="pagination-link" aria-label="Reinforcement Learning Overview">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reinforcement Learning Overview</span></span>
+      <a href="../chapters/part1-bandits.html" class="pagination-link" aria-label="Multi-Armed Bandits">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multi-Armed Bandits</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../chapters/part1-dp.html" class="pagination-link" aria-label="Dynamic Programming">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>9&nbsp; Policy Gradient Methods – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
+<title>10&nbsp; Policy Gradient Methods – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -112,7 +147,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part2-policy-gradient.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part2-policy-gradient.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -159,62 +194,68 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/part1-bandits.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multi-Armed Bandits</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/part1-mdp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-dp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-mc-td.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-function-approx.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-dqn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-policy-gradient.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-actor-critic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part3-practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -233,16 +274,29 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#why-learn-the-policy-directly" id="toc-why-learn-the-policy-directly" class="nav-link active" data-scroll-target="#why-learn-the-policy-directly"><span class="header-section-number">9.1</span> Why Learn the Policy Directly?</a></li>
-  <li><a href="#the-objective-of-policy-gradient-methods" id="toc-the-objective-of-policy-gradient-methods" class="nav-link" data-scroll-target="#the-objective-of-policy-gradient-methods"><span class="header-section-number">9.2</span> The Objective of Policy Gradient Methods</a></li>
-  <li><a href="#the-log-probability-trick" id="toc-the-log-probability-trick" class="nav-link" data-scroll-target="#the-log-probability-trick"><span class="header-section-number">9.3</span> The Log-Probability Trick</a></li>
-  <li><a href="#reinforce" id="toc-reinforce" class="nav-link" data-scroll-target="#reinforce"><span class="header-section-number">9.4</span> REINFORCE</a></li>
-  <li><a href="#why-reinforce-is-noisy" id="toc-why-reinforce-is-noisy" class="nav-link" data-scroll-target="#why-reinforce-is-noisy"><span class="header-section-number">9.5</span> Why REINFORCE Is Noisy</a></li>
-  <li><a href="#baselines-and-variance-reduction" id="toc-baselines-and-variance-reduction" class="nav-link" data-scroll-target="#baselines-and-variance-reduction"><span class="header-section-number">9.6</span> Baselines and Variance Reduction</a></li>
-  <li><a href="#policy-networks-in-practice" id="toc-policy-networks-in-practice" class="nav-link" data-scroll-target="#policy-networks-in-practice"><span class="header-section-number">9.7</span> Policy Networks in Practice</a></li>
-  <li><a href="#strengths-of-policy-gradient-methods" id="toc-strengths-of-policy-gradient-methods" class="nav-link" data-scroll-target="#strengths-of-policy-gradient-methods"><span class="header-section-number">9.8</span> Strengths of Policy Gradient Methods</a></li>
-  <li><a href="#weaknesses-of-pure-policy-gradients" id="toc-weaknesses-of-pure-policy-gradients" class="nav-link" data-scroll-target="#weaknesses-of-pure-policy-gradients"><span class="header-section-number">9.9</span> Weaknesses of Pure Policy Gradients</a></li>
-  <li><a href="#why-policy-gradients-matter" id="toc-why-policy-gradients-matter" class="nav-link" data-scroll-target="#why-policy-gradients-matter"><span class="header-section-number">9.10</span> Why Policy Gradients Matter</a></li>
+  <li><a href="#why-learn-the-policy-directly" id="toc-why-learn-the-policy-directly" class="nav-link active" data-scroll-target="#why-learn-the-policy-directly"><span class="header-section-number">10.1</span> Why Learn the Policy Directly?</a></li>
+  <li><a href="#the-objective-of-policy-gradient-methods" id="toc-the-objective-of-policy-gradient-methods" class="nav-link" data-scroll-target="#the-objective-of-policy-gradient-methods"><span class="header-section-number">10.2</span> The Objective of Policy Gradient Methods</a></li>
+  <li><a href="#the-log-probability-trick" id="toc-the-log-probability-trick" class="nav-link" data-scroll-target="#the-log-probability-trick"><span class="header-section-number">10.3</span> The Log-Probability Trick</a></li>
+  <li><a href="#reinforce" id="toc-reinforce" class="nav-link" data-scroll-target="#reinforce"><span class="header-section-number">10.4</span> REINFORCE</a></li>
+  <li><a href="#what-feels-new-here-for-beginners" id="toc-what-feels-new-here-for-beginners" class="nav-link" data-scroll-target="#what-feels-new-here-for-beginners"><span class="header-section-number">10.5</span> What Feels New Here for Beginners</a></li>
+  <li><a href="#why-reinforce-is-noisy" id="toc-why-reinforce-is-noisy" class="nav-link" data-scroll-target="#why-reinforce-is-noisy"><span class="header-section-number">10.6</span> Why REINFORCE Is Noisy</a></li>
+  <li><a href="#baselines-and-variance-reduction" id="toc-baselines-and-variance-reduction" class="nav-link" data-scroll-target="#baselines-and-variance-reduction"><span class="header-section-number">10.7</span> Baselines and Variance Reduction</a></li>
+  <li><a href="#policy-networks-in-practice" id="toc-policy-networks-in-practice" class="nav-link" data-scroll-target="#policy-networks-in-practice"><span class="header-section-number">10.8</span> Policy Networks in Practice</a></li>
+  <li><a href="#a-beginner-walkthrough-of-the-reinforce-code" id="toc-a-beginner-walkthrough-of-the-reinforce-code" class="nav-link" data-scroll-target="#a-beginner-walkthrough-of-the-reinforce-code"><span class="header-section-number">10.9</span> A Beginner Walkthrough of the REINFORCE Code</a>
+  <ul class="collapse">
+  <li><a href="#pass-1-what-does-the-policy-network-output" id="toc-pass-1-what-does-the-policy-network-output" class="nav-link" data-scroll-target="#pass-1-what-does-the-policy-network-output"><span class="header-section-number">10.9.1</span> Pass 1: What does the policy network output?</a></li>
+  <li><a href="#pass-2-what-gets-saved-during-the-episode" id="toc-pass-2-what-gets-saved-during-the-episode" class="nav-link" data-scroll-target="#pass-2-what-gets-saved-during-the-episode"><span class="header-section-number">10.9.2</span> Pass 2: What gets saved during the episode?</a></li>
+  <li><a href="#pass-3-where-is-the-actual-policy-gradient-update" id="toc-pass-3-where-is-the-actual-policy-gradient-update" class="nav-link" data-scroll-target="#pass-3-where-is-the-actual-policy-gradient-update"><span class="header-section-number">10.9.3</span> Pass 3: Where is the actual policy-gradient update?</a></li>
+  </ul></li>
+  <li><a href="#common-beginner-confusions-about-policy-gradients" id="toc-common-beginner-confusions-about-policy-gradients" class="nav-link" data-scroll-target="#common-beginner-confusions-about-policy-gradients"><span class="header-section-number">10.10</span> Common Beginner Confusions About Policy Gradients</a>
+  <ul class="collapse">
+  <li><a href="#if-there-is-no-q-table-or-q-network-how-does-the-agent-know-which-action-is-good" id="toc-if-there-is-no-q-table-or-q-network-how-does-the-agent-know-which-action-is-good" class="nav-link" data-scroll-target="#if-there-is-no-q-table-or-q-network-how-does-the-agent-know-which-action-is-good"><span class="header-section-number">10.10.1</span> “If there is no Q-table or Q-network, how does the agent know which action is good?”</a></li>
+  <li><a href="#why-do-we-wait-until-the-end-of-the-episode-in-reinforce" id="toc-why-do-we-wait-until-the-end-of-the-episode-in-reinforce" class="nav-link" data-scroll-target="#why-do-we-wait-until-the-end-of-the-episode-in-reinforce"><span class="header-section-number">10.10.2</span> “Why do we wait until the end of the episode in REINFORCE?”</a></li>
+  <li><a href="#why-does-this-feel-less-direct-than-dqn-even-though-the-code-is-short" id="toc-why-does-this-feel-less-direct-than-dqn-even-though-the-code-is-short" class="nav-link" data-scroll-target="#why-does-this-feel-less-direct-than-dqn-even-though-the-code-is-short"><span class="header-section-number">10.10.3</span> “Why does this feel less direct than DQN even though the code is short?”</a></li>
+  </ul></li>
+  <li><a href="#strengths-of-policy-gradient-methods" id="toc-strengths-of-policy-gradient-methods" class="nav-link" data-scroll-target="#strengths-of-policy-gradient-methods"><span class="header-section-number">10.11</span> Strengths of Policy Gradient Methods</a></li>
+  <li><a href="#weaknesses-of-pure-policy-gradients" id="toc-weaknesses-of-pure-policy-gradients" class="nav-link" data-scroll-target="#weaknesses-of-pure-policy-gradients"><span class="header-section-number">10.12</span> Weaknesses of Pure Policy Gradients</a></li>
+  <li><a href="#why-policy-gradients-matter" id="toc-why-policy-gradients-matter" class="nav-link" data-scroll-target="#why-policy-gradients-matter"><span class="header-section-number">10.13</span> Why Policy Gradients Matter</a></li>
   </ul>
 </nav>
     </div>
@@ -251,7 +305,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></h1>
 </div>
 
 
@@ -271,8 +325,8 @@ window.Quarto = {
 <p>So far, the deep reinforcement learning methods in this book have followed the value-based path. We started from tabular Q-learning, moved to function approximation, and then studied DQN as a deep version of value-based control.</p>
 <p>That path is powerful, but it is not the only one.</p>
 <p>Policy gradient methods take a different approach. Instead of learning action values and then selecting actions indirectly, they optimize the policy itself. This shift changes the mathematical object we train, the kinds of action spaces we can handle naturally, and the kinds of stability problems we encounter.</p>
-<section id="why-learn-the-policy-directly" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="why-learn-the-policy-directly"><span class="header-section-number">9.1</span> Why Learn the Policy Directly?</h2>
+<section id="why-learn-the-policy-directly" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="why-learn-the-policy-directly"><span class="header-section-number">10.1</span> Why Learn the Policy Directly?</h2>
 <p>In value-based methods, the policy is derived from value estimates. For example, in Q-learning or DQN, we estimate <span class="math inline">\(Q(s, a)\)</span> and then choose actions by taking an argmax or by adding exploration.</p>
 <p>This works well in many discrete-action problems, but it has limitations.</p>
 <p>First, the argmax operation becomes awkward in continuous action spaces. If actions are continuous, finding the maximizing action at every step may be difficult or expensive.</p>
@@ -284,8 +338,8 @@ window.Quarto = {
 \]</span></p>
 <p>where <span class="math inline">\(\theta\)</span> are the parameters of the policy network.</p>
 </section>
-<section id="the-objective-of-policy-gradient-methods" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="the-objective-of-policy-gradient-methods"><span class="header-section-number">9.2</span> The Objective of Policy Gradient Methods</h2>
+<section id="the-objective-of-policy-gradient-methods" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="the-objective-of-policy-gradient-methods"><span class="header-section-number">10.2</span> The Objective of Policy Gradient Methods</h2>
 <p>The goal is to maximize expected return under the policy. At a high level, we may write the objective as:</p>
 <p><span class="math display">\[
 J(\theta)
@@ -296,8 +350,8 @@ J(\theta)
 <p>This is where the policy gradient theorem enters. The theorem gives a way to estimate <span class="math inline">\(\nabla_\theta J(\theta)\)</span> using sampled trajectories, without needing to differentiate through the environment dynamics directly.</p>
 <p>The deep idea is that if an action led to better-than-expected outcomes, then the policy should become more likely to take that action in similar states. If an action led to worse-than-expected outcomes, the policy should become less likely to take it.</p>
 </section>
-<section id="the-log-probability-trick" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="the-log-probability-trick"><span class="header-section-number">9.3</span> The Log-Probability Trick</h2>
+<section id="the-log-probability-trick" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="the-log-probability-trick"><span class="header-section-number">10.3</span> The Log-Probability Trick</h2>
 <p>One of the most important identities behind policy gradients is:</p>
 <p><span class="math display">\[
 \nabla_\theta \pi_\theta(a \mid s) = \pi_\theta(a \mid s)\nabla_\theta \log \pi_\theta(a \mid s)
@@ -307,8 +361,8 @@ J(\theta)
 <p>This leads to the core intuition:</p>
 <p>Increase the probability of actions that lead to high return, and decrease the probability of actions that lead to low return.</p>
 </section>
-<section id="reinforce" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="reinforce"><span class="header-section-number">9.4</span> REINFORCE</h2>
+<section id="reinforce" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="reinforce"><span class="header-section-number">10.4</span> REINFORCE</h2>
 <p>The classic Monte Carlo policy gradient algorithm is <strong>REINFORCE</strong>. Its update has the form:</p>
 <p><span class="math display">\[
 \theta \leftarrow \theta + \alpha G_t \nabla_\theta \log \pi_\theta(A_t \mid S_t)
@@ -322,8 +376,27 @@ J(\theta)
 <p>REINFORCE is appealing because it is conceptually direct. It does not require a value function in its simplest form. It uses sampled returns to improve the policy directly.</p>
 <p>This makes REINFORCE an important baseline for understanding the entire policy optimization family.</p>
 </section>
-<section id="why-reinforce-is-noisy" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="why-reinforce-is-noisy"><span class="header-section-number">9.5</span> Why REINFORCE Is Noisy</h2>
+<section id="what-feels-new-here-for-beginners" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="what-feels-new-here-for-beginners"><span class="header-section-number">10.5</span> What Feels New Here for Beginners</h2>
+<p>Policy gradients often feel unfamiliar at first because they reverse a habit built by value-based methods.</p>
+<p>In value-based RL, the usual mental pattern is:</p>
+<ol type="1">
+<li>estimate values,</li>
+<li>compare actions,</li>
+<li>choose the best-looking one.</li>
+</ol>
+<p>In policy gradients, the mental pattern becomes:</p>
+<ol type="1">
+<li>sample an action from the current policy,</li>
+<li>observe how well the episode turned out,</li>
+<li>make that sampled action more or less likely next time.</li>
+</ol>
+<p>That is a real conceptual shift. The policy is no longer extracted from a value table or Q-network at the end of the step. The policy itself is the object being optimized.</p>
+<p>For many readers, the simplest way to stay oriented is to keep one sentence in mind:</p>
+<p>REINFORCE does not ask “which action currently has the highest predicted value?” It asks “which sampled actions should become more probable after seeing the return?”</p>
+</section>
+<section id="why-reinforce-is-noisy" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="why-reinforce-is-noisy"><span class="header-section-number">10.6</span> Why REINFORCE Is Noisy</h2>
 <p>REINFORCE is elegant, but it suffers from a serious practical problem:</p>
 <p>Its gradient estimates can have very high variance.</p>
 <p>There are several reasons for this:</p>
@@ -335,8 +408,8 @@ J(\theta)
 <p>As a result, learning can be unstable or slow. The algorithm points in the right direction on average, but the individual gradient estimates can be extremely noisy.</p>
 <p>This is one reason why pure Monte Carlo policy gradients are often more useful as teaching tools or baseline methods than as the final answer in serious reinforcement learning systems.</p>
 </section>
-<section id="baselines-and-variance-reduction" class="level2" data-number="9.6">
-<h2 data-number="9.6" class="anchored" data-anchor-id="baselines-and-variance-reduction"><span class="header-section-number">9.6</span> Baselines and Variance Reduction</h2>
+<section id="baselines-and-variance-reduction" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="baselines-and-variance-reduction"><span class="header-section-number">10.7</span> Baselines and Variance Reduction</h2>
 <p>One of the most important ideas in policy gradient methods is the use of a <strong>baseline</strong>.</p>
 <p>Instead of weighting the gradient by the raw return <span class="math inline">\(G_t\)</span>, we subtract a baseline <span class="math inline">\(b(s)\)</span>:</p>
 <p><span class="math display">\[
@@ -346,8 +419,8 @@ J(\theta)
 <p>The intuition is simple. We do not only want to know whether a return was large in absolute terms. We want to know whether it was better or worse than some reasonable expectation.</p>
 <p>That “better than expected” idea later becomes the advantage function, which is central to actor-critic methods.</p>
 </section>
-<section id="policy-networks-in-practice" class="level2" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="policy-networks-in-practice"><span class="header-section-number">9.7</span> Policy Networks in Practice</h2>
+<section id="policy-networks-in-practice" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="policy-networks-in-practice"><span class="header-section-number">10.8</span> Policy Networks in Practice</h2>
 <p>In deep reinforcement learning, the policy is often represented by a neural network.</p>
 <p>For discrete actions, the network may output logits or probabilities over actions. For continuous actions, it may output the parameters of a probability distribution, such as a Gaussian mean and variance.</p>
 <p>The training signal then comes from log-probabilities of sampled actions multiplied by returns, advantages, or related estimates.</p>
@@ -366,8 +439,65 @@ J(\theta)
 <p>It records action log-probabilities during an episode, computes discounted returns afterward, and then performs a return-weighted policy update. That example is intentionally kept as the simplest policy-gradient reference in the codebase.</p>
 <p>That role should be read carefully. <code>reinforce_cartpole.py</code> is not presented here as the strongest maintained policy optimization baseline in the project. It is presented as the clearest local implementation of the policy-gradient idea itself. If the question is “what does a return-weighted log-probability update look like in code?”, this is the right file to read first.</p>
 </section>
-<section id="strengths-of-policy-gradient-methods" class="level2" data-number="9.8">
-<h2 data-number="9.8" class="anchored" data-anchor-id="strengths-of-policy-gradient-methods"><span class="header-section-number">9.8</span> Strengths of Policy Gradient Methods</h2>
+<section id="a-beginner-walkthrough-of-the-reinforce-code" class="level2" data-number="10.9">
+<h2 data-number="10.9" class="anchored" data-anchor-id="a-beginner-walkthrough-of-the-reinforce-code"><span class="header-section-number">10.9</span> A Beginner Walkthrough of the REINFORCE Code</h2>
+<p>If you open <code>examples/deep_rl/reinforce_cartpole.py</code>, it helps to read it in three passes.</p>
+<section id="pass-1-what-does-the-policy-network-output" class="level3" data-number="10.9.1">
+<h3 data-number="10.9.1" class="anchored" data-anchor-id="pass-1-what-does-the-policy-network-output"><span class="header-section-number">10.9.1</span> Pass 1: What does the policy network output?</h3>
+<p>The network outputs action scores for a distribution, not state values and not Q-values.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>logits <span class="op">=</span> policy(to_tensor(state, device<span class="op">=</span>device).unsqueeze(<span class="dv">0</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>distribution <span class="op">=</span> torch.distributions.Categorical(logits<span class="op">=</span>logits)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>action <span class="op">=</span> distribution.sample()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The key beginner idea is:</p>
+<ol type="1">
+<li>the policy produces a distribution over actions,</li>
+<li>an action is sampled from that distribution,</li>
+<li>the sampled action is part of the training signal later.</li>
+</ol>
+<p>This is why stochasticity is built into the method rather than bolted on through <span class="math inline">\(\epsilon\)</span>-greedy exploration.</p>
+</section>
+<section id="pass-2-what-gets-saved-during-the-episode" class="level3" data-number="10.9.2">
+<h3 data-number="10.9.2" class="anchored" data-anchor-id="pass-2-what-gets-saved-during-the-episode"><span class="header-section-number">10.9.2</span> Pass 2: What gets saved during the episode?</h3>
+<p>During each episode, the script stores:</p>
+<ol type="1">
+<li><code>log_probs</code>, which remember how probable the chosen actions were under the current policy,</li>
+<li><code>entropies</code>, which encourage some exploration,</li>
+<li><code>rewards</code>, which are later turned into returns.</li>
+</ol>
+<p>That is already the whole teaching skeleton of REINFORCE. The algorithm needs to remember what it did and how the episode turned out.</p>
+</section>
+<section id="pass-3-where-is-the-actual-policy-gradient-update" class="level3" data-number="10.9.3">
+<h3 data-number="10.9.3" class="anchored" data-anchor-id="pass-3-where-is-the-actual-policy-gradient-update"><span class="header-section-number">10.9.3</span> Pass 3: Where is the actual policy-gradient update?</h3>
+<p>The central code appears after the episode ends:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>return_tensor <span class="op">=</span> to_tensor(discounted_returns(rewards, config.gamma), device<span class="op">=</span>device)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>policy_loss <span class="op">=</span> torch.stack([<span class="op">-</span>log_prob <span class="op">*</span> ret <span class="cf">for</span> log_prob, ret <span class="kw">in</span> <span class="bu">zip</span>(log_probs, return_tensor)]).<span class="bu">sum</span>()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> policy_loss <span class="op">-</span> config.entropy_weight <span class="op">*</span> entropy_bonus</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is the code version of the chapter update rule.</p>
+<ol type="1">
+<li><code>discounted_returns(...)</code> computes how good each time step turned out in the end.</li>
+<li><code>-log_prob * ret</code> says: actions followed by higher return should become more likely.</li>
+<li>summing over the episode turns many sampled decisions into one policy update.</li>
+</ol>
+<p>If a reader understands those three lines, they already understand the heart of REINFORCE.</p>
+</section>
+</section>
+<section id="common-beginner-confusions-about-policy-gradients" class="level2" data-number="10.10">
+<h2 data-number="10.10" class="anchored" data-anchor-id="common-beginner-confusions-about-policy-gradients"><span class="header-section-number">10.10</span> Common Beginner Confusions About Policy Gradients</h2>
+<section id="if-there-is-no-q-table-or-q-network-how-does-the-agent-know-which-action-is-good" class="level3" data-number="10.10.1">
+<h3 data-number="10.10.1" class="anchored" data-anchor-id="if-there-is-no-q-table-or-q-network-how-does-the-agent-know-which-action-is-good"><span class="header-section-number">10.10.1</span> “If there is no Q-table or Q-network, how does the agent know which action is good?”</h3>
+<p>It does not know in the value-estimation sense used by Q-learning. Instead, it shifts the policy toward actions that were followed by better returns. The learning signal is retrospective: the episode tells the policy which sampled choices should become more or less probable.</p>
+</section>
+<section id="why-do-we-wait-until-the-end-of-the-episode-in-reinforce" class="level3" data-number="10.10.2">
+<h3 data-number="10.10.2" class="anchored" data-anchor-id="why-do-we-wait-until-the-end-of-the-episode-in-reinforce"><span class="header-section-number">10.10.2</span> “Why do we wait until the end of the episode in REINFORCE?”</h3>
+<p>Because basic REINFORCE uses Monte Carlo returns. It waits for the realized rewards and then computes discounted returns from the full trajectory. That is simple conceptually, but it also creates high-variance updates.</p>
+</section>
+<section id="why-does-this-feel-less-direct-than-dqn-even-though-the-code-is-short" class="level3" data-number="10.10.3">
+<h3 data-number="10.10.3" class="anchored" data-anchor-id="why-does-this-feel-less-direct-than-dqn-even-though-the-code-is-short"><span class="header-section-number">10.10.3</span> “Why does this feel less direct than DQN even though the code is short?”</h3>
+<p>Because value-based methods give a very concrete object to stare at: the predicted value of each action. Policy gradients instead optimize probabilities through sampled outcomes, which is statistically elegant but often less intuitive at first glance.</p>
+</section>
+</section>
+<section id="strengths-of-policy-gradient-methods" class="level2" data-number="10.11">
+<h2 data-number="10.11" class="anchored" data-anchor-id="strengths-of-policy-gradient-methods"><span class="header-section-number">10.11</span> Strengths of Policy Gradient Methods</h2>
 <p>Policy gradient methods have several important strengths.</p>
 <p>First, they support stochastic policies naturally.</p>
 <p>Second, they handle continuous action spaces more gracefully than max-based value methods.</p>
@@ -382,8 +512,8 @@ J(\theta)
 </ol>
 <p>For policy gradients in this project, REINFORCE mainly serves the first role.</p>
 </section>
-<section id="weaknesses-of-pure-policy-gradients" class="level2" data-number="9.9">
-<h2 data-number="9.9" class="anchored" data-anchor-id="weaknesses-of-pure-policy-gradients"><span class="header-section-number">9.9</span> Weaknesses of Pure Policy Gradients</h2>
+<section id="weaknesses-of-pure-policy-gradients" class="level2" data-number="10.12">
+<h2 data-number="10.12" class="anchored" data-anchor-id="weaknesses-of-pure-policy-gradients"><span class="header-section-number">10.12</span> Weaknesses of Pure Policy Gradients</h2>
 <p>At the same time, pure policy gradient methods also have clear weaknesses.</p>
 <ol type="1">
 <li>Gradient estimates can have high variance.</li>
@@ -395,8 +525,8 @@ J(\theta)
 <p>Combine policy learning with value estimation.</p>
 <p>That hybrid approach leads to actor-critic methods.</p>
 </section>
-<section id="why-policy-gradients-matter" class="level2" data-number="9.10">
-<h2 data-number="9.10" class="anchored" data-anchor-id="why-policy-gradients-matter"><span class="header-section-number">9.10</span> Why Policy Gradients Matter</h2>
+<section id="why-policy-gradients-matter" class="level2" data-number="10.13">
+<h2 data-number="10.13" class="anchored" data-anchor-id="why-policy-gradients-matter"><span class="header-section-number">10.13</span> Why Policy Gradients Matter</h2>
 <p>Policy gradients matter because they expand the reinforcement learning toolbox beyond greedy value maximization. They show that decision-making policies can be parameterized and optimized directly, which becomes especially important in continuous control and large-scale deep reinforcement learning.</p>
 <p>They also introduce several ideas that will remain central:</p>
 <ol type="1">
@@ -814,12 +944,12 @@ J(\theta)
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../chapters/part2-dqn.html" class="pagination-link" aria-label="Deep Q-Networks">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../chapters/part2-actor-critic.html" class="pagination-link" aria-label="Actor-Critic Methods">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

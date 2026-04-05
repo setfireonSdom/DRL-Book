@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8&nbsp; Deep Q-Networks – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
+<title>9&nbsp; Deep Q-Networks – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -112,7 +147,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part2-dqn.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part2-dqn.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -159,62 +194,68 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/part1-bandits.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multi-Armed Bandits</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/part1-mdp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-dp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-mc-td.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-function-approx.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-dqn.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-policy-gradient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-actor-critic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part3-practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -233,16 +274,29 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#from-q-learning-to-dqn" id="toc-from-q-learning-to-dqn" class="nav-link active" data-scroll-target="#from-q-learning-to-dqn"><span class="header-section-number">8.1</span> From Q-Learning to DQN</a></li>
-  <li><a href="#why-naive-deep-q-learning-is-unstable" id="toc-why-naive-deep-q-learning-is-unstable" class="nav-link" data-scroll-target="#why-naive-deep-q-learning-is-unstable"><span class="header-section-number">8.2</span> Why Naive Deep Q-Learning Is Unstable</a></li>
-  <li><a href="#experience-replay" id="toc-experience-replay" class="nav-link" data-scroll-target="#experience-replay"><span class="header-section-number">8.3</span> Experience Replay</a></li>
-  <li><a href="#target-networks" id="toc-target-networks" class="nav-link" data-scroll-target="#target-networks"><span class="header-section-number">8.4</span> Target Networks</a></li>
-  <li><a href="#the-dqn-training-loop" id="toc-the-dqn-training-loop" class="nav-link" data-scroll-target="#the-dqn-training-loop"><span class="header-section-number">8.5</span> The DQN Training Loop</a></li>
-  <li><a href="#input-representation-and-atari" id="toc-input-representation-and-atari" class="nav-link" data-scroll-target="#input-representation-and-atari"><span class="header-section-number">8.6</span> Input Representation and Atari</a></li>
-  <li><a href="#what-old-dqn-code-still-teaches" id="toc-what-old-dqn-code-still-teaches" class="nav-link" data-scroll-target="#what-old-dqn-code-still-teaches"><span class="header-section-number">8.7</span> What Old DQN Code Still Teaches</a></li>
-  <li><a href="#main-weaknesses-of-basic-dqn" id="toc-main-weaknesses-of-basic-dqn" class="nav-link" data-scroll-target="#main-weaknesses-of-basic-dqn"><span class="header-section-number">8.8</span> Main Weaknesses of Basic DQN</a></li>
-  <li><a href="#beyond-basic-dqn" id="toc-beyond-basic-dqn" class="nav-link" data-scroll-target="#beyond-basic-dqn"><span class="header-section-number">8.9</span> Beyond Basic DQN</a></li>
-  <li><a href="#why-dqn-still-matters" id="toc-why-dqn-still-matters" class="nav-link" data-scroll-target="#why-dqn-still-matters"><span class="header-section-number">8.10</span> Why DQN Still Matters</a></li>
+  <li><a href="#from-q-learning-to-dqn" id="toc-from-q-learning-to-dqn" class="nav-link active" data-scroll-target="#from-q-learning-to-dqn"><span class="header-section-number">9.1</span> From Q-Learning to DQN</a></li>
+  <li><a href="#why-naive-deep-q-learning-is-unstable" id="toc-why-naive-deep-q-learning-is-unstable" class="nav-link" data-scroll-target="#why-naive-deep-q-learning-is-unstable"><span class="header-section-number">9.2</span> Why Naive Deep Q-Learning Is Unstable</a></li>
+  <li><a href="#experience-replay" id="toc-experience-replay" class="nav-link" data-scroll-target="#experience-replay"><span class="header-section-number">9.3</span> Experience Replay</a></li>
+  <li><a href="#target-networks" id="toc-target-networks" class="nav-link" data-scroll-target="#target-networks"><span class="header-section-number">9.4</span> Target Networks</a></li>
+  <li><a href="#the-dqn-training-loop" id="toc-the-dqn-training-loop" class="nav-link" data-scroll-target="#the-dqn-training-loop"><span class="header-section-number">9.5</span> The DQN Training Loop</a></li>
+  <li><a href="#a-beginner-walkthrough-of-the-actual-code" id="toc-a-beginner-walkthrough-of-the-actual-code" class="nav-link" data-scroll-target="#a-beginner-walkthrough-of-the-actual-code"><span class="header-section-number">9.6</span> A Beginner Walkthrough of the Actual Code</a>
+  <ul class="collapse">
+  <li><a href="#pass-1-what-is-being-stored" id="toc-pass-1-what-is-being-stored" class="nav-link" data-scroll-target="#pass-1-what-is-being-stored"><span class="header-section-number">9.6.1</span> Pass 1: What is being stored?</a></li>
+  <li><a href="#pass-2-what-is-the-model-predicting" id="toc-pass-2-what-is-the-model-predicting" class="nav-link" data-scroll-target="#pass-2-what-is-the-model-predicting"><span class="header-section-number">9.6.2</span> Pass 2: What is the model predicting?</a></li>
+  <li><a href="#pass-3-where-is-the-bellman-target" id="toc-pass-3-where-is-the-bellman-target" class="nav-link" data-scroll-target="#pass-3-where-is-the-bellman-target"><span class="header-section-number">9.6.3</span> Pass 3: Where is the Bellman target?</a></li>
+  <li><a href="#pass-4-where-is-the-learning-loop" id="toc-pass-4-where-is-the-learning-loop" class="nav-link" data-scroll-target="#pass-4-where-is-the-learning-loop"><span class="header-section-number">9.6.4</span> Pass 4: Where is the learning loop?</a></li>
+  </ul></li>
+  <li><a href="#common-beginner-confusions-about-dqn" id="toc-common-beginner-confusions-about-dqn" class="nav-link" data-scroll-target="#common-beginner-confusions-about-dqn"><span class="header-section-number">9.7</span> Common Beginner Confusions About DQN</a>
+  <ul class="collapse">
+  <li><a href="#if-the-network-outputs-an-action-why-do-we-still-need-epsilon-greedy" id="toc-if-the-network-outputs-an-action-why-do-we-still-need-epsilon-greedy" class="nav-link" data-scroll-target="#if-the-network-outputs-an-action-why-do-we-still-need-epsilon-greedy"><span class="header-section-number">9.7.1</span> “If the network outputs an action, why do we still need epsilon-greedy?”</a></li>
+  <li><a href="#why-do-we-need-two-networks-if-they-have-the-same-architecture" id="toc-why-do-we-need-two-networks-if-they-have-the-same-architecture" class="nav-link" data-scroll-target="#why-do-we-need-two-networks-if-they-have-the-same-architecture"><span class="header-section-number">9.7.2</span> “Why do we need two networks if they have the same architecture?”</a></li>
+  <li><a href="#why-does-dqn-feel-much-harder-than-tabular-q-learning-even-though-the-formula-looks-similar" id="toc-why-does-dqn-feel-much-harder-than-tabular-q-learning-even-though-the-formula-looks-similar" class="nav-link" data-scroll-target="#why-does-dqn-feel-much-harder-than-tabular-q-learning-even-though-the-formula-looks-similar"><span class="header-section-number">9.7.3</span> “Why does DQN feel much harder than tabular Q-learning even though the formula looks similar?”</a></li>
+  </ul></li>
+  <li><a href="#input-representation-and-atari" id="toc-input-representation-and-atari" class="nav-link" data-scroll-target="#input-representation-and-atari"><span class="header-section-number">9.8</span> Input Representation and Atari</a></li>
+  <li><a href="#what-old-dqn-code-still-teaches" id="toc-what-old-dqn-code-still-teaches" class="nav-link" data-scroll-target="#what-old-dqn-code-still-teaches"><span class="header-section-number">9.9</span> What Old DQN Code Still Teaches</a></li>
+  <li><a href="#main-weaknesses-of-basic-dqn" id="toc-main-weaknesses-of-basic-dqn" class="nav-link" data-scroll-target="#main-weaknesses-of-basic-dqn"><span class="header-section-number">9.10</span> Main Weaknesses of Basic DQN</a></li>
+  <li><a href="#beyond-basic-dqn" id="toc-beyond-basic-dqn" class="nav-link" data-scroll-target="#beyond-basic-dqn"><span class="header-section-number">9.11</span> Beyond Basic DQN</a></li>
+  <li><a href="#why-dqn-still-matters" id="toc-why-dqn-still-matters" class="nav-link" data-scroll-target="#why-dqn-still-matters"><span class="header-section-number">9.12</span> Why DQN Still Matters</a></li>
   </ul>
 </nav>
     </div>
@@ -251,7 +305,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></h1>
 </div>
 
 
@@ -271,8 +325,8 @@ window.Quarto = {
 <p>Deep Q-Networks, usually abbreviated <strong>DQN</strong>, mark one of the most influential turning points in reinforcement learning. The core idea is easy to state:</p>
 <p>Use a neural network to approximate the Q-function in a Q-learning-style algorithm.</p>
 <p>The reason this mattered is that tabular Q-learning cannot handle raw, high-dimensional observations such as images. DQN showed that with the right stabilizing techniques, value-based reinforcement learning could scale far beyond small tabular environments.</p>
-<section id="from-q-learning-to-dqn" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="from-q-learning-to-dqn"><span class="header-section-number">8.1</span> From Q-Learning to DQN</h2>
+<section id="from-q-learning-to-dqn" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="from-q-learning-to-dqn"><span class="header-section-number">9.1</span> From Q-Learning to DQN</h2>
 <p>Recall the tabular Q-learning update:</p>
 <p><span class="math display">\[
 Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \left[R_{t+1} + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t)\right]
@@ -294,8 +348,8 @@ y_t = R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a'; \theta^-)
 \]</span></p>
 <p>This looks close to supervised learning, but the similarity is misleading. In supervised learning, targets are usually fixed labels from a dataset. In DQN, the targets are themselves generated from the agent’s evolving estimates.</p>
 </section>
-<section id="why-naive-deep-q-learning-is-unstable" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="why-naive-deep-q-learning-is-unstable"><span class="header-section-number">8.2</span> Why Naive Deep Q-Learning Is Unstable</h2>
+<section id="why-naive-deep-q-learning-is-unstable" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="why-naive-deep-q-learning-is-unstable"><span class="header-section-number">9.2</span> Why Naive Deep Q-Learning Is Unstable</h2>
 <p>If we simply plug a neural network into Q-learning, training can become highly unstable.</p>
 <p>There are several reasons:</p>
 <ol type="1">
@@ -307,8 +361,8 @@ y_t = R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a'; \theta^-)
 <p>This creates a feedback loop. The network predicts values, those predictions define the targets, and those targets immediately reshape the network again. Without extra care, the process can oscillate or diverge.</p>
 <p>That is why DQN should be understood not only as a neural version of Q-learning, but as a stabilization package for deep value learning.</p>
 </section>
-<section id="experience-replay" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="experience-replay"><span class="header-section-number">8.3</span> Experience Replay</h2>
+<section id="experience-replay" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="experience-replay"><span class="header-section-number">9.3</span> Experience Replay</h2>
 <p>One of the most important DQN ideas is the <strong>replay buffer</strong>.</p>
 <p>Instead of updating the network only from the newest transition, the agent stores transitions such as:</p>
 <p><span class="math display">\[
@@ -324,8 +378,8 @@ y_t = R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a'; \theta^-)
 <p>Replay turns reinforcement learning into something closer to stochastic optimization over a growing dataset. That shift is one reason deep value learning became much more workable.</p>
 <p>Historically, even simple replay buffer implementations already showed the basic advantage. Modern systems may add prioritized sampling, larger buffers, or more careful data management, but the fundamental insight remains the same.</p>
 </section>
-<section id="target-networks" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="target-networks"><span class="header-section-number">8.4</span> Target Networks</h2>
+<section id="target-networks" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="target-networks"><span class="header-section-number">9.4</span> Target Networks</h2>
 <p>The second major stabilization idea is the <strong>target network</strong>.</p>
 <p>If the same parameters are used both to predict the current Q-value and to compute the target, then the optimization target changes too quickly. The system is trying to chase its own moving predictions.</p>
 <p>DQN reduces this problem by maintaining a second set of parameters, often written as <span class="math inline">\(\theta^-\)</span>, which are copied from the main network only periodically or updated more slowly.</p>
@@ -336,8 +390,8 @@ y_t = R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a'; \theta^-)
 <p>This simple idea makes a large practical difference. The target becomes more stable, which improves learning behavior.</p>
 <p>Older implementations often copy the target network every fixed number of steps. Many modern methods still use that basic pattern, though details vary by algorithm and codebase.</p>
 </section>
-<section id="the-dqn-training-loop" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="the-dqn-training-loop"><span class="header-section-number">8.5</span> The DQN Training Loop</h2>
+<section id="the-dqn-training-loop" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="the-dqn-training-loop"><span class="header-section-number">9.5</span> The DQN Training Loop</h2>
 <p>At a high level, DQN training follows a repeated loop:</p>
 <ol type="1">
 <li>Observe the current state.</li>
@@ -364,14 +418,103 @@ y_t = R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a'; \theta^-)
 </ol>
 <p>This chapter is easier to internalize if you treat those names as the executable version of the pseudocode.</p>
 </section>
-<section id="input-representation-and-atari" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="input-representation-and-atari"><span class="header-section-number">8.6</span> Input Representation and Atari</h2>
+<section id="a-beginner-walkthrough-of-the-actual-code" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="a-beginner-walkthrough-of-the-actual-code"><span class="header-section-number">9.6</span> A Beginner Walkthrough of the Actual Code</h2>
+<p>If you are reading DQN for the first time, do not start by trying to understand the whole file at once. Read <code>examples/deep_rl/dqn_cartpole.py</code> in four passes.</p>
+<section id="pass-1-what-is-being-stored" class="level3" data-number="9.6.1">
+<h3 data-number="9.6.1" class="anchored" data-anchor-id="pass-1-what-is-being-stored"><span class="header-section-number">9.6.1</span> Pass 1: What is being stored?</h3>
+<p>First find <code>ReplayBuffer</code>. Its entire job is to keep past transitions so training does not depend only on the newest step.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ReplayBuffer:</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> add(<span class="va">self</span>, state, action, reward, next_state, done):</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">buffer</span>.append((state, action, reward, next_state, done))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> sample(<span class="va">self</span>, batch_size):</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        batch <span class="op">=</span> random.sample(<span class="va">self</span>.<span class="bu">buffer</span>, batch_size)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        states, actions, rewards, next_states, dones <span class="op">=</span> <span class="bu">map</span>(np.array, <span class="bu">zip</span>(<span class="op">*</span>batch))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> states, actions, rewards, next_states, dones</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The important beginner point is not the container type. The important point is that DQN learns from sampled old experience rather than only from the most recent transition.</p>
+</section>
+<section id="pass-2-what-is-the-model-predicting" class="level3" data-number="9.6.2">
+<h3 data-number="9.6.2" class="anchored" data-anchor-id="pass-2-what-is-the-model-predicting"><span class="header-section-number">9.6.2</span> Pass 2: What is the model predicting?</h3>
+<p>Then find <code>QNetwork</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> QNetwork(nn.Module):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, observation_dim, action_dim, hidden_dim):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.net <span class="op">=</span> nn.Sequential(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>            nn.Linear(observation_dim, hidden_dim),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            nn.Linear(hidden_dim, hidden_dim),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            nn.Linear(hidden_dim, action_dim),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For CartPole, the network takes a state vector and outputs one Q-value per action. That means the model is not asked “what is the next action?” It is asked:</p>
+<p>What are my current value estimates for each action in this state?</p>
+<p>That distinction matters. DQN is still a value-based method. The policy comes later from choosing the action with the largest predicted value.</p>
+</section>
+<section id="pass-3-where-is-the-bellman-target" class="level3" data-number="9.6.3">
+<h3 data-number="9.6.3" class="anchored" data-anchor-id="pass-3-where-is-the-bellman-target"><span class="header-section-number">9.6.3</span> Pass 3: Where is the Bellman target?</h3>
+<p>The heart of the algorithm is in <code>optimize(...)</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>current_q_values <span class="op">=</span> q_network(state_tensor).gather(<span class="dv">1</span>, action_tensor).squeeze(<span class="dv">1</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    next_q_values <span class="op">=</span> target_network(next_state_tensor).<span class="bu">max</span>(dim<span class="op">=</span><span class="dv">1</span>).values</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    targets <span class="op">=</span> reward_tensor <span class="op">+</span> config.gamma <span class="op">*</span> (<span class="fl">1.0</span> <span class="op">-</span> done_tensor) <span class="op">*</span> next_q_values</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is the place where the chapter equation becomes code.</p>
+<ol type="1">
+<li><code>q_network(state_tensor)</code> predicts values for all actions now.</li>
+<li><code>.gather(...)</code> picks the value of the action that was actually taken.</li>
+<li><code>target_network(next_state_tensor).max(...)</code> estimates the best next action value.</li>
+<li><code>reward + gamma * next_value</code> builds the bootstrap target.</li>
+</ol>
+<p>If a beginner understands only those four lines, the core of DQN is already in view.</p>
+</section>
+<section id="pass-4-where-is-the-learning-loop" class="level3" data-number="9.6.4">
+<h3 data-number="9.6.4" class="anchored" data-anchor-id="pass-4-where-is-the-learning-loop"><span class="header-section-number">9.6.4</span> Pass 4: Where is the learning loop?</h3>
+<p>Finally look at <code>train_dqn_cartpole(...)</code>. Inside the main loop, the file does the same cycle repeatedly:</p>
+<ol type="1">
+<li>choose an action with <code>epsilon</code>-greedy behavior,</li>
+<li>step the environment,</li>
+<li>store the transition,</li>
+<li>run <code>optimize(...)</code>,</li>
+<li>periodically copy parameters into the target network.</li>
+</ol>
+<p>That is the operational meaning of DQN. Everything else in the file supports one of those steps.</p>
+</section>
+</section>
+<section id="common-beginner-confusions-about-dqn" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="common-beginner-confusions-about-dqn"><span class="header-section-number">9.7</span> Common Beginner Confusions About DQN</h2>
+<p>Several confusions are especially common here, so it helps to answer them directly.</p>
+<section id="if-the-network-outputs-an-action-why-do-we-still-need-epsilon-greedy" class="level3" data-number="9.7.1">
+<h3 data-number="9.7.1" class="anchored" data-anchor-id="if-the-network-outputs-an-action-why-do-we-still-need-epsilon-greedy"><span class="header-section-number">9.7.1</span> “If the network outputs an action, why do we still need epsilon-greedy?”</h3>
+<p>The network does not output an action. It outputs estimated values for actions. The agent still needs a behavior rule for choosing actions during training. In this implementation, that rule is <span class="math inline">\(\epsilon\)</span>-greedy: usually choose the current best-looking action, but sometimes explore.</p>
+</section>
+<section id="why-do-we-need-two-networks-if-they-have-the-same-architecture" class="level3" data-number="9.7.2">
+<h3 data-number="9.7.2" class="anchored" data-anchor-id="why-do-we-need-two-networks-if-they-have-the-same-architecture"><span class="header-section-number">9.7.2</span> “Why do we need two networks if they have the same architecture?”</h3>
+<p>Because they play different roles.</p>
+<ol type="1">
+<li>The online network is the one being updated right now.</li>
+<li>The target network is a slower-moving reference used to build the target.</li>
+</ol>
+<p>The point is not architectural diversity. The point is target stability.</p>
+</section>
+<section id="why-does-dqn-feel-much-harder-than-tabular-q-learning-even-though-the-formula-looks-similar" class="level3" data-number="9.7.3">
+<h3 data-number="9.7.3" class="anchored" data-anchor-id="why-does-dqn-feel-much-harder-than-tabular-q-learning-even-though-the-formula-looks-similar"><span class="header-section-number">9.7.3</span> “Why does DQN feel much harder than tabular Q-learning even though the formula looks similar?”</h3>
+<p>Because the hard part is no longer only the formula. The hard part is the interaction among:</p>
+<ol type="1">
+<li>bootstrapping,</li>
+<li>off-policy learning,</li>
+<li>shared function approximation.</li>
+</ol>
+<p>In tabular Q-learning, that interaction is much easier to survive. In deep RL, it can destabilize training quickly.</p>
+</section>
+</section>
+<section id="input-representation-and-atari" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="input-representation-and-atari"><span class="header-section-number">9.8</span> Input Representation and Atari</h2>
 <p>DQN became famous because of its Atari results. In that setting, the network processed stacks of image frames rather than low-dimensional hand-crafted state features.</p>
 <p>That achievement is historically important because it demonstrated end-to-end value learning from high-dimensional sensory input. The network did not rely on a manually designed state table. It learned directly from a representation much closer to raw observation.</p>
 <p>At the same time, it is important not to mythologize the result too much. DQN also depended on careful preprocessing, frame stacking, reward clipping, and other design choices. In reinforcement learning, seemingly small implementation decisions often matter a great deal.</p>
 </section>
-<section id="what-old-dqn-code-still-teaches" class="level2" data-number="8.7">
-<h2 data-number="8.7" class="anchored" data-anchor-id="what-old-dqn-code-still-teaches"><span class="header-section-number">8.7</span> What Old DQN Code Still Teaches</h2>
+<section id="what-old-dqn-code-still-teaches" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="what-old-dqn-code-still-teaches"><span class="header-section-number">9.9</span> What Old DQN Code Still Teaches</h2>
 <p>Older DQN implementations often use TensorFlow 1.x and earlier Gym APIs. As software artifacts, they are dated, but they still teach several enduring lessons:</p>
 <ol type="1">
 <li>The Q-network predicts one value per action.</li>
@@ -396,8 +539,8 @@ y_t = R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a'; \theta^-)
 <li>The last one is intentionally described as “Rainbow-ish” rather than full Rainbow, because it combines several ideas without claiming to be a complete reproduction of the full Rainbow recipe.</li>
 </ol>
 </section>
-<section id="main-weaknesses-of-basic-dqn" class="level2" data-number="8.8">
-<h2 data-number="8.8" class="anchored" data-anchor-id="main-weaknesses-of-basic-dqn"><span class="header-section-number">8.8</span> Main Weaknesses of Basic DQN</h2>
+<section id="main-weaknesses-of-basic-dqn" class="level2" data-number="9.10">
+<h2 data-number="9.10" class="anchored" data-anchor-id="main-weaknesses-of-basic-dqn"><span class="header-section-number">9.10</span> Main Weaknesses of Basic DQN</h2>
 <p>Basic DQN was a breakthrough, but it has important limitations.</p>
 <p>First, it is mainly designed for discrete action spaces. The max over actions is manageable when the action set is small, but it becomes difficult in continuous control.</p>
 <p>Second, it can overestimate action values because the same estimates are used inside a max operator. This issue motivated later methods such as Double DQN.</p>
@@ -405,8 +548,8 @@ y_t = R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a'; \theta^-)
 <p>Fourth, DQN is sample-hungry. Learning strong behavior can require many environment interactions.</p>
 <p>These limitations do not make DQN unimportant. On the contrary, they explain why so much later research built directly on it.</p>
 </section>
-<section id="beyond-basic-dqn" class="level2" data-number="8.9">
-<h2 data-number="8.9" class="anchored" data-anchor-id="beyond-basic-dqn"><span class="header-section-number">8.9</span> Beyond Basic DQN</h2>
+<section id="beyond-basic-dqn" class="level2" data-number="9.11">
+<h2 data-number="9.11" class="anchored" data-anchor-id="beyond-basic-dqn"><span class="header-section-number">9.11</span> Beyond Basic DQN</h2>
 <p>Several influential methods can be understood as refinements of DQN:</p>
 <ol type="1">
 <li><strong>Double DQN</strong> reduces overestimation bias.</li>
@@ -426,8 +569,8 @@ y_t = R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a'; \theta^-)
 <p>That pairing is useful because it makes the target-construction difference concrete. Basic DQN uses the target network both to select and evaluate the next greedy action. Double DQN instead uses the online network to choose the next action and the target network to evaluate that chosen action.</p>
 <p>The broader family is also useful pedagogically because it shows how modern value-based reinforcement learning usually evolves in practice. Rarely does a project jump directly from tabular Q-learning to a fully elaborate agent. More often, it accumulates stabilizing ingredients one by one: first replay and target networks, then improved targets, then architectural changes, then improved sampling schemes.</p>
 </section>
-<section id="why-dqn-still-matters" class="level2" data-number="8.10">
-<h2 data-number="8.10" class="anchored" data-anchor-id="why-dqn-still-matters"><span class="header-section-number">8.10</span> Why DQN Still Matters</h2>
+<section id="why-dqn-still-matters" class="level2" data-number="9.12">
+<h2 data-number="9.12" class="anchored" data-anchor-id="why-dqn-still-matters"><span class="header-section-number">9.12</span> Why DQN Still Matters</h2>
 <p>DQN still matters for at least three reasons.</p>
 <p>First, it is the clearest bridge from classical Q-learning to modern deep reinforcement learning.</p>
 <p>Second, it illustrates the practical consequences of the deadly triad: bootstrapping, off-policy learning, and function approximation. The replay buffer and target network are direct responses to those problems.</p>
@@ -842,12 +985,12 @@ y_t = R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a'; \theta^-)
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../chapters/part2-function-approx.html" class="pagination-link" aria-label="From Tabular Methods to Function Approximation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../chapters/part2-policy-gradient.html" class="pagination-link" aria-label="Policy Gradient Methods">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

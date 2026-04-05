@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Monte Carlo Methods and Temporal-Difference Learning – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
+<title>6&nbsp; Monte Carlo Methods and Temporal-Difference Learning – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -112,7 +147,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part1-mc-td.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part1-mc-td.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -159,62 +194,68 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/part1-bandits.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multi-Armed Bandits</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/part1-mdp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-dp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-mc-td.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part1-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-function-approx.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-dqn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-policy-gradient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-actor-critic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part2-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/part3-practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -233,15 +274,21 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#monte-carlo-methods" id="toc-monte-carlo-methods" class="nav-link active" data-scroll-target="#monte-carlo-methods"><span class="header-section-number">5.1</span> Monte Carlo Methods</a></li>
-  <li><a href="#first-visit-and-every-visit-monte-carlo" id="toc-first-visit-and-every-visit-monte-carlo" class="nav-link" data-scroll-target="#first-visit-and-every-visit-monte-carlo"><span class="header-section-number">5.2</span> First-Visit and Every-Visit Monte Carlo</a></li>
-  <li><a href="#strengths-and-weaknesses-of-monte-carlo-learning" id="toc-strengths-and-weaknesses-of-monte-carlo-learning" class="nav-link" data-scroll-target="#strengths-and-weaknesses-of-monte-carlo-learning"><span class="header-section-number">5.3</span> Strengths and Weaknesses of Monte Carlo Learning</a></li>
-  <li><a href="#temporal-difference-learning" id="toc-temporal-difference-learning" class="nav-link" data-scroll-target="#temporal-difference-learning"><span class="header-section-number">5.4</span> Temporal-Difference Learning</a></li>
-  <li><a href="#the-td-error" id="toc-the-td-error" class="nav-link" data-scroll-target="#the-td-error"><span class="header-section-number">5.5</span> The TD Error</a></li>
-  <li><a href="#monte-carlo-vs.-temporal-difference-learning" id="toc-monte-carlo-vs.-temporal-difference-learning" class="nav-link" data-scroll-target="#monte-carlo-vs.-temporal-difference-learning"><span class="header-section-number">5.6</span> Monte Carlo vs.&nbsp;Temporal-Difference Learning</a></li>
-  <li><a href="#bootstrapping-as-a-core-idea" id="toc-bootstrapping-as-a-core-idea" class="nav-link" data-scroll-target="#bootstrapping-as-a-core-idea"><span class="header-section-number">5.7</span> Bootstrapping as a Core Idea</a></li>
-  <li><a href="#eligibility-traces-and-the-space-between-mc-and-td" id="toc-eligibility-traces-and-the-space-between-mc-and-td" class="nav-link" data-scroll-target="#eligibility-traces-and-the-space-between-mc-and-td"><span class="header-section-number">5.8</span> Eligibility Traces and the Space Between MC and TD</a></li>
-  <li><a href="#from-prediction-to-control" id="toc-from-prediction-to-control" class="nav-link" data-scroll-target="#from-prediction-to-control"><span class="header-section-number">5.9</span> From Prediction to Control</a></li>
+  <li><a href="#monte-carlo-methods" id="toc-monte-carlo-methods" class="nav-link active" data-scroll-target="#monte-carlo-methods"><span class="header-section-number">6.1</span> Monte Carlo Methods</a></li>
+  <li><a href="#a-beginner-code-contrast-mc-vs.-td" id="toc-a-beginner-code-contrast-mc-vs.-td" class="nav-link" data-scroll-target="#a-beginner-code-contrast-mc-vs.-td"><span class="header-section-number">6.2</span> A Beginner Code Contrast: MC vs.&nbsp;TD</a></li>
+  <li><a href="#first-visit-and-every-visit-monte-carlo" id="toc-first-visit-and-every-visit-monte-carlo" class="nav-link" data-scroll-target="#first-visit-and-every-visit-monte-carlo"><span class="header-section-number">6.3</span> First-Visit and Every-Visit Monte Carlo</a></li>
+  <li><a href="#strengths-and-weaknesses-of-monte-carlo-learning" id="toc-strengths-and-weaknesses-of-monte-carlo-learning" class="nav-link" data-scroll-target="#strengths-and-weaknesses-of-monte-carlo-learning"><span class="header-section-number">6.4</span> Strengths and Weaknesses of Monte Carlo Learning</a></li>
+  <li><a href="#temporal-difference-learning" id="toc-temporal-difference-learning" class="nav-link" data-scroll-target="#temporal-difference-learning"><span class="header-section-number">6.5</span> Temporal-Difference Learning</a></li>
+  <li><a href="#the-td-error" id="toc-the-td-error" class="nav-link" data-scroll-target="#the-td-error"><span class="header-section-number">6.6</span> The TD Error</a></li>
+  <li><a href="#monte-carlo-vs.-temporal-difference-learning" id="toc-monte-carlo-vs.-temporal-difference-learning" class="nav-link" data-scroll-target="#monte-carlo-vs.-temporal-difference-learning"><span class="header-section-number">6.7</span> Monte Carlo vs.&nbsp;Temporal-Difference Learning</a></li>
+  <li><a href="#bootstrapping-as-a-core-idea" id="toc-bootstrapping-as-a-core-idea" class="nav-link" data-scroll-target="#bootstrapping-as-a-core-idea"><span class="header-section-number">6.8</span> Bootstrapping as a Core Idea</a></li>
+  <li><a href="#eligibility-traces-and-the-space-between-mc-and-td" id="toc-eligibility-traces-and-the-space-between-mc-and-td" class="nav-link" data-scroll-target="#eligibility-traces-and-the-space-between-mc-and-td"><span class="header-section-number">6.9</span> Eligibility Traces and the Space Between MC and TD</a></li>
+  <li><a href="#common-beginner-confusions-about-mc-and-td" id="toc-common-beginner-confusions-about-mc-and-td" class="nav-link" data-scroll-target="#common-beginner-confusions-about-mc-and-td"><span class="header-section-number">6.10</span> Common Beginner Confusions About MC and TD</a>
+  <ul class="collapse">
+  <li><a href="#is-monte-carlo-more-correct-because-it-uses-the-full-return" id="toc-is-monte-carlo-more-correct-because-it-uses-the-full-return" class="nav-link" data-scroll-target="#is-monte-carlo-more-correct-because-it-uses-the-full-return"><span class="header-section-number">6.10.1</span> “Is Monte Carlo more correct because it uses the full return?”</a></li>
+  <li><a href="#is-td-cheating-because-it-uses-its-own-estimate-in-the-target" id="toc-is-td-cheating-because-it-uses-its-own-estimate-in-the-target" class="nav-link" data-scroll-target="#is-td-cheating-because-it-uses-its-own-estimate-in-the-target"><span class="header-section-number">6.10.2</span> “Is TD cheating because it uses its own estimate in the target?”</a></li>
+  </ul></li>
+  <li><a href="#from-prediction-to-control" id="toc-from-prediction-to-control" class="nav-link" data-scroll-target="#from-prediction-to-control"><span class="header-section-number">6.11</span> From Prediction to Control</a></li>
   </ul>
 </nav>
     </div>
@@ -250,7 +297,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></h1>
 </div>
 
 
@@ -271,8 +318,8 @@ window.Quarto = {
 <p>Monte Carlo methods and temporal-difference learning answer the same broad question:</p>
 <p>How can an agent learn value estimates directly from sampled interaction?</p>
 <p>These two families of methods are fundamental. They show how reinforcement learning can move from planning with a known model to learning from data.</p>
-<section id="monte-carlo-methods" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="monte-carlo-methods"><span class="header-section-number">5.1</span> Monte Carlo Methods</h2>
+<section id="monte-carlo-methods" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="monte-carlo-methods"><span class="header-section-number">6.1</span> Monte Carlo Methods</h2>
 <p>Monte Carlo methods learn from complete episodes. The core idea is straightforward:</p>
 <ol type="1">
 <li>Run an episode.</li>
@@ -286,21 +333,43 @@ window.Quarto = {
 V(s) \leftarrow V(s) + \alpha \left(G_t - V(s)\right)
 \]</span></p>
 <p>This looks very similar to later update rules. The key difference lies in the target. In Monte Carlo learning, the target is a full sampled return.</p>
+<p>If you remember one thing from Monte Carlo learning, it is this:</p>
+<p>Wait for the whole story, then learn from the whole story.</p>
 <p>In the maintained code for this book, the cleanest tabular Monte Carlo reference is:</p>
 <ol type="1">
 <li><code>examples/tabular/monte_carlo_prediction.py</code></li>
 </ol>
 <p>The important thing to notice in that file is not just that it samples episodes. It also stores complete trajectories and then walks backward through them to compute returns. That backward pass makes the full-return target explicit in code.</p>
 </section>
-<section id="first-visit-and-every-visit-monte-carlo" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="first-visit-and-every-visit-monte-carlo"><span class="header-section-number">5.2</span> First-Visit and Every-Visit Monte Carlo</h2>
+<section id="a-beginner-code-contrast-mc-vs.-td" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="a-beginner-code-contrast-mc-vs.-td"><span class="header-section-number">6.2</span> A Beginner Code Contrast: MC vs.&nbsp;TD</h2>
+<p>This chapter becomes much easier once you stop treating Monte Carlo and TD as two unrelated names and instead compare their code shapes.</p>
+<p>In Monte Carlo prediction, the crucial pattern is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>states, rewards <span class="op">=</span> sample_episode(grid, policy, rng<span class="op">=</span>rng)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(states) <span class="op">-</span> <span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    return_so_far <span class="op">=</span> reward <span class="op">+</span> gamma <span class="op">*</span> return_so_far</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This tells the whole story:</p>
+<ol type="1">
+<li>collect an episode first,</li>
+<li>then walk backward,</li>
+<li>then build full returns.</li>
+</ol>
+<p>By contrast, TD(0) updates immediately after each transition:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>reward <span class="op">=</span> grid.move(action)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>next_state <span class="op">=</span> grid.current_state()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>values[state] <span class="op">+=</span> alpha <span class="op">*</span> (reward <span class="op">+</span> gamma <span class="op">*</span> values[next_state] <span class="op">-</span> values[state])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That is the chapter in miniature. Monte Carlo waits. TD updates now.</p>
+</section>
+<section id="first-visit-and-every-visit-monte-carlo" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="first-visit-and-every-visit-monte-carlo"><span class="header-section-number">6.3</span> First-Visit and Every-Visit Monte Carlo</h2>
 <p>There are different ways to count returns for a state within an episode.</p>
 <p>In <strong>first-visit Monte Carlo</strong>, only the first occurrence of a state in an episode is used for updating that state’s estimate. In <strong>every-visit Monte Carlo</strong>, every occurrence is used.</p>
 <p>Both approaches can work. The difference is mostly about how samples are collected and correlated. In practice, the main idea remains the same: use complete returns from actual trajectories.</p>
 <p>The maintained example currently uses a first-visit style update. In <code>run_first_visit_mc_prediction(...)</code>, the code checks whether the current state has already appeared earlier in the same episode before committing the update. That one implementation detail is the practical difference between first-visit and every-visit Monte Carlo.</p>
 </section>
-<section id="strengths-and-weaknesses-of-monte-carlo-learning" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="strengths-and-weaknesses-of-monte-carlo-learning"><span class="header-section-number">5.3</span> Strengths and Weaknesses of Monte Carlo Learning</h2>
+<section id="strengths-and-weaknesses-of-monte-carlo-learning" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="strengths-and-weaknesses-of-monte-carlo-learning"><span class="header-section-number">6.4</span> Strengths and Weaknesses of Monte Carlo Learning</h2>
 <p>Monte Carlo methods have several strengths:</p>
 <ol type="1">
 <li>They are conceptually simple.</li>
@@ -315,8 +384,8 @@ V(s) \leftarrow V(s) + \alpha \left(G_t - V(s)\right)
 </ol>
 <p>That high variance is important. If rewards are delayed or noisy, the complete return can fluctuate greatly from one episode to the next. This makes value estimation unstable or slow.</p>
 </section>
-<section id="temporal-difference-learning" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="temporal-difference-learning"><span class="header-section-number">5.4</span> Temporal-Difference Learning</h2>
+<section id="temporal-difference-learning" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="temporal-difference-learning"><span class="header-section-number">6.5</span> Temporal-Difference Learning</h2>
 <p>Temporal-difference learning, usually abbreviated <strong>TD learning</strong>, takes a different approach. Instead of waiting for the full return, it updates estimates using partially observed experience plus current value estimates.</p>
 <p>The simplest case is TD(0):</p>
 <p><span class="math display">\[
@@ -329,14 +398,16 @@ R_{t+1} + \gamma V(S_{t+1})
 <p>Rather than waiting until the end of the episode, TD learning says:</p>
 <p>Use the immediate reward plus the current estimate of the next state as a target right now.</p>
 <p>This idea is one of the deepest in reinforcement learning. The target is not a full observed outcome. It is part observation, part estimate.</p>
+<p>If Monte Carlo says “wait and see everything,” TD says:</p>
+<p>Learn immediately from the next step plus your current best guess.</p>
 <p>In the maintained code, the cleanest TD(0) example is:</p>
 <ol type="1">
 <li><code>examples/tabular/td0_prediction.py</code></li>
 </ol>
 <p>The key function is <code>run_td0_prediction(...)</code>. If you compare it with the Monte Carlo file, the contrast is instructive. The Monte Carlo script stores a whole episode and updates later. The TD script updates immediately after each transition. That single structural difference captures a large part of the conceptual gap between Monte Carlo and TD learning.</p>
 </section>
-<section id="the-td-error" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="the-td-error"><span class="header-section-number">5.5</span> The TD Error</h2>
+<section id="the-td-error" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="the-td-error"><span class="header-section-number">6.6</span> The TD Error</h2>
 <p>The quantity</p>
 <p><span class="math display">\[
 \delta_t = R_{t+1} + \gamma V(S_{t+1}) - V(S_t)
@@ -344,9 +415,11 @@ R_{t+1} + \gamma V(S_{t+1})
 <p>is called the <strong>temporal-difference error</strong>.</p>
 <p>It measures how surprising the transition was relative to the current value estimate. If the outcome was better than expected, the TD error is positive and the estimate should increase. If the outcome was worse than expected, the TD error is negative and the estimate should decrease.</p>
 <p>This error signal later becomes important far beyond basic prediction. Actor-critic methods use related ideas. Advantage estimation is closely connected to it. Many practical deep reinforcement learning algorithms still depend on TD-style targets.</p>
+<p>For beginners, this is an especially important checkpoint. If you can explain the TD error in words, a large part of later RL will become easier:</p>
+<p>It measures whether the observed outcome was better or worse than the current estimate expected.</p>
 </section>
-<section id="monte-carlo-vs.-temporal-difference-learning" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="monte-carlo-vs.-temporal-difference-learning"><span class="header-section-number">5.6</span> Monte Carlo vs.&nbsp;Temporal-Difference Learning</h2>
+<section id="monte-carlo-vs.-temporal-difference-learning" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="monte-carlo-vs.-temporal-difference-learning"><span class="header-section-number">6.7</span> Monte Carlo vs.&nbsp;Temporal-Difference Learning</h2>
 <p>Monte Carlo and TD methods both learn from experience, but they make different trade-offs.</p>
 <p>Monte Carlo methods:</p>
 <ol type="1">
@@ -365,6 +438,8 @@ R_{t+1} + \gamma V(S_{t+1})
 <p>A common summary is:</p>
 <p>Monte Carlo methods wait longer but use more complete targets. TD methods learn earlier but rely on estimates that may themselves be wrong.</p>
 <p>This is a bias-variance trade-off. Monte Carlo targets are often less biased but more variable. TD targets are often more biased but less variable and more data-efficient.</p>
+<p>For beginners, the comparison can be remembered in one sentence:</p>
+<p>Monte Carlo is slower but more complete. TD is quicker but more approximate.</p>
 <p>That trade-off is not merely theoretical. You can see it in the code organization of the maintained examples:</p>
 <ol type="1">
 <li><code>examples/tabular/monte_carlo_prediction.py</code></li>
@@ -372,20 +447,31 @@ R_{t+1} + \gamma V(S_{t+1})
 </ol>
 <p>The Monte Carlo script has to wait for trajectory completion and then reconstruct returns. The TD script can learn online, one transition at a time. The code itself shows why TD methods tend to feel more incremental and more data-efficient in practice.</p>
 </section>
-<section id="bootstrapping-as-a-core-idea" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="bootstrapping-as-a-core-idea"><span class="header-section-number">5.7</span> Bootstrapping as a Core Idea</h2>
+<section id="bootstrapping-as-a-core-idea" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="bootstrapping-as-a-core-idea"><span class="header-section-number">6.8</span> Bootstrapping as a Core Idea</h2>
 <p>Bootstrapping means updating an estimate using another estimate. This may seem risky at first, because errors can propagate. But it is also what makes learning efficient. Instead of waiting for full trajectories, the agent can improve estimates online, one transition at a time.</p>
 <p>Bootstrapping is also one of the reasons reinforcement learning can become unstable when combined with function approximation. Later in the book, when we study DQN and actor-critic methods, we will see that bootstrapping remains powerful but must be handled carefully.</p>
 </section>
-<section id="eligibility-traces-and-the-space-between-mc-and-td" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="eligibility-traces-and-the-space-between-mc-and-td"><span class="header-section-number">5.8</span> Eligibility Traces and the Space Between MC and TD</h2>
+<section id="eligibility-traces-and-the-space-between-mc-and-td" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="eligibility-traces-and-the-space-between-mc-and-td"><span class="header-section-number">6.9</span> Eligibility Traces and the Space Between MC and TD</h2>
 <p>Monte Carlo and TD(0) are often presented as separate families, but they are really endpoints of a spectrum. Methods based on <strong>eligibility traces</strong>, such as TD(<span class="math inline">\(\lambda\)</span>), interpolate between them.</p>
 <p>When <span class="math inline">\(\lambda\)</span> is closer to 1, the method behaves more like Monte Carlo, relying more on long returns. When <span class="math inline">\(\lambda\)</span> is closer to 0, it behaves more like TD(0), relying more on one-step bootstrapping.</p>
 <p>This spectrum is important because it shows that reinforcement learning methods are often connected by design trade-offs rather than by sharp boundaries.</p>
 <p>This book does not yet maintain a full TD(<span class="math inline">\(\lambda\)</span>) code path in <code>examples/</code>, so the point here should be understood conceptually. It is included because it explains why Monte Carlo and TD(0) should not be thought of as isolated islands. They are endpoints of a family of return-construction choices.</p>
 </section>
-<section id="from-prediction-to-control" class="level2" data-number="5.9">
-<h2 data-number="5.9" class="anchored" data-anchor-id="from-prediction-to-control"><span class="header-section-number">5.9</span> From Prediction to Control</h2>
+<section id="common-beginner-confusions-about-mc-and-td" class="level2" data-number="6.10">
+<h2 data-number="6.10" class="anchored" data-anchor-id="common-beginner-confusions-about-mc-and-td"><span class="header-section-number">6.10</span> Common Beginner Confusions About MC and TD</h2>
+<section id="is-monte-carlo-more-correct-because-it-uses-the-full-return" class="level3" data-number="6.10.1">
+<h3 data-number="6.10.1" class="anchored" data-anchor-id="is-monte-carlo-more-correct-because-it-uses-the-full-return"><span class="header-section-number">6.10.1</span> “Is Monte Carlo more correct because it uses the full return?”</h3>
+<p>Not automatically. Monte Carlo avoids bootstrapping, but its targets can be noisy and delayed. TD is often more practical because it learns online and usually has lower variance.</p>
+</section>
+<section id="is-td-cheating-because-it-uses-its-own-estimate-in-the-target" class="level3" data-number="6.10.2">
+<h3 data-number="6.10.2" class="anchored" data-anchor-id="is-td-cheating-because-it-uses-its-own-estimate-in-the-target"><span class="header-section-number">6.10.2</span> “Is TD cheating because it uses its own estimate in the target?”</h3>
+<p>It is bootstrapping, not cheating. That estimate-based target is exactly what makes TD efficient, even though it also introduces bias and later stability challenges.</p>
+</section>
+</section>
+<section id="from-prediction-to-control" class="level2" data-number="6.11">
+<h2 data-number="6.11" class="anchored" data-anchor-id="from-prediction-to-control"><span class="header-section-number">6.11</span> From Prediction to Control</h2>
 <p>So far, we have mostly discussed value estimation for a fixed policy. But reinforcement learning is usually about control, not just prediction. We want the agent to improve its behavior while learning.</p>
 <p>That requires one more step:</p>
 <p>The agent must use value estimates to choose better actions.</p>
@@ -798,12 +884,12 @@ R_{t+1} + \gamma V(S_{t+1})
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../chapters/part1-dp.html" class="pagination-link" aria-label="Dynamic Programming">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../chapters/part1-control.html" class="pagination-link" aria-label="Classical Control Methods">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
