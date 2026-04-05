@@ -275,7 +275,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="a-note-on-the-example-code" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="a-note-on-the-example-code"><span class="header-section-number">1.4</span> A Note on the Example Code</h2>
 <p>The main code path for this book is the maintained <code>examples/</code> directory. That is the codebase the chapters are primarily written against. It contains the tabular examples, the function-approximation bridge examples, the maintained PyTorch DQN path, and the current policy-gradient baseline used by the project.</p>
-<p>The repository also contains older reinforcement learning code in <code>machine_learning_examples/</code>. Those files still have value, especially when an older implementation exposes an algorithmic skeleton clearly. But the software stack has changed. Some of those files assume older Gym APIs, TensorFlow 1.x, or older training conventions. In this book, we will use such material mainly as conceptual anchors:</p>
+<p>Older reinforcement learning examples can still have value, especially when a compact implementation exposes an algorithmic skeleton clearly. But the software stack has changed, and many older tutorials assume earlier Gym APIs, TensorFlow 1.x, or older training conventions. In this book, that older style of material is used only as conceptual background:</p>
 <ol type="1">
 <li>To illustrate the shape of an algorithm.</li>
 <li>To compare tabular and neural approaches.</li>
@@ -284,7 +284,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Whenever an implementation detail is outdated, the text will say so clearly rather than presenting old patterns as current best practice. The general rule is simple:</p>
 <ol type="1">
 <li><code>examples/</code> is the maintained code path to read with the book.</li>
-<li><code>machine_learning_examples/</code> is background material to consult selectively.</li>
+<li>Older tutorial-style implementations are background material, not the primary source of truth for the text.</li>
 </ol>
 <p>By the end of the book, the reader should not only know what major reinforcement learning algorithms do, but also understand why they were developed, when they fail, and how they connect to the broader logic of sequential decision-making.</p>
 

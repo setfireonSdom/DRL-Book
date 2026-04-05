@@ -372,7 +372,7 @@ y_t = R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a'; \theta^-)
 </section>
 <section id="what-old-dqn-code-still-teaches" class="level2" data-number="8.7">
 <h2 data-number="8.7" class="anchored" data-anchor-id="what-old-dqn-code-still-teaches"><span class="header-section-number">8.7</span> What Old DQN Code Still Teaches</h2>
-<p>Some older DQN examples in this repository use TensorFlow 1.x and older Gym versions. Those implementations are outdated as software artifacts, but they still teach several enduring lessons:</p>
+<p>Older DQN implementations often use TensorFlow 1.x and earlier Gym APIs. As software artifacts, they are dated, but they still teach several enduring lessons:</p>
 <ol type="1">
 <li>The Q-network predicts one value per action.</li>
 <li>A replay buffer stores transitions for later sampling.</li>
