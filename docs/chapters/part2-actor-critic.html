@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>10&nbsp; Actor-Critic Methods – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/part2-advanced.html" rel="next">
+<link href="../chapters/part2-policy-gradient.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part2-actor-critic.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">From Reinforcement Learning Foundations to Deep Reinforcement Learning</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part1-overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reinforcement Learning Overview</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part1-mdp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part1-dp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dynamic Programming</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part1-mc-td.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part1-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part2-function-approx.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part2-dqn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Deep Q-Networks</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part2-policy-gradient.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part2-actor-critic.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part2-advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part3-practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Deep Reinforcement Learning in Practice</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-main-idea" id="toc-the-main-idea" class="nav-link active" data-scroll-target="#the-main-idea"><span class="header-section-number">10.1</span> The Main Idea</a></li>
+  <li><a href="#why-add-a-critic" id="toc-why-add-a-critic" class="nav-link" data-scroll-target="#why-add-a-critic"><span class="header-section-number">10.2</span> Why Add a Critic?</a></li>
+  <li><a href="#the-advantage-function" id="toc-the-advantage-function" class="nav-link" data-scroll-target="#the-advantage-function"><span class="header-section-number">10.3</span> The Advantage Function</a></li>
+  <li><a href="#temporal-difference-critics" id="toc-temporal-difference-critics" class="nav-link" data-scroll-target="#temporal-difference-critics"><span class="header-section-number">10.4</span> Temporal-Difference Critics</a></li>
+  <li><a href="#a-basic-actor-critic-update" id="toc-a-basic-actor-critic-update" class="nav-link" data-scroll-target="#a-basic-actor-critic-update"><span class="header-section-number">10.5</span> A Basic Actor-Critic Update</a></li>
+  <li><a href="#synchronous-and-asynchronous-variants" id="toc-synchronous-and-asynchronous-variants" class="nav-link" data-scroll-target="#synchronous-and-asynchronous-variants"><span class="header-section-number">10.6</span> Synchronous and Asynchronous Variants</a></li>
+  <li><a href="#a2c-and-the-simplification-of-a3c" id="toc-a2c-and-the-simplification-of-a3c" class="nav-link" data-scroll-target="#a2c-and-the-simplification-of-a3c"><span class="header-section-number">10.7</span> A2C and the Simplification of A3C</a></li>
+  <li><a href="#why-actor-critic-became-central" id="toc-why-actor-critic-became-central" class="nav-link" data-scroll-target="#why-actor-critic-became-central"><span class="header-section-number">10.8</span> Why Actor-Critic Became Central</a></li>
+  <li><a href="#remaining-challenges" id="toc-remaining-challenges" class="nav-link" data-scroll-target="#remaining-challenges"><span class="header-section-number">10.9</span> Remaining Challenges</a></li>
+  <li><a href="#from-actor-critic-to-modern-drl" id="toc-from-actor-critic-to-modern-drl" class="nav-link" data-scroll-target="#from-actor-critic-to-modern-drl"><span class="header-section-number">10.10</span> From Actor-Critic to Modern DRL</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Actor-Critic Methods</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Policy gradient methods optimize the policy directly, which gives them flexibility and conceptual clarity. But pure policy gradients often suffer from high variance and poor sample efficiency. Value-based methods, on the other hand, use bootstrapping to learn more efficiently, but they may be less natural in continuous action settings and can be unstable in other ways.</p>
+<p>Actor-critic methods combine the strengths of both approaches.</p>
+<p>This is one of the most important design patterns in modern reinforcement learning.</p>
+<section id="the-main-idea" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="the-main-idea"><span class="header-section-number">10.1</span> The Main Idea</h2>
+<p>An actor-critic method has two components:</p>
+<ol type="1">
+<li>The <strong>actor</strong>, which represents the policy.</li>
+<li>The <strong>critic</strong>, which estimates how good states, actions, or decisions are.</li>
+</ol>
+<p>The actor decides what to do. The critic evaluates those decisions and provides a learning signal.</p>
+<p>This division of labor is powerful because it separates two difficult problems:</p>
+<ol type="1">
+<li>How to choose actions.</li>
+<li>How to judge whether those actions were good.</li>
+</ol>
+<p>In deep reinforcement learning, both actor and critic are often neural networks, though their exact forms vary across algorithms.</p>
+</section>
+<section id="why-add-a-critic" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="why-add-a-critic"><span class="header-section-number">10.2</span> Why Add a Critic?</h2>
+<p>The main reason to add a critic is variance reduction and improved learning efficiency.</p>
+<p>Instead of waiting for a full Monte Carlo return as in REINFORCE, the critic can provide a learned estimate of future return. That estimate becomes a stronger, more immediate training signal for the actor.</p>
+<p>In its simplest form, the actor update may look like:</p>
+<p><span class="math display">\[
+\theta \leftarrow \theta + \alpha \hat{A}_t \nabla_\theta \log \pi_\theta(A_t \mid S_t)
+\]</span></p>
+<p>where <span class="math inline">\(\hat{A}_t\)</span> is an estimate of the <strong>advantage</strong> of the selected action.</p>
+<p>This already shows the core relationship:</p>
+<p>The actor changes the policy, and the critic supplies the signal that says whether the chosen action was better or worse than expected.</p>
+</section>
+<section id="the-advantage-function" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="the-advantage-function"><span class="header-section-number">10.3</span> The Advantage Function</h2>
+<p>The advantage function is one of the central ideas in actor-critic methods. It is defined as:</p>
+<p><span class="math display">\[
+A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s)
+\]</span></p>
+<p>It measures how much better or worse an action is relative to the state’s average value under the current policy.</p>
+<p>This is useful because raw returns alone do not tell us whether an action was surprisingly good. A large return may simply reflect that the state itself was favorable. The advantage function tries to isolate the contribution of the action relative to the baseline expectation.</p>
+<p>This is precisely the kind of signal that helps reduce variance in policy updates.</p>
+</section>
+<section id="temporal-difference-critics" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="temporal-difference-critics"><span class="header-section-number">10.4</span> Temporal-Difference Critics</h2>
+<p>Many actor-critic methods use TD learning for the critic. For example, the critic may update a state-value estimate using:</p>
+<p><span class="math display">\[
+V(S_t) \leftarrow V(S_t) + \alpha \left(R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\right)
+\]</span></p>
+<p>The TD error</p>
+<p><span class="math display">\[
+\delta_t = R_{t+1} + \gamma V(S_{t+1}) - V(S_t)
+\]</span></p>
+<p>often serves a dual role:</p>
+<ol type="1">
+<li>It updates the critic.</li>
+<li>It acts as a policy learning signal for the actor.</li>
+</ol>
+<p>This is elegant because the same one-step surprise signal helps both components learn together.</p>
+</section>
+<section id="a-basic-actor-critic-update" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="a-basic-actor-critic-update"><span class="header-section-number">10.5</span> A Basic Actor-Critic Update</h2>
+<p>A simple actor-critic algorithm might follow this loop:</p>
+<ol type="1">
+<li>Observe state <span class="math inline">\(S_t\)</span>.</li>
+<li>Sample action <span class="math inline">\(A_t\)</span> from the actor.</li>
+<li>Receive reward <span class="math inline">\(R_{t+1}\)</span> and next state <span class="math inline">\(S_{t+1}\)</span>.</li>
+<li>Compute a TD-style target for the critic.</li>
+<li>Compute a TD error or advantage estimate.</li>
+<li>Update the critic toward the target.</li>
+<li>Update the actor using the advantage-weighted log-probability gradient.</li>
+</ol>
+<p>This structure is one of the cleanest examples of how reinforcement learning combines prediction and control in a single learning system.</p>
+</section>
+<section id="synchronous-and-asynchronous-variants" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="synchronous-and-asynchronous-variants"><span class="header-section-number">10.6</span> Synchronous and Asynchronous Variants</h2>
+<p>Historically, actor-critic ideas appeared in several forms, including synchronous and asynchronous training.</p>
+<p>One notable family was <strong>A3C</strong> (Asynchronous Advantage Actor-Critic), where multiple workers interacted with environments in parallel and updated shared global parameters. This approach helped reduce correlation in experience and made training more efficient at the time.</p>
+<p>Older repositories often contain A3C-style implementations with threaded workers, local copies of policy and value networks, and periodic synchronization. Even though the software style may look dated, the conceptual lesson remains important:</p>
+<p>Parallel data collection and advantage-based policy updates can make actor-critic methods much more practical.</p>
+<p>Later systems often moved toward synchronous batched training, but the actor-critic principle remained intact.</p>
+</section>
+<section id="a2c-and-the-simplification-of-a3c" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="a2c-and-the-simplification-of-a3c"><span class="header-section-number">10.7</span> A2C and the Simplification of A3C</h2>
+<p><strong>A2C</strong> (Advantage Actor-Critic) is often described as a synchronous counterpart to A3C. Instead of many asynchronous workers updating parameters independently, data is often collected in parallel and then used in more coordinated batch updates.</p>
+<p>This simplification can make implementations easier to reason about and debug. It also aligns better with modern accelerator-based training workflows.</p>
+<p>The deeper point is not the naming difference between A2C and A3C. The deeper point is that both rely on the same core structure:</p>
+<ol type="1">
+<li>A policy network proposes actions.</li>
+<li>A value estimator supplies a baseline or advantage signal.</li>
+<li>The actor is updated in the direction of actions that appear better than expected.</li>
+</ol>
+</section>
+<section id="why-actor-critic-became-central" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="why-actor-critic-became-central"><span class="header-section-number">10.8</span> Why Actor-Critic Became Central</h2>
+<p>Actor-critic methods became central because they occupy a strong middle ground.</p>
+<p>Compared with pure policy gradients, they usually reduce variance and improve sample efficiency.</p>
+<p>Compared with purely value-based methods, they often handle stochastic or continuous policies more naturally.</p>
+<p>Compared with pure Monte Carlo methods, they can learn incrementally through bootstrapping.</p>
+<p>This balance explains why so many modern deep reinforcement learning algorithms are actor-critic variants in one form or another.</p>
+<p>It also explains why actor-critic is harder to implement robustly than its pseudocode may suggest. Once a policy update depends on a learned value signal, the system becomes a coupled optimization problem. The actor depends on the critic for guidance, and the critic depends on data generated by the actor. That feedback loop is powerful, but it is also where many implementation failures come from.</p>
+</section>
+<section id="remaining-challenges" class="level2" data-number="10.9">
+<h2 data-number="10.9" class="anchored" data-anchor-id="remaining-challenges"><span class="header-section-number">10.9</span> Remaining Challenges</h2>
+<p>Actor-critic methods are powerful, but they are not automatically stable.</p>
+<p>They inherit complexity from both sides:</p>
+<ol type="1">
+<li>The actor can drift too quickly.</li>
+<li>The critic can become inaccurate or biased.</li>
+<li>Bootstrapping can still create instability.</li>
+<li>Off-policy variants can become especially delicate.</li>
+</ol>
+<p>In practice, a weak critic can damage the actor badly, because the policy update depends on the critic’s signal. This creates a feedback loop similar in spirit to the issues seen in deep value learning.</p>
+<p>That is why later actor-critic methods often include additional design choices such as clipping, trust-region style constraints, entropy regularization, target networks, replay buffers, or delayed updates.</p>
+</section>
+<section id="from-actor-critic-to-modern-drl" class="level2" data-number="10.10">
+<h2 data-number="10.10" class="anchored" data-anchor-id="from-actor-critic-to-modern-drl"><span class="header-section-number">10.10</span> From Actor-Critic to Modern DRL</h2>
+<p>Actor-critic is less a single algorithm than a broad framework. Many influential deep reinforcement learning methods can be understood as actor-critic descendants or refinements.</p>
+<p>Examples include:</p>
+<ol type="1">
+<li>A2C and A3C.</li>
+<li>DDPG for continuous control.</li>
+<li>TD3 as a refinement of deterministic actor-critic ideas.</li>
+<li>SAC as an entropy-regularized actor-critic method.</li>
+<li>PPO as a practical policy optimization method built around actor-critic structure.</li>
+</ol>
+<p>This is why actor-critic deserves special attention. It is one of the most fertile templates in the entire field.</p>
+<p>In the maintained code for this book, actor-critic ideas are currently represented in two different ways.</p>
+<p>First, the simplest policy-gradient baseline remains a local self-implementation:</p>
+<ol type="1">
+<li><code>examples/deep_rl/reinforce_cartpole.py</code></li>
+</ol>
+<p>Second, the main actor-critic training path is currently represented by stable library-backed LunarLander examples:</p>
+<ol type="1">
+<li><code>examples/deep_rl/actor_critic_lunarlander.py</code></li>
+<li><code>examples/deep_rl/a2c_lunarlander.py</code></li>
+<li><code>examples/deep_rl/ppo_lunarlander.py</code></li>
+</ol>
+<p>These files use Stable-Baselines3 rather than local from-scratch implementations. That choice is deliberate. In this project, the actor-critic family proved much more sensitive to implementation details than the value-based DQN family, so the maintained baseline now prioritizes validated training behavior over hand-written minimalism.</p>
+<p>From a conceptual perspective, this is still appropriate. The point of this chapter is to understand the actor-critic pattern: policy updates guided by a learned value-based signal. The specific software boundary between “written locally” and “delegated to a stable library” is secondary to that core idea.</p>
+<p>Still, the implementation boundary should be stated explicitly because it affects how the code should be used:</p>
+<ol type="1">
+<li><code>reinforce_cartpole.py</code> is the local conceptual baseline for direct policy gradients.</li>
+<li><code>ppo_lunarlander.py</code> is currently the strongest maintained actor-critic-family baseline in the repository.</li>
+<li><code>actor_critic_lunarlander.py</code> and <code>a2c_lunarlander.py</code> preserve the algorithmic positions in the codebase, but they should be read with the same practical caution used elsewhere in this book: an algorithm name in the repository is not automatically a claim that every variant is equally validated.</li>
+</ol>
+<p>The next chapter surveys more advanced deep reinforcement learning methods and shows how they extend the ideas introduced so far.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/part2-policy-gradient.html" class="pagination-link" aria-label="Policy Gradient Methods">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Policy Gradient Methods</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/part2-advanced.html" class="pagination-link" aria-label="Advanced Deep Reinforcement Learning">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Deep Reinforcement Learning</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

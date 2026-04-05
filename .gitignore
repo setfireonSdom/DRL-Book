@@ -1,0 +1,9 @@
+.DS_Store
+.Rhistory
+.Rproj.user/
+RL_Book.Rproj
+
+examples/.venv/
+examples/.sb3_checkpoints/
+**/__pycache__/
+*.pyc

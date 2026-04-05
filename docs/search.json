@@ -1,0 +1,1182 @@
+[
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "1.1 Why Start with Classical Reinforcement Learning?\nReinforcement learning studies how an agent can learn to make decisions through interaction with an environment. Unlike supervised learning, where a model is trained from labeled input-output pairs, reinforcement learning is about sequential action. The learner is not told the correct action at every step. Instead, it acts, observes the consequences, and receives rewards that may be delayed, noisy, or sparse.\nThis delayed-feedback setting is what makes reinforcement learning both powerful and difficult. A decision that looks bad in the short term may create a better future state. A decision that gives immediate reward may block better long-term outcomes. Because of this, reinforcement learning is not only about prediction. It is about strategy.\nAt a high level, the field asks a simple question:\nHow should an agent act so that the total long-term reward is as large as possible?\nThat question appears in many forms. A game-playing agent chooses moves. A robot chooses control signals. A recommendation system chooses which item to show. A trading system chooses whether to buy, sell, or wait. In each case, the system must act under uncertainty, and each action can influence what happens next.\nDeep reinforcement learning receives most of the attention today because it combines neural networks with reinforcement learning objectives. That combination made it possible to learn from high-dimensional observations such as images, and it led to famous results in Atari games, Go, robotics, and large-scale decision systems.\nHowever, deep reinforcement learning is much easier to misunderstand if we skip the classical foundations. DQN is still built on Q-learning. Actor-critic methods still depend on value estimation. Advantage functions still come from the same logic as return estimation and baseline correction. If the foundations are weak, deep methods can look like a collection of engineering tricks rather than a coherent family of ideas.\nFor that reason, this book begins with:\nOnly after that do we move into function approximation and deep reinforcement learning.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#why-start-with-classical-reinforcement-learning",
+    "href": "intro.html#why-start-with-classical-reinforcement-learning",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "The agent-environment framework.\nMarkov decision processes.\nValue functions and Bellman equations.\nDynamic programming.\nMonte Carlo methods.\nTemporal-difference learning.\nClassical control methods such as SARSA and Q-learning.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#why-deep-reinforcement-learning-is-hard",
+    "href": "intro.html#why-deep-reinforcement-learning-is-hard",
+    "title": "1  Introduction",
+    "section": "1.2 Why Deep Reinforcement Learning Is Hard",
+    "text": "1.2 Why Deep Reinforcement Learning Is Hard\nThe move from classical reinforcement learning to deep reinforcement learning is not just a change of model size. It changes the training dynamics in important ways.\nIn tabular reinforcement learning, each state or state-action pair can be stored explicitly. Updates are local and often interpretable. In deep reinforcement learning, a neural network shares parameters across many states. This gives us generalization, but it also introduces instability. A single gradient update can change predictions for many states at once. Bootstrapping, off-policy learning, and function approximation can interact in unstable ways. This is one reason techniques such as replay buffers, target networks, normalization, clipping, trust regions, and entropy regularization became so important in practice.\nAnother difficulty is evaluation. In supervised learning, a validation set often provides a relatively direct signal of progress. In reinforcement learning, performance can vary greatly across random seeds, reward scales, exploration strategies, environment wrappers, and implementation details. Two systems that look similar on paper may behave very differently during training.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#how-to-read-this-book",
+    "href": "intro.html#how-to-read-this-book",
+    "title": "1  Introduction",
+    "section": "1.3 How to Read This Book",
+    "text": "1.3 How to Read This Book\nThis book is organized as a gradual progression.\nThe first part builds the conceptual and mathematical foundations of reinforcement learning. The second part bridges classical methods and deep methods. The third part focuses on practical deep reinforcement learning, including stability, debugging, and implementation judgment.\nWhen reading, it helps to keep three questions in mind:\n\nWhat is being estimated?\nWhat is being improved?\nWhat assumptions make the method work?\n\nThose three questions are useful almost everywhere in reinforcement learning. A value-based method estimates values and improves a policy indirectly. A policy-based method improves the policy directly but may still estimate returns or advantages. An actor-critic method does both. If you keep track of those roles, the algorithm landscape becomes much easier to organize.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#a-note-on-the-example-code",
+    "href": "intro.html#a-note-on-the-example-code",
+    "title": "1  Introduction",
+    "section": "1.4 A Note on the Example Code",
+    "text": "1.4 A Note on the Example Code\nThe main code path for this book is the maintained examples/ directory. That is the codebase the chapters are primarily written against. It contains the tabular examples, the function-approximation bridge examples, the maintained PyTorch DQN path, and the current policy-gradient baseline used by the project.\nThe repository also contains older reinforcement learning code in machine_learning_examples/. Those files still have value, especially when an older implementation exposes an algorithmic skeleton clearly. But the software stack has changed. Some of those files assume older Gym APIs, TensorFlow 1.x, or older training conventions. In this book, we will use such material mainly as conceptual anchors:\n\nTo illustrate the shape of an algorithm.\nTo compare tabular and neural approaches.\nTo discuss how modern implementations differ.\n\nWhenever an implementation detail is outdated, the text will say so clearly rather than presenting old patterns as current best practice. The general rule is simple:\n\nexamples/ is the maintained code path to read with the book.\nmachine_learning_examples/ is background material to consult selectively.\n\nBy the end of the book, the reader should not only know what major reinforcement learning algorithms do, but also understand why they were developed, when they fail, and how they connect to the broader logic of sequential decision-making.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-control.html",
+    "href": "chapters/part1-control.html",
+    "title": "6  Classical Control Methods",
+    "section": "",
+    "text": "6.1 Exploration and Exploitation\nPrediction methods estimate how good a policy is. Control methods go one step further: they try to find a good policy.\nIn reinforcement learning, this usually means that the agent must both learn and act at the same time. It cannot wait until all uncertainty disappears. It must make decisions while its estimates are still imperfect. That makes control fundamentally harder than pure policy evaluation.\nThis chapter introduces the basic logic of classical model-free control. The key themes are exploration, action-value estimation, and iterative policy improvement through experience.\nOne of the first problems in control is the exploration-exploitation trade-off.\nIf the agent always chooses the action that currently looks best, it may miss better actions that have not been tried enough. If it explores too much, it may waste reward on poor choices and never settle into strong behavior.\nThis trade-off is not a minor technical detail. It is one of the central design problems of reinforcement learning.\nMany classical methods begin with a simple exploration rule such as (\\(\\epsilon\\))-greedy action selection:\nThis rule is crude, but it is easy to implement and often works well enough in small problems. It also appears in many toy implementations, including classic Q-learning examples.\nIn the maintained codebase, the simplest places to see this idea are:\nBoth rely on an \\(\\epsilon\\)-greedy action selector in examples/tabular/control_utils.py. This is a good example of a principle worth carrying from theory into code: exploration is not an optional outer wrapper around learning. It is part of what determines the data distribution, and therefore part of what the agent learns.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Classical Control Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-control.html#exploration-and-exploitation",
+    "href": "chapters/part1-control.html#exploration-and-exploitation",
+    "title": "6  Classical Control Methods",
+    "section": "",
+    "text": "With probability (1 - ), choose the action with the highest estimated value.\nWith probability (), choose a random action.\n\n\n\n\nexamples/tabular/sarsa.py\nexamples/tabular/q_learning.py",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Classical Control Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-control.html#action-value-control",
+    "href": "chapters/part1-control.html#action-value-control",
+    "title": "6  Classical Control Methods",
+    "section": "6.2 Action-Value Control",
+    "text": "6.2 Action-Value Control\nFor control, action values are often more useful than state values. If we estimate (Q(s, a)), then we can select actions directly by comparing action values within the current state.\nThis is the basic value-based control idea:\n\nEstimate action values.\nChoose actions using those estimates.\nUpdate the estimates from experience.\nRepeat.\n\nOnce action values become accurate enough, greedy action selection can define a strong policy.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Classical Control Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-control.html#on-policy-and-off-policy-learning",
+    "href": "chapters/part1-control.html#on-policy-and-off-policy-learning",
+    "title": "6  Classical Control Methods",
+    "section": "6.3 On-Policy and Off-Policy Learning",
+    "text": "6.3 On-Policy and Off-Policy Learning\nBefore introducing SARSA and Q-learning, we need one important distinction.\nAn on-policy method learns about the policy it is currently using to act. An off-policy method learns about one policy while following another.\nThis distinction matters because the behavior policy may include exploration, while the target policy may be greedy or nearly greedy. Off-policy methods are often more flexible, but they can also become less stable, especially once function approximation is introduced.\nSARSA is the classical on-policy example. Q-learning is the classical off-policy example.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Classical Control Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-control.html#sarsa",
+    "href": "chapters/part1-control.html#sarsa",
+    "title": "6  Classical Control Methods",
+    "section": "6.4 SARSA",
+    "text": "6.4 SARSA\nSARSA is named after the sequence of variables used in its update:\n\\[ (S_t, A_t, R\\_{t+1}, S\\_{t+1}, A\\_{t+1}) \\]\nThe update rule is:\n\\[ Q(S_t, A_t) \\leftarrow Q(S_t, A_t) + \\alpha \\left[R_{t+1} + \\gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t)\\right]\\]\nThis is an on-policy update because the next action (A_{t+1}) is the action actually chosen by the current behavior policy, which may include exploration.\nThat detail has an important consequence. SARSA learns the value of behaving according to the exploration-aware policy currently in use. If exploratory actions can be dangerous, SARSA may learn more conservative behavior than a purely greedy method.\nThis makes SARSA especially useful for understanding how learning depends not only on the update rule, but also on the behavior policy generating the data.\nThe maintained implementation is:\n\nexamples/tabular/sarsa.py\n\nIf you read run_sarsa(...), the most important line conceptually is the one that selects next_action from the current exploratory policy before building the TD target. That is the code-level meaning of “on-policy” in this chapter. The target is tied to what the agent actually does next, not to a hypothetical greedy action it did not take.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Classical Control Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-control.html#q-learning",
+    "href": "chapters/part1-control.html#q-learning",
+    "title": "6  Classical Control Methods",
+    "section": "6.5 Q-Learning",
+    "text": "6.5 Q-Learning\nQ-learning uses a different target:\n\\[ Q(S_t, A_t) \\leftarrow Q(S_t, A_t) + \\alpha \\left[R_{t+1} + \\gamma \\max_a Q(S_{t+1}, a) - Q(S_t, A_t)\\right]\\]\nThe max over next actions means the update targets the value of the greedy action, regardless of which action is actually taken next by the behavior policy. That is why Q-learning is off-policy.\nConceptually, Q-learning says:\nAct with exploration if needed, but learn as if you were going to behave greedily from the next state onward.\nThis is a powerful idea. It allows exploratory behavior to collect data while still pushing estimates toward the greedy optimal action-value function (Q^*).\nQ-learning is one of the most influential algorithms in reinforcement learning. Its basic structure later reappears in DQN, where the tabular action-value table is replaced by a neural network.\nThe maintained implementation is:\n\nexamples/tabular/q_learning.py\n\nHere the code-level contrast with SARSA is sharp. In run_q_learning(...), the target uses max(q_table[next_state].values()) rather than the value of the next exploratory action actually chosen. That single difference is the operational meaning of “off-policy” in this setting.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Classical Control Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-control.html#sarsa-vs.-q-learning",
+    "href": "chapters/part1-control.html#sarsa-vs.-q-learning",
+    "title": "6  Classical Control Methods",
+    "section": "6.6 SARSA vs. Q-Learning",
+    "text": "6.6 SARSA vs. Q-Learning\nSARSA and Q-learning often look very similar in code. Both update action-value estimates from one-step transitions. Both are easy to implement in tabular environments. Both can use ()-greedy exploration.\nBut their learning targets differ:\n\nSARSA uses the next action actually chosen by the current policy.\nQ-learning uses the best estimated next action, whether or not it is chosen.\n\nThis difference can lead to meaningfully different behavior. In risky environments, SARSA may learn safer policies because it accounts for the exploratory actions that the agent really takes. Q-learning may learn more aggressive policies because it evaluates the greedy target rather than the exploratory behavior policy.\nIn this project, both maintained scripts use a negative-grid variant with step cost. That is a sensible foundation example because it makes the behavioral difference easier to see. The point is not only whether the final policy reaches the goal. The point is how the learning target changes the kind of path the agent prefers while exploration is still part of the process.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Classical Control Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-control.html#convergence-and-practical-assumptions",
+    "href": "chapters/part1-control.html#convergence-and-practical-assumptions",
+    "title": "6  Classical Control Methods",
+    "section": "6.7 Convergence and Practical Assumptions",
+    "text": "6.7 Convergence and Practical Assumptions\nIn finite tabular settings, classical convergence results are available under assumptions such as:\n\nAll relevant state-action pairs are visited sufficiently often.\nLearning rates are chosen appropriately.\nExploration does not vanish too early.\n\nThese assumptions matter because reinforcement learning is only as good as the data it sees. If the agent never explores a useful action, it cannot learn its value.\nAt the same time, convergence guarantees in the tabular case should not create false confidence about larger problems. Once we move to function approximation and neural networks, many clean guarantees become weaker or disappear entirely.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Classical Control Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-control.html#a-note-on-historical-implementations",
+    "href": "chapters/part1-control.html#a-note-on-historical-implementations",
+    "title": "6  Classical Control Methods",
+    "section": "6.8 A Note on Historical Implementations",
+    "text": "6.8 A Note on Historical Implementations\nMany older reinforcement learning tutorials implement Q-learning with small lookup tables, simple ()-greedy exploration, and lightweight loops over episodes. Those examples are still excellent for understanding the algorithmic core.\nFor example, a compact tabular Q-learning implementation usually contains the following ingredients:\n\nA table storing (Q(s, a)).\nAn ()-greedy action selector.\nA one-step TD update toward a bootstrap target.\nRepetition over many episodes.\n\nThat structure is still worth studying. The main limitation is not the logic of the algorithm, but the scale of the representation. Once state spaces become large or continuous, lookup tables stop being practical.\nIn the maintained code for this book, that compact structure is still present, just cleaned up and reorganized:\n\nexamples/tabular/control_utils.py\nexamples/tabular/sarsa.py\nexamples/tabular/q_learning.py\n\nThese files are deliberately small enough that you can trace the entire control loop from exploration to update target to policy extraction without jumping across a large framework.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Classical Control Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-control.html#why-classical-control-still-matters",
+    "href": "chapters/part1-control.html#why-classical-control-still-matters",
+    "title": "6  Classical Control Methods",
+    "section": "6.9 Why Classical Control Still Matters",
+    "text": "6.9 Why Classical Control Still Matters\nClassical control methods are not just historical stepping stones. They teach several durable lessons:\n\nValue estimation and action selection are tightly linked.\nExploration strategy changes what the agent learns.\nOn-policy and off-policy learning are meaningfully different.\nBootstrapping can support efficient control.\n\nThese lessons carry directly into deep reinforcement learning. DQN inherits the off-policy value-learning structure of Q-learning. Policy-gradient and actor-critic methods respond, in part, to the limitations of value-based control in large or continuous spaces.\nThe next chapter makes the bridge explicit by moving from tabular methods to function approximation.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Classical Control Methods</span>"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "From Reinforcement Learning Foundations to Deep Reinforcement Learning",
+    "section": "",
+    "text": "Preface\nThis book is an English writing project and a technical learning project at the same time. It is designed for readers who want to build a clean path from the foundations of reinforcement learning to the main ideas of deep reinforcement learning.\nMany reinforcement learning resources fall into one of two extremes. Some are mathematically precise but hard to connect to implementation. Others are implementation-driven but move too quickly, leaving the reader with code that works without a clear understanding of why it works. This book tries to stay in the middle. We will begin with the core concepts, then move to classical algorithms, and finally reach deep reinforcement learning methods that rely on function approximation and neural networks.\nThe main code path used in this book now lives in examples/. That directory is the maintained companion to the text. It contains the tabular examples, function-approximation examples, the PyTorch DQN family, and the currently recommended policy-gradient baseline used in the project.\nThe repository also still contains older reinforcement learning material in machine_learning_examples/. Those files remain useful as historical reference points, but they are no longer the primary code path of the book. Some of them reflect an earlier software ecosystem, including older versions of Gym and TensorFlow. For that reason, this book treats them as background material rather than as the main implementations readers should follow.\nThe goal of the draft is not to present the newest benchmark tricks first. Instead, the goal is to build understanding in the right order:\n\nLearn the language of reinforcement learning.\nUnderstand how agents estimate value and improve behavior.\nSee why tabular methods stop scaling.\nUnderstand how deep learning changes the picture.\nDevelop enough practical judgment to train and debug DRL systems responsibly.\n\nIf you are using this book as an English exercise, that is a strength rather than a distraction. Reinforcement learning already requires careful reading. Writing and reading it in English encourages precision with technical terms such as policy, return, state value, action value, bootstrapping, and off-policy learning. Over time, these terms become part of your working vocabulary.\nThis book is written as a foundation text rather than a benchmark handbook. The emphasis is on understanding the main objects, equations, and algorithmic patterns clearly enough that code and experiments can be interpreted honestly. Where the repository uses a self-implemented reference, the text will say so. Where the repository relies on a mature third-party implementation for a more reliable baseline, the text will say that too.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-overview.html",
+    "href": "chapters/part1-overview.html",
+    "title": "2  Reinforcement Learning Overview",
+    "section": "",
+    "text": "2.1 Sequential Decision-Making\nReinforcement learning is a framework for learning through interaction. An agent observes a situation, chooses an action, receives a reward, and moves to a new situation. Over time, it tries to improve its decisions so that the total reward it collects becomes as large as possible.\nThis description sounds simple, but it hides an important difference from other machine learning settings. In supervised learning, the correct answer is usually available in the training data. In reinforcement learning, the agent often has to discover good behavior by trial and error. It must balance two conflicting goals:\nThat tension between exploitation and exploration is one of the defining features of the field.\nThe central object in reinforcement learning is not a single prediction but a sequence of decisions. A good action is not simply one that gives immediate reward. It is an action that contributes to good long-term outcomes.\nThis is why the same action can be good in one context and bad in another. For example, in a game, sacrificing a piece may look costly in the short term but lead to a winning position later. In navigation, taking a longer route may avoid a dead end. In robotics, a stabilizing action may temporarily reduce speed while improving future control.\nReinforcement learning formalizes these problems by focusing on trajectories:\n\\[\nS_0, A_0, R_1, S_1, A_1, R_2, S_2, \\dots\n\\]\nAt each time step, the agent is in a state \\(S_t\\), chooses an action \\(A_t\\), receives a reward \\(R_{t+1}\\), and transitions to a new state \\(S_{t+1}\\). The objective is to choose actions so that the long-term return is large.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reinforcement Learning Overview</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-overview.html#the-agent-and-the-environment",
+    "href": "chapters/part1-overview.html#the-agent-and-the-environment",
+    "title": "2  Reinforcement Learning Overview",
+    "section": "2.2 The Agent and the Environment",
+    "text": "2.2 The Agent and the Environment\nThe agent is the learner or decision-maker. The environment is everything outside the agent that responds to its actions. This distinction is conceptual rather than physical. In a board game, the environment includes the game rules and board configuration. In robotic control, the environment may include the robot body, the external world, sensors, and dynamics not directly controlled by the learner.\nThe interaction loop usually looks like this:\n\nThe environment presents a state to the agent.\nThe agent chooses an action according to its current policy.\nThe environment returns a reward and a next state.\nThe agent updates its internal estimates or policy.\n\nThis loop may happen a few times in a toy problem or millions of times in a large-scale training run.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reinforcement Learning Overview</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-overview.html#states-actions-and-rewards",
+    "href": "chapters/part1-overview.html#states-actions-and-rewards",
+    "title": "2  Reinforcement Learning Overview",
+    "section": "2.3 States, Actions, and Rewards",
+    "text": "2.3 States, Actions, and Rewards\nA state is the information used to describe the current situation. An action is a choice available to the agent. A reward is a scalar signal that evaluates the immediate outcome of an action.\nIt is important not to confuse reward with objective. Reward is the training signal provided at each step. The objective is usually the expected sum of rewards over time. A reward can be sparse, delayed, shaped, noisy, or even misleading. Much of reinforcement learning becomes difficult when the reward does not immediately reveal which behavior is truly good.\nThe quality of the state representation also matters. If the state omits critical information, the problem becomes harder because the agent cannot tell apart situations that require different behavior. This is one motivation for later deep reinforcement learning methods, where learned representations become part of the solution.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reinforcement Learning Overview</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-overview.html#policies-and-value-functions",
+    "href": "chapters/part1-overview.html#policies-and-value-functions",
+    "title": "2  Reinforcement Learning Overview",
+    "section": "2.4 Policies and Value Functions",
+    "text": "2.4 Policies and Value Functions\nA policy tells the agent how to act. We often write a policy as \\(\\pi(a \\mid s)\\), the probability of choosing action \\(a\\) in state \\(s\\). A deterministic policy always chooses the same action for a given state. A stochastic policy defines a distribution over actions.\nWhile a policy specifies behavior, a value function measures how good states or actions are under a policy. Two common value functions are:\n\nThe state-value function \\(V^\\pi(s)\\), which measures the expected return starting from state \\(s\\) and following policy \\(\\pi\\).\nThe action-value function \\(Q^\\pi(s, a)\\), which measures the expected return after taking action \\(a\\) in state \\(s\\) and then following policy \\(\\pi\\).\n\nThese objects are central because many algorithms either estimate value functions directly or use them to improve a policy.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reinforcement Learning Overview</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-overview.html#return-and-discounting",
+    "href": "chapters/part1-overview.html#return-and-discounting",
+    "title": "2  Reinforcement Learning Overview",
+    "section": "2.5 Return and Discounting",
+    "text": "2.5 Return and Discounting\nThe return is the total reward accumulated over time. A common definition is the discounted return:\n\\[\nG_t = R_{t+1} + \\gamma R_{t+2} + \\gamma^2 R_{t+3} + \\cdots\n\\]\nwhere \\(0 \\le \\gamma \\le 1\\) is the discount factor.\nThe discount factor controls how much the agent cares about the future. A small \\(\\gamma\\) makes the agent short-sighted. A large \\(\\gamma\\) places more weight on long-term consequences. Discounting is useful for both mathematical and practical reasons. It can ensure that infinite sums remain finite, and it can encode a preference for earlier rewards over later ones.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reinforcement Learning Overview</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-overview.html#episodes-and-continuing-tasks",
+    "href": "chapters/part1-overview.html#episodes-and-continuing-tasks",
+    "title": "2  Reinforcement Learning Overview",
+    "section": "2.6 Episodes and Continuing Tasks",
+    "text": "2.6 Episodes and Continuing Tasks\nSome reinforcement learning problems have natural endings. A game ends when one player wins. A robot navigation task may end when the goal is reached. These are episodic tasks.\nOther problems continue indefinitely, such as recommendation systems or certain control problems. These are often treated as continuing tasks. The difference matters because it affects how we define returns, evaluate performance, and structure training.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reinforcement Learning Overview</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-overview.html#model-based-and-model-free-learning",
+    "href": "chapters/part1-overview.html#model-based-and-model-free-learning",
+    "title": "2  Reinforcement Learning Overview",
+    "section": "2.7 Model-Based and Model-Free Learning",
+    "text": "2.7 Model-Based and Model-Free Learning\nAn agent is model-based if it has access to, or learns, a model of the environment dynamics. That means it can predict how actions change states and rewards. An agent is model-free if it learns behavior or value estimates directly from experience without explicitly learning the transition model.\nThis book begins mostly with model-free learning, because that path leads naturally into modern deep reinforcement learning. Still, model-based ideas remain important, especially when sample efficiency matters.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reinforcement Learning Overview</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-overview.html#why-reinforcement-learning-matters",
+    "href": "chapters/part1-overview.html#why-reinforcement-learning-matters",
+    "title": "2  Reinforcement Learning Overview",
+    "section": "2.8 Why Reinforcement Learning Matters",
+    "text": "2.8 Why Reinforcement Learning Matters\nReinforcement learning matters because many real-world problems involve decisions, feedback, uncertainty, and long-term consequences. The framework gives us a language for these problems even when perfect solutions are impossible.\nAt the same time, reinforcement learning should not be treated as a universal hammer. It is often hard to train, expensive in data, and sensitive to problem design. A major part of real expertise is knowing when reinforcement learning is appropriate and when a simpler method would be better.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reinforcement Learning Overview</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mdp.html",
+    "href": "chapters/part1-mdp.html",
+    "title": "3  Markov Decision Processes",
+    "section": "",
+    "text": "3.1 The Markov Property\nThe agent-environment framework gives us intuition, but we still need a mathematical structure that makes reinforcement learning precise. The standard framework is the Markov decision process (MDP). It provides a clean way to describe states, actions, rewards, transitions, and long-term objectives.\nMany reinforcement learning algorithms can be understood as different ways of solving, approximating, or learning within an MDP.\nThe defining assumption behind an MDP is the Markov property. Informally, it says that the future depends on the present state, not on the full past history, once the present state is known.\nIn words:\nThe current state contains all information needed for predicting the next step.\nThis does not mean the past is irrelevant in general. It means the state has already summarized the relevant parts of the past. If the state representation fails to do that, then the process is not fully Markov from the agent’s point of view.\nThis point is important in practice. Many real environments are only approximately Markov. Partial observability, noisy sensors, hidden variables, and missing context can all break the assumption. Deep reinforcement learning often deals with this by learning richer representations, stacking observations, or using recurrent models.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Markov Decision Processes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mdp.html#the-mdp-components",
+    "href": "chapters/part1-mdp.html#the-mdp-components",
+    "title": "3  Markov Decision Processes",
+    "section": "3.2 The MDP Components",
+    "text": "3.2 The MDP Components\nAn MDP is often described by the tuple:\n\\[\n(\\mathcal{S}, \\mathcal{A}, P, R, \\gamma)\n\\]\nwhere:\n\n\\(\\mathcal{S}\\) is the set of states.\n\\(\\mathcal{A}\\) is the set of actions.\n\\(P\\) is the transition dynamics.\n\\(R\\) is the reward function.\n\\(\\gamma\\) is the discount factor.\n\nThe transition dynamics tell us how the environment changes after an action. More formally, we may write:\n\\[\nP(s', r \\mid s, a)\n\\]\nwhich means the probability of moving to state \\(s'\\) and receiving reward \\(r\\) after taking action \\(a\\) in state \\(s\\).\nThis form captures both uncertainty in the next state and uncertainty in the reward.\nThe abstraction may seem very mathematical at first, but in code it usually appears as a small number of concrete data structures.\nIn the maintained tabular examples for this project, the cleanest place to see this is:\n\nexamples/tabular/gridworld.py\n\nThat file makes the MDP components explicit:\n\nStates are grid coordinates such as (row, col).\nActions are symbols such as \"U\", \"D\", \"L\", and \"R\".\nRewards are stored in dictionaries keyed by states.\nAvailable actions are stored in dictionaries keyed by states.\nThe windy variant stores transition probabilities explicitly in transition_probs.\n\nThis is a useful point pedagogically. Before reinforcement learning becomes deep or statistical, an MDP is simply a structured description of what can happen next and what reward is attached to it.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Markov Decision Processes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mdp.html#policies-inside-an-mdp",
+    "href": "chapters/part1-mdp.html#policies-inside-an-mdp",
+    "title": "3  Markov Decision Processes",
+    "section": "3.3 Policies Inside an MDP",
+    "text": "3.3 Policies Inside an MDP\nOnce an MDP is defined, the agent still needs a policy. A policy determines how actions are selected in each state. If \\(\\pi\\) is a policy, then:\n\\[\n\\pi(a \\mid s)\n\\]\nis the probability that the agent chooses action \\(a\\) in state \\(s\\).\nThe policy and the environment together induce a distribution over trajectories. That is why reinforcement learning is fundamentally probabilistic even when the environment or policy is deterministic in special cases.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Markov Decision Processes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mdp.html#returns-and-objectives",
+    "href": "chapters/part1-mdp.html#returns-and-objectives",
+    "title": "3  Markov Decision Processes",
+    "section": "3.4 Returns and Objectives",
+    "text": "3.4 Returns and Objectives\nThe main objective in an MDP is usually to maximize expected return. Starting at time \\(t\\), the discounted return is:\n\\[\nG_t = \\sum_{k=0}^{\\infty} \\gamma^k R_{t+k+1}\n\\]\nThis equation formalizes the idea that current actions should be judged by their future consequences, not only by immediate rewards.\nThere are several reasons discounting is useful:\n\nIt gives more weight to near-term rewards.\nIt often makes infinite-horizon sums well-defined.\nIt can reduce sensitivity to very distant uncertainty.\n\nIn episodic tasks, the return may terminate naturally at the end of an episode. In continuing tasks, discounting often plays a larger role.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Markov Decision Processes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mdp.html#state-value-and-action-value-functions",
+    "href": "chapters/part1-mdp.html#state-value-and-action-value-functions",
+    "title": "3  Markov Decision Processes",
+    "section": "3.5 State-Value and Action-Value Functions",
+    "text": "3.5 State-Value and Action-Value Functions\nValue functions describe expected future return under a policy. They translate the long-term objective into quantities that can be estimated and improved.\nThe state-value function is:\n\\[\nV^\\pi(s) = \\mathbb{E}_\\pi [G_t \\mid S_t = s]\n\\]\nIt tells us how good it is to be in state \\(s\\) if we continue to follow policy \\(\\pi\\).\nThe action-value function is:\n\\[\nQ^\\pi(s, a) = \\mathbb{E}_\\pi [G_t \\mid S_t = s, A_t = a]\n\\]\nIt tells us how good it is to take action \\(a\\) in state \\(s\\) and then follow policy \\(\\pi\\).\nThese functions are central because they support both evaluation and control. If we know which states and actions have high long-term value, we can improve decisions accordingly.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Markov Decision Processes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mdp.html#bellman-equations",
+    "href": "chapters/part1-mdp.html#bellman-equations",
+    "title": "3  Markov Decision Processes",
+    "section": "3.6 Bellman Equations",
+    "text": "3.6 Bellman Equations\nOne of the most important ideas in reinforcement learning is that value functions satisfy recursive relationships. This is the core insight behind the Bellman equations.\nFor the state-value function:\n\\[\nV^\\pi(s) = \\sum_a \\pi(a \\mid s) \\sum_{s', r} P(s', r \\mid s, a) \\left[r + \\gamma V^\\pi(s')\\right]\n\\]\nThis equation says that the value of a state equals the expected immediate reward plus the discounted value of the next state.\nSimilarly, the action-value function satisfies:\n\\[\nQ^\\pi(s, a) = \\sum_{s', r} P(s', r \\mid s, a) \\left[r + \\gamma \\sum_{a'} \\pi(a' \\mid s') Q^\\pi(s', a')\\right]\n\\]\nThese recursive forms are powerful because they allow value estimation to be built from local consistency conditions rather than from full trajectory enumeration.\nIn this repository, that recursive structure is not hidden behind a framework. It is written out directly in the tabular examples. The most transparent places to inspect are:\n\nexamples/tabular/policy_evaluation.py\nexamples/tabular/value_iteration.py\n\nThose files are worth reading slowly. The Bellman equations are not only identities on paper. In code, they become loops over states, actions, and possible next states. The theory says a value should satisfy a recursive consistency relation. The implementation turns that statement into repeated sweeps until the estimates stop moving very much.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Markov Decision Processes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mdp.html#optimal-value-functions",
+    "href": "chapters/part1-mdp.html#optimal-value-functions",
+    "title": "3  Markov Decision Processes",
+    "section": "3.7 Optimal Value Functions",
+    "text": "3.7 Optimal Value Functions\nSo far, the value functions have been defined relative to a fixed policy \\(\\pi\\). But reinforcement learning usually aims to find the best possible policy.\nThe optimal state-value function is:\n\\[\nV^*(s) = \\max_\\pi V^\\pi(s)\n\\]\nand the optimal action-value function is:\n\\[\nQ^*(s, a) = \\max_\\pi Q^\\pi(s, a)\n\\]\nThese optimal value functions also satisfy Bellman equations. For example:\n\\[\nV^*(s) = \\max_a \\sum_{s', r} P(s', r \\mid s, a)\\left[r + \\gamma V^*(s')\\right]\n\\]\nand\n\\[\nQ^*(s, a) = \\sum_{s', r} P(s', r \\mid s, a)\\left[r + \\gamma \\max_{a'} Q^*(s', a')\\right]\n\\]\nThese equations replace the policy expectation with a maximization over actions. That single change leads directly to many control algorithms, including Q-learning and DQN.\nThat single change is easy to underestimate. In fact, it is one of the most important transitions in the whole book. When a policy expectation is replaced by a maximization, the problem changes from evaluating a given behavior to searching for the best behavior.\nYou can already see this shift in the maintained code before any learning from data begins:\n\nexamples/tabular/policy_iteration.py\nexamples/tabular/value_iteration.py\n\nThen later, in the learning chapters, the same structural change reappears in:\n\nexamples/tabular/q_learning.py\nexamples/deep_rl/dqn_cartpole.py\n\nSo the Bellman optimality equation should not be read here as an isolated theorem. It is the mathematical ancestor of the greedy bootstrap target used much later in Q-learning and DQN.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Markov Decision Processes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mdp.html#why-mdps-matter-for-deep-reinforcement-learning",
+    "href": "chapters/part1-mdp.html#why-mdps-matter-for-deep-reinforcement-learning",
+    "title": "3  Markov Decision Processes",
+    "section": "3.8 Why MDPs Matter for Deep Reinforcement Learning",
+    "text": "3.8 Why MDPs Matter for Deep Reinforcement Learning\nAt first glance, deep reinforcement learning may seem far away from the clean equations in this chapter. In practice, however, the deep part mostly changes how value functions, policies, or models are represented. It does not change the core logic of the problem.\nDQN still tries to approximate an action-value function. Policy gradient methods still optimize a policy in an MDP. Actor-critic methods still rely on value estimates defined through expected return. Even advanced algorithms remain built on the same foundational objects.\nThis is why MDPs matter. They provide the conceptual skeleton of the entire field.\nFor this reason, it is worth returning to the MDP language repeatedly while reading later chapters. Even when the code starts to use replay buffers, neural networks, target networks, or third-party training libraries, the foundational questions do not change:\n\nWhat is the state?\nWhat are the available actions?\nWhat is the reward signal?\nWhat return is being optimized?\nWhere is the Bellman or policy objective appearing in the update?\n\nIf those questions are kept visible, the later algorithms stay interpretable. If they are forgotten, deep reinforcement learning can easily collapse into a collection of names and engineering recipes.\nThe next chapter studies dynamic programming, which assumes the environment model is known and shows how value functions can be evaluated and improved systematically.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Markov Decision Processes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mc-td.html",
+    "href": "chapters/part1-mc-td.html",
+    "title": "5  Monte Carlo Methods and Temporal-Difference Learning",
+    "section": "",
+    "text": "5.1 Monte Carlo Methods\nDynamic programming assumes that the environment model is known. In many realistic problems, that assumption is too strong. The agent does not know the transition probabilities in advance, and it may not know the reward structure either. What it does have is experience.\nMonte Carlo methods and temporal-difference learning answer the same broad question:\nHow can an agent learn value estimates directly from sampled interaction?\nThese two families of methods are fundamental. They show how reinforcement learning can move from planning with a known model to learning from data.\nMonte Carlo methods learn from complete episodes. The core idea is straightforward:\nIf a state \\(s\\) appears in an episode, we can estimate its value by averaging the returns observed after visiting that state. Over many episodes, these averages can converge to the true value under the policy being followed.\nThis approach has an appealing simplicity. It does not require a model, and it does not bootstrap from current estimates. It waits until the return is fully observed.\nFor example, if the return following a visit to state \\(s\\) is \\(G_t\\), then a Monte Carlo estimate of the state value may be updated toward that sampled return:\n\\[\nV(s) \\leftarrow V(s) + \\alpha \\left(G_t - V(s)\\right)\n\\]\nThis looks very similar to later update rules. The key difference lies in the target. In Monte Carlo learning, the target is a full sampled return.\nIn the maintained code for this book, the cleanest tabular Monte Carlo reference is:\nThe important thing to notice in that file is not just that it samples episodes. It also stores complete trajectories and then walks backward through them to compute returns. That backward pass makes the full-return target explicit in code.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Monte Carlo Methods and Temporal-Difference Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mc-td.html#monte-carlo-methods",
+    "href": "chapters/part1-mc-td.html#monte-carlo-methods",
+    "title": "5  Monte Carlo Methods and Temporal-Difference Learning",
+    "section": "",
+    "text": "Run an episode.\nObserve the return that actually occurred.\nUse that return as a target for value estimation.\n\n\n\n\n\n\n\n\nexamples/tabular/monte_carlo_prediction.py",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Monte Carlo Methods and Temporal-Difference Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mc-td.html#first-visit-and-every-visit-monte-carlo",
+    "href": "chapters/part1-mc-td.html#first-visit-and-every-visit-monte-carlo",
+    "title": "5  Monte Carlo Methods and Temporal-Difference Learning",
+    "section": "5.2 First-Visit and Every-Visit Monte Carlo",
+    "text": "5.2 First-Visit and Every-Visit Monte Carlo\nThere are different ways to count returns for a state within an episode.\nIn first-visit Monte Carlo, only the first occurrence of a state in an episode is used for updating that state’s estimate. In every-visit Monte Carlo, every occurrence is used.\nBoth approaches can work. The difference is mostly about how samples are collected and correlated. In practice, the main idea remains the same: use complete returns from actual trajectories.\nThe maintained example currently uses a first-visit style update. In run_first_visit_mc_prediction(...), the code checks whether the current state has already appeared earlier in the same episode before committing the update. That one implementation detail is the practical difference between first-visit and every-visit Monte Carlo.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Monte Carlo Methods and Temporal-Difference Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mc-td.html#strengths-and-weaknesses-of-monte-carlo-learning",
+    "href": "chapters/part1-mc-td.html#strengths-and-weaknesses-of-monte-carlo-learning",
+    "title": "5  Monte Carlo Methods and Temporal-Difference Learning",
+    "section": "5.3 Strengths and Weaknesses of Monte Carlo Learning",
+    "text": "5.3 Strengths and Weaknesses of Monte Carlo Learning\nMonte Carlo methods have several strengths:\n\nThey are conceptually simple.\nThey do not require a model.\nThey use unbiased sampled returns as targets.\n\nBut they also have limitations:\n\nThey require episodes to terminate, or at least to be truncated in a meaningful way.\nThey may learn slowly when episodes are long.\nTheir return estimates can have high variance.\n\nThat high variance is important. If rewards are delayed or noisy, the complete return can fluctuate greatly from one episode to the next. This makes value estimation unstable or slow.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Monte Carlo Methods and Temporal-Difference Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mc-td.html#temporal-difference-learning",
+    "href": "chapters/part1-mc-td.html#temporal-difference-learning",
+    "title": "5  Monte Carlo Methods and Temporal-Difference Learning",
+    "section": "5.4 Temporal-Difference Learning",
+    "text": "5.4 Temporal-Difference Learning\nTemporal-difference learning, usually abbreviated TD learning, takes a different approach. Instead of waiting for the full return, it updates estimates using partially observed experience plus current value estimates.\nThe simplest case is TD(0):\n\\[\nV(S_t) \\leftarrow V(S_t) + \\alpha \\left(R_{t+1} + \\gamma V(S_{t+1}) - V(S_t)\\right)\n\\]\nThis update uses a bootstrapped target:\n\\[\nR_{t+1} + \\gamma V(S_{t+1})\n\\]\nRather than waiting until the end of the episode, TD learning says:\nUse the immediate reward plus the current estimate of the next state as a target right now.\nThis idea is one of the deepest in reinforcement learning. The target is not a full observed outcome. It is part observation, part estimate.\nIn the maintained code, the cleanest TD(0) example is:\n\nexamples/tabular/td0_prediction.py\n\nThe key function is run_td0_prediction(...). If you compare it with the Monte Carlo file, the contrast is instructive. The Monte Carlo script stores a whole episode and updates later. The TD script updates immediately after each transition. That single structural difference captures a large part of the conceptual gap between Monte Carlo and TD learning.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Monte Carlo Methods and Temporal-Difference Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mc-td.html#the-td-error",
+    "href": "chapters/part1-mc-td.html#the-td-error",
+    "title": "5  Monte Carlo Methods and Temporal-Difference Learning",
+    "section": "5.5 The TD Error",
+    "text": "5.5 The TD Error\nThe quantity\n\\[\n\\delta_t = R_{t+1} + \\gamma V(S_{t+1}) - V(S_t)\n\\]\nis called the temporal-difference error.\nIt measures how surprising the transition was relative to the current value estimate. If the outcome was better than expected, the TD error is positive and the estimate should increase. If the outcome was worse than expected, the TD error is negative and the estimate should decrease.\nThis error signal later becomes important far beyond basic prediction. Actor-critic methods use related ideas. Advantage estimation is closely connected to it. Many practical deep reinforcement learning algorithms still depend on TD-style targets.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Monte Carlo Methods and Temporal-Difference Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mc-td.html#monte-carlo-vs.-temporal-difference-learning",
+    "href": "chapters/part1-mc-td.html#monte-carlo-vs.-temporal-difference-learning",
+    "title": "5  Monte Carlo Methods and Temporal-Difference Learning",
+    "section": "5.6 Monte Carlo vs. Temporal-Difference Learning",
+    "text": "5.6 Monte Carlo vs. Temporal-Difference Learning\nMonte Carlo and TD methods both learn from experience, but they make different trade-offs.\nMonte Carlo methods:\n\nWait for full returns.\nDo not bootstrap.\nCan have high variance.\nAre naturally episodic.\n\nTemporal-difference methods:\n\nUpdate after each step.\nBootstrap from current estimates.\nUsually have lower variance.\nCan work naturally in continuing tasks.\n\nA common summary is:\nMonte Carlo methods wait longer but use more complete targets. TD methods learn earlier but rely on estimates that may themselves be wrong.\nThis is a bias-variance trade-off. Monte Carlo targets are often less biased but more variable. TD targets are often more biased but less variable and more data-efficient.\nThat trade-off is not merely theoretical. You can see it in the code organization of the maintained examples:\n\nexamples/tabular/monte_carlo_prediction.py\nexamples/tabular/td0_prediction.py\n\nThe Monte Carlo script has to wait for trajectory completion and then reconstruct returns. The TD script can learn online, one transition at a time. The code itself shows why TD methods tend to feel more incremental and more data-efficient in practice.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Monte Carlo Methods and Temporal-Difference Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mc-td.html#bootstrapping-as-a-core-idea",
+    "href": "chapters/part1-mc-td.html#bootstrapping-as-a-core-idea",
+    "title": "5  Monte Carlo Methods and Temporal-Difference Learning",
+    "section": "5.7 Bootstrapping as a Core Idea",
+    "text": "5.7 Bootstrapping as a Core Idea\nBootstrapping means updating an estimate using another estimate. This may seem risky at first, because errors can propagate. But it is also what makes learning efficient. Instead of waiting for full trajectories, the agent can improve estimates online, one transition at a time.\nBootstrapping is also one of the reasons reinforcement learning can become unstable when combined with function approximation. Later in the book, when we study DQN and actor-critic methods, we will see that bootstrapping remains powerful but must be handled carefully.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Monte Carlo Methods and Temporal-Difference Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mc-td.html#eligibility-traces-and-the-space-between-mc-and-td",
+    "href": "chapters/part1-mc-td.html#eligibility-traces-and-the-space-between-mc-and-td",
+    "title": "5  Monte Carlo Methods and Temporal-Difference Learning",
+    "section": "5.8 Eligibility Traces and the Space Between MC and TD",
+    "text": "5.8 Eligibility Traces and the Space Between MC and TD\nMonte Carlo and TD(0) are often presented as separate families, but they are really endpoints of a spectrum. Methods based on eligibility traces, such as TD(\\(\\lambda\\)), interpolate between them.\nWhen \\(\\lambda\\) is closer to 1, the method behaves more like Monte Carlo, relying more on long returns. When \\(\\lambda\\) is closer to 0, it behaves more like TD(0), relying more on one-step bootstrapping.\nThis spectrum is important because it shows that reinforcement learning methods are often connected by design trade-offs rather than by sharp boundaries.\nThis book does not yet maintain a full TD(\\(\\lambda\\)) code path in examples/, so the point here should be understood conceptually. It is included because it explains why Monte Carlo and TD(0) should not be thought of as isolated islands. They are endpoints of a family of return-construction choices.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Monte Carlo Methods and Temporal-Difference Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-mc-td.html#from-prediction-to-control",
+    "href": "chapters/part1-mc-td.html#from-prediction-to-control",
+    "title": "5  Monte Carlo Methods and Temporal-Difference Learning",
+    "section": "5.9 From Prediction to Control",
+    "text": "5.9 From Prediction to Control\nSo far, we have mostly discussed value estimation for a fixed policy. But reinforcement learning is usually about control, not just prediction. We want the agent to improve its behavior while learning.\nThat requires one more step:\nThe agent must use value estimates to choose better actions.\nThe next chapter studies this transition. We will move from value prediction to classical control methods, including exploration strategies, SARSA, and Q-learning.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Monte Carlo Methods and Temporal-Difference Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-function-approx.html",
+    "href": "chapters/part2-function-approx.html",
+    "title": "7  From Tabular Methods to Function Approximation",
+    "section": "",
+    "text": "7.1 Why Tabular Methods Stop Scaling\nBy this point, we have seen several core reinforcement learning ideas in their tabular form. We estimated values, improved policies, compared Monte Carlo and temporal-difference learning, and studied classical control methods such as SARSA and Q-learning.\nThese methods are conceptually important, but they face a serious limitation:\nThey do not scale well when the state space becomes large, high-dimensional, or continuous.\nThis chapter explains why that limitation appears, why function approximation becomes necessary, and how this transition leads directly into deep reinforcement learning.\nIn a tabular method, the agent stores a separate value for each state or each state-action pair. This works well in small environments such as grid worlds, toy games, or discretized control tasks.\nBut many realistic problems do not have small state spaces.\nConsider a robotic control task with continuous position and velocity variables. Consider a video game where the state is an image. Consider any problem where the observation includes dozens or hundreds of features. In these settings, we cannot expect to visit every possible state enough times to learn a reliable table entry.\nThere are several related problems:\nThis last point is especially important. In tabular learning, each state is treated as isolated. Learning that one state is valuable tells us nothing directly about nearby or similar states. That becomes extremely inefficient in large environments.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>From Tabular Methods to Function Approximation</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-function-approx.html#why-tabular-methods-stop-scaling",
+    "href": "chapters/part2-function-approx.html#why-tabular-methods-stop-scaling",
+    "title": "7  From Tabular Methods to Function Approximation",
+    "section": "",
+    "text": "The number of states may be enormous.\nThe state space may be continuous rather than discrete.\nSimilar states should share information, but a lookup table cannot generalize.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>From Tabular Methods to Function Approximation</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-function-approx.html#generalization-as-the-key-motivation",
+    "href": "chapters/part2-function-approx.html#generalization-as-the-key-motivation",
+    "title": "7  From Tabular Methods to Function Approximation",
+    "section": "7.2 Generalization as the Key Motivation",
+    "text": "7.2 Generalization as the Key Motivation\nFunction approximation solves this problem by replacing explicit tables with parameterized models.\nInstead of storing one independent value for each state, we define a function such as:\n\\[\n\\hat{V}(s; w)\n\\]\nor\n\\[\n\\hat{Q}(s, a; w)\n\\]\nwhere \\(w\\) denotes learnable parameters.\nNow the agent no longer memorizes values one state at a time. Instead, it learns a mapping from states or state-action pairs to predicted values. Similar inputs can produce similar outputs, so information can generalize across related situations.\nThis shift changes the entire learning problem. The goal is no longer just to fill in a table. The goal is to learn a useful approximation of the value function or policy over a large input space.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>From Tabular Methods to Function Approximation</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-function-approx.html#linear-function-approximation",
+    "href": "chapters/part2-function-approx.html#linear-function-approximation",
+    "title": "7  From Tabular Methods to Function Approximation",
+    "section": "7.3 Linear Function Approximation",
+    "text": "7.3 Linear Function Approximation\nA natural first step is linear approximation. Suppose we extract a feature vector \\(x(s)\\) from state \\(s\\). Then we may write:\n\\[\n\\hat{V}(s; w) = w^\\top x(s)\n\\]\nFor action values, we may use features of state-action pairs:\n\\[\n\\hat{Q}(s, a; w) = w^\\top x(s, a)\n\\]\nThis looks simple, but it already changes the learning behavior in an important way. Updating the parameter vector \\(w\\) changes the prediction for many states at once. This is the source of generalization.\nOlder reinforcement learning examples often illustrate this step with hand-designed features, radial basis function expansions, or other shallow approximators. Those examples remain useful because they expose the transition from tabular storage to shared parameterization very clearly.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>From Tabular Methods to Function Approximation</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-function-approx.html#a-conceptual-bridge-from-old-examples",
+    "href": "chapters/part2-function-approx.html#a-conceptual-bridge-from-old-examples",
+    "title": "7  From Tabular Methods to Function Approximation",
+    "section": "7.4 A Conceptual Bridge from Old Examples",
+    "text": "7.4 A Conceptual Bridge from Old Examples\nIn this repository, the maintained bridge examples now live in:\n\nexamples/approximation/cartpole_linear_q.py\nexamples/approximation/mountaincar_linear_q.py\n\nThese scripts use explicit feature engineering together with a shallow linear model to approximate action values. Although they are much smaller than modern deep RL systems, their conceptual structure is exactly the bridge we need:\n\nRepresent a state-action pair as a feature vector.\nPredict a scalar value from that representation.\nBuild a bootstrap target from reward plus an estimate of the next state’s best action value.\nUpdate the model parameters toward that target.\n\nThat structure is the real bridge. Deep reinforcement learning keeps the same high-level pattern, but replaces hand-designed features and shallow models with neural networks.\nAt the same time, these maintained examples should not be interpreted as equally strong engineering baselines. The CartPole approximation example is currently the more stable of the two. The MountainCar version is useful conceptually, but remains more sensitive to feature choice and hyperparameters.\nThis distinction is important for how this chapter should be read. The role of these files is not mainly to provide the strongest benchmark results in the repository. Their role is to let the reader see, in a small and inspectable form, what changes when a lookup table becomes a parameterized function:\n\nthe value estimate becomes a prediction from features,\na single update changes many states at once,\nand stability becomes partly a representation problem rather than only a sampling problem.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>From Tabular Methods to Function Approximation</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-function-approx.html#the-promise-and-risk-of-approximation",
+    "href": "chapters/part2-function-approx.html#the-promise-and-risk-of-approximation",
+    "title": "7  From Tabular Methods to Function Approximation",
+    "section": "7.5 The Promise and Risk of Approximation",
+    "text": "7.5 The Promise and Risk of Approximation\nFunction approximation gives us scalability and generalization, but it also introduces new difficulties.\nIn a table, an update only changes one entry. With approximation, a single update can affect many predictions at once. This means generalization can help, but it can also cause interference. Improving one region of the state space may accidentally damage estimates elsewhere.\nThis leads to a new tension:\n\nShared parameters make learning more efficient.\nShared parameters also make learning less local and potentially less stable.\n\nThat trade-off becomes one of the defining difficulties of deep reinforcement learning.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>From Tabular Methods to Function Approximation</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-function-approx.html#prediction-with-function-approximation",
+    "href": "chapters/part2-function-approx.html#prediction-with-function-approximation",
+    "title": "7  From Tabular Methods to Function Approximation",
+    "section": "7.6 Prediction with Function Approximation",
+    "text": "7.6 Prediction with Function Approximation\nThe simplest way to combine temporal-difference learning with approximation is to keep the TD target but optimize model parameters instead of table entries.\nFor example, with state-value prediction we may use a target:\n\\[\ny_t = R_{t+1} + \\gamma \\hat{V}(S_{t+1}; w)\n\\]\nand then update parameters to reduce the difference between the current prediction and that target.\nIn a linear model, the update may resemble stochastic gradient descent. In a neural network, the same principle applies, but the function class is much richer.\nThe crucial idea is that the Bellman logic remains. The representation changes, but the reinforcement learning objective is still driven by returns, value estimates, and recursive consistency.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>From Tabular Methods to Function Approximation</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-function-approx.html#control-with-function-approximation",
+    "href": "chapters/part2-function-approx.html#control-with-function-approximation",
+    "title": "7  From Tabular Methods to Function Approximation",
+    "section": "7.7 Control with Function Approximation",
+    "text": "7.7 Control with Function Approximation\nWe can extend the same idea to action-value control. Instead of storing a tabular Q-function, we approximate:\n\\[\n\\hat{Q}(s, a; w)\n\\]\nThen we can construct targets that resemble Q-learning:\n\\[\ny_t = R_{t+1} + \\gamma \\max_{a'} \\hat{Q}(S_{t+1}, a'; w)\n\\]\nand update parameters so that \\(\\hat{Q}(S_t, A_t; w)\\) moves toward \\(y_t\\).\nConceptually, this is a direct continuation of tabular Q-learning. But in practice, the combination of three ingredients can be unstable:\n\nBootstrapping.\nOff-policy learning.\nFunction approximation.\n\nThis combination is so important that it is sometimes called the “deadly triad” in reinforcement learning. It explains why naive Q-learning with nonlinear approximators can behave poorly.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>From Tabular Methods to Function Approximation</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-function-approx.html#why-neural-networks-enter-the-picture",
+    "href": "chapters/part2-function-approx.html#why-neural-networks-enter-the-picture",
+    "title": "7  From Tabular Methods to Function Approximation",
+    "section": "7.8 Why Neural Networks Enter the Picture",
+    "text": "7.8 Why Neural Networks Enter the Picture\nIf linear approximation already offers generalization, why do we need deep learning?\nThe answer is representation power. Linear models depend heavily on feature design. If the right features are not provided, the model may fail even when the task is learnable. In complex domains such as images, raw sensory streams, or large structured observations, manual feature design is often insufficient or too expensive.\nNeural networks allow the agent to learn representations automatically. Rather than hand-crafting features for every state, we train a network to extract patterns that are useful for predicting values or selecting actions.\nThis is the core promise of deep reinforcement learning:\nLearn representations and decision-making signals together.\nBut this promise comes with a cost. Neural networks are flexible, high-capacity function approximators, which also makes them harder to stabilize under reinforcement learning objectives.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>From Tabular Methods to Function Approximation</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-function-approx.html#the-difference-between-historical-and-modern-practice",
+    "href": "chapters/part2-function-approx.html#the-difference-between-historical-and-modern-practice",
+    "title": "7  From Tabular Methods to Function Approximation",
+    "section": "7.9 The Difference Between Historical and Modern Practice",
+    "text": "7.9 The Difference Between Historical and Modern Practice\nOlder code examples often demonstrate the right algorithmic skeleton but use tools and assumptions that no longer match common modern workflows. You may see:\n\nTensorFlow 1.x graph construction.\nOlder Gym APIs.\nMinimal replay buffer implementations.\nLimited experiment tracking.\nLittle attention to evaluation across random seeds.\n\nThese examples are still worth reading, especially for conceptual clarity. But a modern practitioner should separate the enduring ideas from the outdated tooling.\nThe enduring ideas include:\n\nTemporal-difference targets.\nApproximate value functions.\nExploration strategies.\nTarget computation for control.\n\nThe tooling details, however, should be updated when building serious systems today.\nThe same caution applies inside this project. The maintained approximation examples are honest bridge examples, not claims that shallow feature engineering is the best practical solution for these tasks. Their real value is explanatory:\n\nthey preserve the Bellman-style target clearly,\nthey show where handcrafted representation enters,\nand they expose, at a small scale, why approximation makes learning more sensitive.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>From Tabular Methods to Function Approximation</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-function-approx.html#the-road-to-dqn",
+    "href": "chapters/part2-function-approx.html#the-road-to-dqn",
+    "title": "7  From Tabular Methods to Function Approximation",
+    "section": "7.10 The Road to DQN",
+    "text": "7.10 The Road to DQN\nDeep Q-Networks, or DQN, were historically important because they showed that Q-learning-style updates could be combined with deep neural networks to learn directly from high-dimensional inputs such as Atari frames.\nThis was not merely “Q-learning plus a larger model.” Several stabilizing ideas were needed to make training work at all, especially:\n\nExperience replay.\nTarget networks.\nCareful preprocessing and training design.\n\nThe next chapter studies DQN in detail and explains why those additions were so important.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>From Tabular Methods to Function Approximation</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-dqn.html",
+    "href": "chapters/part2-dqn.html",
+    "title": "8  Deep Q-Networks",
+    "section": "",
+    "text": "8.1 From Q-Learning to DQN\nDeep Q-Networks, usually abbreviated DQN, mark one of the most influential turning points in reinforcement learning. The core idea is easy to state:\nUse a neural network to approximate the Q-function in a Q-learning-style algorithm.\nThe reason this mattered is that tabular Q-learning cannot handle raw, high-dimensional observations such as images. DQN showed that with the right stabilizing techniques, value-based reinforcement learning could scale far beyond small tabular environments.\nRecall the tabular Q-learning update:\n\\[\nQ(S_t, A_t) \\leftarrow Q(S_t, A_t) + \\alpha \\left[R_{t+1} + \\gamma \\max_a Q(S_{t+1}, a) - Q(S_t, A_t)\\right]\n\\]\nDQN keeps the same target structure, but replaces the table with a neural network:\n\\[\nQ(s, a; \\theta)\n\\]\nwhere \\(\\theta\\) denotes the network parameters.\nInstead of directly overwriting a table entry, we now train the network so that its prediction \\(Q(S_t, A_t; \\theta)\\) moves toward a target value.\nThis is often written as:\n\\[\ny_t = R_{t+1} + \\gamma \\max_{a'} Q(S_{t+1}, a'; \\theta^-)\n\\]\nwhere \\(\\theta^-\\) are parameters of a separate target network. We will explain that choice shortly.\nTraining then minimizes a loss such as:\n\\[\n\\mathcal{L}(\\theta) = \\mathbb{E}\\left[\\left(y_t - Q(S_t, A_t; \\theta)\\right)^2\\right]\n\\]\nThis looks close to supervised learning, but the similarity is misleading. In supervised learning, targets are usually fixed labels from a dataset. In DQN, the targets are themselves generated from the agent’s evolving estimates.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Deep Q-Networks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-dqn.html#why-naive-deep-q-learning-is-unstable",
+    "href": "chapters/part2-dqn.html#why-naive-deep-q-learning-is-unstable",
+    "title": "8  Deep Q-Networks",
+    "section": "8.2 Why Naive Deep Q-Learning Is Unstable",
+    "text": "8.2 Why Naive Deep Q-Learning Is Unstable\nIf we simply plug a neural network into Q-learning, training can become highly unstable.\nThere are several reasons:\n\nConsecutive samples are strongly correlated.\nThe target depends on the same network that is being updated.\nThe method is off-policy.\nThe updates rely on bootstrapping.\n\nThis creates a feedback loop. The network predicts values, those predictions define the targets, and those targets immediately reshape the network again. Without extra care, the process can oscillate or diverge.\nThat is why DQN should be understood not only as a neural version of Q-learning, but as a stabilization package for deep value learning.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Deep Q-Networks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-dqn.html#experience-replay",
+    "href": "chapters/part2-dqn.html#experience-replay",
+    "title": "8  Deep Q-Networks",
+    "section": "8.3 Experience Replay",
+    "text": "8.3 Experience Replay\nOne of the most important DQN ideas is the replay buffer.\nInstead of updating the network only from the newest transition, the agent stores transitions such as:\n\\[\n(s, a, r, s', d)\n\\]\nin a memory buffer. During training, it samples minibatches from this buffer.\nThis has several benefits:\n\nIt breaks the strong temporal correlation in consecutive experience.\nIt reuses past data more efficiently.\nIt makes the training distribution smoother and more diverse.\n\nReplay turns reinforcement learning into something closer to stochastic optimization over a growing dataset. That shift is one reason deep value learning became much more workable.\nHistorically, even simple replay buffer implementations already showed the basic advantage. Modern systems may add prioritized sampling, larger buffers, or more careful data management, but the fundamental insight remains the same.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Deep Q-Networks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-dqn.html#target-networks",
+    "href": "chapters/part2-dqn.html#target-networks",
+    "title": "8  Deep Q-Networks",
+    "section": "8.4 Target Networks",
+    "text": "8.4 Target Networks\nThe second major stabilization idea is the target network.\nIf the same parameters are used both to predict the current Q-value and to compute the target, then the optimization target changes too quickly. The system is trying to chase its own moving predictions.\nDQN reduces this problem by maintaining a second set of parameters, often written as \\(\\theta^-\\), which are copied from the main network only periodically or updated more slowly.\nThe target then becomes:\n\\[\ny_t = R_{t+1} + \\gamma \\max_{a'} Q(S_{t+1}, a'; \\theta^-)\n\\]\nThis simple idea makes a large practical difference. The target becomes more stable, which improves learning behavior.\nOlder implementations often copy the target network every fixed number of steps. Many modern methods still use that basic pattern, though details vary by algorithm and codebase.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Deep Q-Networks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-dqn.html#the-dqn-training-loop",
+    "href": "chapters/part2-dqn.html#the-dqn-training-loop",
+    "title": "8  Deep Q-Networks",
+    "section": "8.5 The DQN Training Loop",
+    "text": "8.5 The DQN Training Loop\nAt a high level, DQN training follows a repeated loop:\n\nObserve the current state.\nChoose an action, often with \\(\\epsilon\\)-greedy exploration.\nStep the environment and collect the next transition.\nStore the transition in replay memory.\nSample a minibatch from replay.\nBuild bootstrap targets with the target network.\nUpdate the online Q-network by gradient descent.\nPeriodically update the target network.\n\nThis loop is conceptually simple once written out, but each component plays a role in keeping learning stable enough to proceed.\nIn the maintained code for this project, the main reference implementation is:\n\nexamples/deep_rl/dqn_cartpole.py\n\nThat file is intentionally small enough to be read end to end. If you want to connect the abstract DQN loop to concrete code, the main pieces are:\n\nReplayBuffer, which stores transitions.\nQNetwork, which maps observations to one Q-value per action.\nselect_action(...), which implements \\(\\epsilon\\)-greedy behavior.\noptimize(...), which builds the bootstrap target and performs the gradient step.\nevaluate_policy(...), which separates exploratory training behavior from greedy evaluation.\n\nThis chapter is easier to internalize if you treat those names as the executable version of the pseudocode.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Deep Q-Networks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-dqn.html#input-representation-and-atari",
+    "href": "chapters/part2-dqn.html#input-representation-and-atari",
+    "title": "8  Deep Q-Networks",
+    "section": "8.6 Input Representation and Atari",
+    "text": "8.6 Input Representation and Atari\nDQN became famous because of its Atari results. In that setting, the network processed stacks of image frames rather than low-dimensional hand-crafted state features.\nThat achievement is historically important because it demonstrated end-to-end value learning from high-dimensional sensory input. The network did not rely on a manually designed state table. It learned directly from a representation much closer to raw observation.\nAt the same time, it is important not to mythologize the result too much. DQN also depended on careful preprocessing, frame stacking, reward clipping, and other design choices. In reinforcement learning, seemingly small implementation decisions often matter a great deal.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Deep Q-Networks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-dqn.html#what-old-dqn-code-still-teaches",
+    "href": "chapters/part2-dqn.html#what-old-dqn-code-still-teaches",
+    "title": "8  Deep Q-Networks",
+    "section": "8.7 What Old DQN Code Still Teaches",
+    "text": "8.7 What Old DQN Code Still Teaches\nSome older DQN examples in this repository use TensorFlow 1.x and older Gym versions. Those implementations are outdated as software artifacts, but they still teach several enduring lessons:\n\nThe Q-network predicts one value per action.\nA replay buffer stores transitions for later sampling.\nA separate target network stabilizes bootstrap targets.\nExploration is usually handled by an \\(\\epsilon\\)-greedy policy.\n\nThose are the algorithmic ideas worth carrying forward. The exact framework syntax, environment API, and engineering style should be treated as historical rather than current.\nAt the same time, the maintained examples in this project now include a modern PyTorch CartPole DQN implementation and a matching Double DQN variant. Those files are intentionally smaller and cleaner than the legacy scripts so that readers can trace the training loop, replay buffer usage, and target-network logic without needing to decode TensorFlow 1.x graph code first.\nThe maintained value-based path in this repository now consists of:\n\nexamples/deep_rl/dqn_cartpole.py\nexamples/deep_rl/double_dqn_cartpole.py\nexamples/deep_rl/dueling_dqn_cartpole.py\nexamples/deep_rl/prioritized_dqn_cartpole.py\nexamples/deep_rl/rainbowish_cartpole.py\n\nThese files are not identical in status.\n\nThe first two are the clearest starting points if the goal is to understand the core algorithm.\nThe next two add specific stabilization or representation ideas on top of that base.\nThe last one is intentionally described as “Rainbow-ish” rather than full Rainbow, because it combines several ideas without claiming to be a complete reproduction of the full Rainbow recipe.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Deep Q-Networks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-dqn.html#main-weaknesses-of-basic-dqn",
+    "href": "chapters/part2-dqn.html#main-weaknesses-of-basic-dqn",
+    "title": "8  Deep Q-Networks",
+    "section": "8.8 Main Weaknesses of Basic DQN",
+    "text": "8.8 Main Weaknesses of Basic DQN\nBasic DQN was a breakthrough, but it has important limitations.\nFirst, it is mainly designed for discrete action spaces. The max over actions is manageable when the action set is small, but it becomes difficult in continuous control.\nSecond, it can overestimate action values because the same estimates are used inside a max operator. This issue motivated later methods such as Double DQN.\nThird, performance can be highly sensitive to reward scaling, exploration schedules, replay design, target update frequency, and network architecture.\nFourth, DQN is sample-hungry. Learning strong behavior can require many environment interactions.\nThese limitations do not make DQN unimportant. On the contrary, they explain why so much later research built directly on it.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Deep Q-Networks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-dqn.html#beyond-basic-dqn",
+    "href": "chapters/part2-dqn.html#beyond-basic-dqn",
+    "title": "8  Deep Q-Networks",
+    "section": "8.9 Beyond Basic DQN",
+    "text": "8.9 Beyond Basic DQN\nSeveral influential methods can be understood as refinements of DQN:\n\nDouble DQN reduces overestimation bias.\nDueling networks separate value and advantage structure.\nPrioritized replay samples transitions more selectively.\nDistributional methods model return distributions rather than only expectations.\n\nThese extensions improved performance and stability in many settings, but the basic DQN structure remains a reference point for value-based deep reinforcement learning.\nIn the code for this book, the DQN path is now represented by:\n\nexamples/deep_rl/dqn_cartpole.py\nexamples/deep_rl/double_dqn_cartpole.py\nexamples/deep_rl/dueling_dqn_cartpole.py\nexamples/deep_rl/prioritized_dqn_cartpole.py\nexamples/deep_rl/rainbowish_cartpole.py\n\nThat pairing is useful because it makes the target-construction difference concrete. Basic DQN uses the target network both to select and evaluate the next greedy action. Double DQN instead uses the online network to choose the next action and the target network to evaluate that chosen action.\nThe broader family is also useful pedagogically because it shows how modern value-based reinforcement learning usually evolves in practice. Rarely does a project jump directly from tabular Q-learning to a fully elaborate agent. More often, it accumulates stabilizing ingredients one by one: first replay and target networks, then improved targets, then architectural changes, then improved sampling schemes.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Deep Q-Networks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-dqn.html#why-dqn-still-matters",
+    "href": "chapters/part2-dqn.html#why-dqn-still-matters",
+    "title": "8  Deep Q-Networks",
+    "section": "8.10 Why DQN Still Matters",
+    "text": "8.10 Why DQN Still Matters\nDQN still matters for at least three reasons.\nFirst, it is the clearest bridge from classical Q-learning to modern deep reinforcement learning.\nSecond, it illustrates the practical consequences of the deadly triad: bootstrapping, off-policy learning, and function approximation. The replay buffer and target network are direct responses to those problems.\nThird, it teaches a broader lesson that appears throughout DRL:\nGood reinforcement learning algorithms are often not just mathematical objectives. They are objectives plus stabilization mechanisms.\nThe next chapter turns from value-based deep reinforcement learning to policy gradient methods, which optimize the policy more directly and open the door to actor-critic approaches.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Deep Q-Networks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-dp.html",
+    "href": "chapters/part1-dp.html",
+    "title": "4  Dynamic Programming",
+    "section": "",
+    "text": "4.1 Why Study Dynamic Programming?\nDynamic programming is one of the cleanest entry points into reinforcement learning. It is not the most realistic setting for large-scale applications, because it assumes access to the full environment model. But it provides an ideal laboratory for understanding value functions, Bellman equations, and policy improvement.\nIn an MDP, if we know the transition dynamics and reward function, then we can often compute value functions by repeated updates rather than by pure trial-and-error interaction. This is the basic idea of dynamic programming.\nDynamic programming matters for three reasons.\nEven when we cannot use dynamic programming directly, its logic remains everywhere in reinforcement learning. Temporal-difference learning uses Bellman-style targets. Q-learning uses an optimality backup that mirrors dynamic programming. DQN approximates those same updates with a neural network.\nSo while dynamic programming is not the final practical answer, it is one of the best conceptual starting points.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Dynamic Programming</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-dp.html#why-study-dynamic-programming",
+    "href": "chapters/part1-dp.html#why-study-dynamic-programming",
+    "title": "4  Dynamic Programming",
+    "section": "",
+    "text": "It makes the Bellman equations operational.\nIt separates evaluation from improvement very clearly.\nIt provides the conceptual foundation for many later algorithms.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Dynamic Programming</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-dp.html#policy-evaluation",
+    "href": "chapters/part1-dp.html#policy-evaluation",
+    "title": "4  Dynamic Programming",
+    "section": "4.2 Policy Evaluation",
+    "text": "4.2 Policy Evaluation\nSuppose we are given a policy \\(\\pi\\). Policy evaluation asks a single question:\nHow good is this policy?\nMore precisely, we want to compute the value function \\(V^\\pi(s)\\) for each state. From the Bellman expectation equation, we know that:\n\\[\nV^\\pi(s) = \\sum_a \\pi(a \\mid s)\\sum_{s',r} P(s', r \\mid s, a)\\left[r + \\gamma V^\\pi(s')\\right]\n\\]\nThis is a system of equations, one for each state. In small problems, we may solve it directly. More often, we use iterative policy evaluation:\n\\[\nV_{k+1}(s) \\leftarrow \\sum_a \\pi(a \\mid s)\\sum_{s',r} P(s', r \\mid s, a)\\left[r + \\gamma V_k(s')\\right]\n\\]\nThe idea is simple. Start with an initial guess for the value function, often all zeros. Then repeatedly apply the Bellman update until the values stabilize.\nEach update uses the current estimate \\(V_k\\) to produce a better estimate \\(V_{k+1}\\). Under standard conditions, this process converges to the true value function of the policy.\nIn the maintained code for this book, this idea appears directly in:\n\nexamples/tabular/policy_evaluation.py\n\nThe key function is evaluate_deterministic_policy(...). It does exactly what the equation above says: for each non-terminal state, it loops over actions and next states, computes the Bellman expectation backup, and repeats until the largest change across states falls below a tolerance threshold.\nThis is worth pausing over. In many books, iterative policy evaluation is presented only as a formula. In code, the crucial operational detail is the stopping condition. The implementation does not stop because it knows the true answer. It stops because successive sweeps stop changing the value function by much.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Dynamic Programming</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-dp.html#policy-improvement",
+    "href": "chapters/part1-dp.html#policy-improvement",
+    "title": "4  Dynamic Programming",
+    "section": "4.3 Policy Improvement",
+    "text": "4.3 Policy Improvement\nOnce we know how good a policy is, the next natural step is to improve it.\nSuppose we already have \\(V^\\pi\\). For each state, we can ask which action gives the highest expected return if we act once and then continue according to the old policy. That leads to a greedy improvement step:\n\\[\n\\pi'(s) = \\arg\\max_a \\sum_{s',r} P(s', r \\mid s, a)\\left[r + \\gamma V^\\pi(s')\\right]\n\\]\nThis gives a new policy \\(\\pi'\\). A key result in reinforcement learning is the policy improvement theorem, which says that this greedy policy is at least as good as the original policy under suitable conditions.\nThis is the basic pattern:\n\nEvaluate the current policy.\nImprove the policy greedily with respect to the current value estimates.\nRepeat.\n\nThat alternating structure is the heart of policy iteration.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Dynamic Programming</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-dp.html#policy-iteration",
+    "href": "chapters/part1-dp.html#policy-iteration",
+    "title": "4  Dynamic Programming",
+    "section": "4.4 Policy Iteration",
+    "text": "4.4 Policy Iteration\nPolicy iteration combines policy evaluation and policy improvement into a loop.\nThe procedure is:\n\nStart with an initial policy.\nEvaluate the policy to obtain \\(V^\\pi\\).\nImprove the policy greedily.\nIf the policy no longer changes, stop. Otherwise, repeat.\n\nThis method is elegant because it mirrors how we often think about learning in general. First understand the consequences of the current behavior, then update the behavior based on that understanding.\nIn small finite MDPs, policy iteration can converge surprisingly quickly. It is especially useful for grid worlds and textbook environments, where the transition model is available and easy to inspect.\nThe maintained implementation is:\n\nexamples/tabular/policy_iteration.py\n\nThere are two functions worth reading together:\n\nrun_policy_iteration(...)\nimprove_policy(...)\n\nThe first orchestrates the outer loop. The second is where the greedy improvement step actually happens. If you want to see the policy improvement theorem in code form, this file is one of the cleanest places in the project to do it. The code evaluates the current policy, then for each state compares all available actions under the current value estimates, and replaces the old action with the best one.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Dynamic Programming</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-dp.html#value-iteration",
+    "href": "chapters/part1-dp.html#value-iteration",
+    "title": "4  Dynamic Programming",
+    "section": "4.5 Value Iteration",
+    "text": "4.5 Value Iteration\nPolicy iteration is conceptually clean, but full policy evaluation can be expensive. Value iteration compresses the evaluation and improvement steps into a single update.\nInstead of fully evaluating the current policy, value iteration directly applies the Bellman optimality update:\n\\[\nV_{k+1}(s) \\leftarrow \\max_a \\sum_{s',r} P(s', r \\mid s, a)\\left[r + \\gamma V_k(s')\\right]\n\\]\nThis update says: if the goal is optimal behavior, then at each iteration we should back up the best action immediately.\nAfter the value function converges, we can recover an optimal policy by choosing the greedy action in each state:\n\\[\n\\pi^*(s) = \\arg\\max_a \\sum_{s',r} P(s', r \\mid s, a)\\left[r + \\gamma V^*(s')\\right]\n\\]\nValue iteration is often simpler to implement than policy iteration, and it highlights the role of the Bellman optimality equation very clearly.\nThe maintained implementation is:\n\nexamples/tabular/value_iteration.py\n\nCompared with policy iteration, the important conceptual difference in code is this: the update takes a max inside the sweep itself. In other words, policy improvement is no longer a separate outer step. The Bellman optimality operator is applied directly during value updates.\nThat difference is visible in run_value_iteration(...), where each state update computes the value of every possible action and immediately keeps only the largest one. After convergence, the script performs one more greedy pass to extract the policy explicitly.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Dynamic Programming</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-dp.html#synchronous-and-in-place-updates",
+    "href": "chapters/part1-dp.html#synchronous-and-in-place-updates",
+    "title": "4  Dynamic Programming",
+    "section": "4.6 Synchronous and In-Place Updates",
+    "text": "4.6 Synchronous and In-Place Updates\nThere are several ways to implement dynamic programming updates. In synchronous updates, every state is updated using values from the previous sweep. In in-place updates, the algorithm overwrites values as soon as they are computed, allowing later states in the same sweep to use fresher information.\nThis detail may seem minor, but it affects convergence speed. In-place updates often propagate useful information faster. More advanced planning methods build on this idea by choosing which states to update in more strategic ways.\nThe current tabular dynamic-programming examples in this project use straightforward sweep-based updates. That is a good choice for a foundation text. It keeps the Bellman logic visible and avoids burying the main idea under optimization tricks.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Dynamic Programming</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-dp.html#the-limits-of-dynamic-programming",
+    "href": "chapters/part1-dp.html#the-limits-of-dynamic-programming",
+    "title": "4  Dynamic Programming",
+    "section": "4.7 The Limits of Dynamic Programming",
+    "text": "4.7 The Limits of Dynamic Programming\nDynamic programming is powerful, but its assumptions are strong.\nFirst, it requires a model of the environment. In many real-world problems, we do not know the transition probabilities or reward function exactly.\nSecond, it assumes the state space is manageable. If the number of states is huge, storing and updating a value for every state becomes infeasible.\nThird, it depends on repeated sweeps over the entire state space. This is difficult in high-dimensional or continuous domains.\nThese limitations explain why dynamic programming is not the dominant method in modern large-scale reinforcement learning. Still, the logic of Bellman backups and iterative improvement survives in almost every major algorithm family.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Dynamic Programming</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-dp.html#from-planning-to-learning",
+    "href": "chapters/part1-dp.html#from-planning-to-learning",
+    "title": "4  Dynamic Programming",
+    "section": "4.8 From Planning to Learning",
+    "text": "4.8 From Planning to Learning\nDynamic programming is often described as a planning method rather than a learning method. That distinction is useful:\n\nPlanning uses a known model to compute good behavior.\nLearning uses experience to estimate what the model or values should be.\n\nThe next chapter makes this transition explicit. We will drop the assumption of a known model and ask how an agent can estimate value functions directly from sampled episodes and transitions. That leads to Monte Carlo methods and temporal-difference learning.\nFor this reason, dynamic programming should be read here less as a practical recipe and more as a conceptual template. The exact same Bellman logic that appears in these grid world scripts later reappears in TD learning, Q-learning, DQN, and even actor-critic critics. The implementations become more approximate, more statistical, and more fragile, but the underlying backup idea does not disappear.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Dynamic Programming</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-policy-gradient.html",
+    "href": "chapters/part2-policy-gradient.html",
+    "title": "9  Policy Gradient Methods",
+    "section": "",
+    "text": "9.1 Why Learn the Policy Directly?\nSo far, the deep reinforcement learning methods in this book have followed the value-based path. We started from tabular Q-learning, moved to function approximation, and then studied DQN as a deep version of value-based control.\nThat path is powerful, but it is not the only one.\nPolicy gradient methods take a different approach. Instead of learning action values and then selecting actions indirectly, they optimize the policy itself. This shift changes the mathematical object we train, the kinds of action spaces we can handle naturally, and the kinds of stability problems we encounter.\nIn value-based methods, the policy is derived from value estimates. For example, in Q-learning or DQN, we estimate \\(Q(s, a)\\) and then choose actions by taking an argmax or by adding exploration.\nThis works well in many discrete-action problems, but it has limitations.\nFirst, the argmax operation becomes awkward in continuous action spaces. If actions are continuous, finding the maximizing action at every step may be difficult or expensive.\nSecond, some tasks benefit from learning stochastic policies directly. In uncertain environments, partial observability, competitive settings, or environments with multiple near-optimal behaviors, a stochastic policy may be more natural than a deterministic one.\nThird, direct policy optimization avoids some of the indirectness of value-based control. Rather than estimating action values and then extracting behavior, policy gradient methods optimize behavior itself.\nThis leads to a new parameterization:\n\\[\n\\pi_\\theta(a \\mid s)\n\\]\nwhere \\(\\theta\\) are the parameters of the policy network.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Policy Gradient Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-policy-gradient.html#the-objective-of-policy-gradient-methods",
+    "href": "chapters/part2-policy-gradient.html#the-objective-of-policy-gradient-methods",
+    "title": "9  Policy Gradient Methods",
+    "section": "9.2 The Objective of Policy Gradient Methods",
+    "text": "9.2 The Objective of Policy Gradient Methods\nThe goal is to maximize expected return under the policy. At a high level, we may write the objective as:\n\\[\nJ(\\theta)\n\\]\nwhere \\(J\\) measures how good the policy is in expectation.\nThe central question is:\nHow do we compute a gradient that tells us how to improve the policy parameters?\nThis is where the policy gradient theorem enters. The theorem gives a way to estimate \\(\\nabla_\\theta J(\\theta)\\) using sampled trajectories, without needing to differentiate through the environment dynamics directly.\nThe deep idea is that if an action led to better-than-expected outcomes, then the policy should become more likely to take that action in similar states. If an action led to worse-than-expected outcomes, the policy should become less likely to take it.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Policy Gradient Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-policy-gradient.html#the-log-probability-trick",
+    "href": "chapters/part2-policy-gradient.html#the-log-probability-trick",
+    "title": "9  Policy Gradient Methods",
+    "section": "9.3 The Log-Probability Trick",
+    "text": "9.3 The Log-Probability Trick\nOne of the most important identities behind policy gradients is:\n\\[\n\\nabla_\\theta \\pi_\\theta(a \\mid s) = \\pi_\\theta(a \\mid s)\\nabla_\\theta \\log \\pi_\\theta(a \\mid s)\n\\]\nThis may look like a technical step, but it is what makes policy optimization practical.\nUsing this identity, we can derive estimators that scale the gradient of the log-probability of an action by a signal that measures how good that action turned out to be.\nThis leads to the core intuition:\nIncrease the probability of actions that lead to high return, and decrease the probability of actions that lead to low return.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Policy Gradient Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-policy-gradient.html#reinforce",
+    "href": "chapters/part2-policy-gradient.html#reinforce",
+    "title": "9  Policy Gradient Methods",
+    "section": "9.4 REINFORCE",
+    "text": "9.4 REINFORCE\nThe classic Monte Carlo policy gradient algorithm is REINFORCE. Its update has the form:\n\\[\n\\theta \\leftarrow \\theta + \\alpha G_t \\nabla_\\theta \\log \\pi_\\theta(A_t \\mid S_t)\n\\]\nHere, \\(G_t\\) is the return observed after taking action \\(A_t\\) in state \\(S_t\\).\nThis update says:\n\nIf the return after an action is high, increase the log-probability of that action.\nIf the return is low, reduce its relative probability.\n\nREINFORCE is appealing because it is conceptually direct. It does not require a value function in its simplest form. It uses sampled returns to improve the policy directly.\nThis makes REINFORCE an important baseline for understanding the entire policy optimization family.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Policy Gradient Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-policy-gradient.html#why-reinforce-is-noisy",
+    "href": "chapters/part2-policy-gradient.html#why-reinforce-is-noisy",
+    "title": "9  Policy Gradient Methods",
+    "section": "9.5 Why REINFORCE Is Noisy",
+    "text": "9.5 Why REINFORCE Is Noisy\nREINFORCE is elegant, but it suffers from a serious practical problem:\nIts gradient estimates can have very high variance.\nThere are several reasons for this:\n\nReturns can be noisy across episodes.\nCredit assignment is difficult when rewards are delayed.\nFull-trajectory returns may fluctuate heavily even when the policy changes only slightly.\n\nAs a result, learning can be unstable or slow. The algorithm points in the right direction on average, but the individual gradient estimates can be extremely noisy.\nThis is one reason why pure Monte Carlo policy gradients are often more useful as teaching tools or baseline methods than as the final answer in serious reinforcement learning systems.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Policy Gradient Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-policy-gradient.html#baselines-and-variance-reduction",
+    "href": "chapters/part2-policy-gradient.html#baselines-and-variance-reduction",
+    "title": "9  Policy Gradient Methods",
+    "section": "9.6 Baselines and Variance Reduction",
+    "text": "9.6 Baselines and Variance Reduction\nOne of the most important ideas in policy gradient methods is the use of a baseline.\nInstead of weighting the gradient by the raw return \\(G_t\\), we subtract a baseline \\(b(s)\\):\n\\[\n\\theta \\leftarrow \\theta + \\alpha \\left(G_t - b(S_t)\\right)\\nabla_\\theta \\log \\pi_\\theta(A_t \\mid S_t)\n\\]\nIf chosen properly, this does not change the expected gradient, but it can reduce variance substantially.\nThe intuition is simple. We do not only want to know whether a return was large in absolute terms. We want to know whether it was better or worse than some reasonable expectation.\nThat “better than expected” idea later becomes the advantage function, which is central to actor-critic methods.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Policy Gradient Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-policy-gradient.html#policy-networks-in-practice",
+    "href": "chapters/part2-policy-gradient.html#policy-networks-in-practice",
+    "title": "9  Policy Gradient Methods",
+    "section": "9.7 Policy Networks in Practice",
+    "text": "9.7 Policy Networks in Practice\nIn deep reinforcement learning, the policy is often represented by a neural network.\nFor discrete actions, the network may output logits or probabilities over actions. For continuous actions, it may output the parameters of a probability distribution, such as a Gaussian mean and variance.\nThe training signal then comes from log-probabilities of sampled actions multiplied by returns, advantages, or related estimates.\nOlder implementations often present this structure in a compact form:\n\nThe network produces action probabilities.\nAn action is sampled from that distribution.\nThe log-probability of the sampled action is recorded.\nAfter rewards are collected, the policy parameters are updated using a weighted log-probability objective.\n\nThat structure remains conceptually correct even when the surrounding software stack is old.\nIn the maintained examples for this project, the cleanest reference for this idea is now a self-implemented PyTorch REINFORCE example for CartPole:\n\nexamples/deep_rl/reinforce_cartpole.py\n\nIt records action log-probabilities during an episode, computes discounted returns afterward, and then performs a return-weighted policy update. That example is intentionally kept as the simplest policy-gradient reference in the codebase.\nThat role should be read carefully. reinforce_cartpole.py is not presented here as the strongest maintained policy optimization baseline in the project. It is presented as the clearest local implementation of the policy-gradient idea itself. If the question is “what does a return-weighted log-probability update look like in code?”, this is the right file to read first.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Policy Gradient Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-policy-gradient.html#strengths-of-policy-gradient-methods",
+    "href": "chapters/part2-policy-gradient.html#strengths-of-policy-gradient-methods",
+    "title": "9  Policy Gradient Methods",
+    "section": "9.8 Strengths of Policy Gradient Methods",
+    "text": "9.8 Strengths of Policy Gradient Methods\nPolicy gradient methods have several important strengths.\nFirst, they support stochastic policies naturally.\nSecond, they handle continuous action spaces more gracefully than max-based value methods.\nThird, they optimize the policy directly rather than relying on a value-to-policy extraction step.\nFourth, they provide a clean foundation for many later methods, including actor-critic algorithms, PPO, TRPO, and other modern policy optimization methods.\nThese strengths help explain why policy-based deep reinforcement learning became such a major branch of the field.\nIn the current code for this book, pure policy gradient is represented mainly by REINFORCE. More advanced policy optimization examples such as PPO are maintained separately and, at present, are backed by a mature third-party implementation rather than a from-scratch local reimplementation. That decision is practical: for this project, a stable and validated training baseline matters more than insisting that every policy method be hand-written first.\nThis means the codebase currently separates two goals that are often conflated:\n\na transparent local implementation that makes the principle easy to inspect,\nand a stronger maintained baseline that is more reliable to run.\n\nFor policy gradients in this project, REINFORCE mainly serves the first role.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Policy Gradient Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-policy-gradient.html#weaknesses-of-pure-policy-gradients",
+    "href": "chapters/part2-policy-gradient.html#weaknesses-of-pure-policy-gradients",
+    "title": "9  Policy Gradient Methods",
+    "section": "9.9 Weaknesses of Pure Policy Gradients",
+    "text": "9.9 Weaknesses of Pure Policy Gradients\nAt the same time, pure policy gradient methods also have clear weaknesses.\n\nGradient estimates can have high variance.\nLearning may require many samples.\nCredit assignment can still be difficult in long-horizon tasks.\nWithout value estimation, the algorithm may use data inefficiently.\n\nThese weaknesses point directly toward the next major idea:\nCombine policy learning with value estimation.\nThat hybrid approach leads to actor-critic methods.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Policy Gradient Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-policy-gradient.html#why-policy-gradients-matter",
+    "href": "chapters/part2-policy-gradient.html#why-policy-gradients-matter",
+    "title": "9  Policy Gradient Methods",
+    "section": "9.10 Why Policy Gradients Matter",
+    "text": "9.10 Why Policy Gradients Matter\nPolicy gradients matter because they expand the reinforcement learning toolbox beyond greedy value maximization. They show that decision-making policies can be parameterized and optimized directly, which becomes especially important in continuous control and large-scale deep reinforcement learning.\nThey also introduce several ideas that will remain central:\n\nLog-probability objectives.\nReturn-weighted policy updates.\nBaselines for variance reduction.\nThe separation between policy optimization and value estimation.\n\nThe next chapter builds on these ideas by combining a policy learner with a value estimator in the actor-critic framework.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Policy Gradient Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-actor-critic.html",
+    "href": "chapters/part2-actor-critic.html",
+    "title": "10  Actor-Critic Methods",
+    "section": "",
+    "text": "10.1 The Main Idea\nPolicy gradient methods optimize the policy directly, which gives them flexibility and conceptual clarity. But pure policy gradients often suffer from high variance and poor sample efficiency. Value-based methods, on the other hand, use bootstrapping to learn more efficiently, but they may be less natural in continuous action settings and can be unstable in other ways.\nActor-critic methods combine the strengths of both approaches.\nThis is one of the most important design patterns in modern reinforcement learning.\nAn actor-critic method has two components:\nThe actor decides what to do. The critic evaluates those decisions and provides a learning signal.\nThis division of labor is powerful because it separates two difficult problems:\nIn deep reinforcement learning, both actor and critic are often neural networks, though their exact forms vary across algorithms.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Actor-Critic Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-actor-critic.html#the-main-idea",
+    "href": "chapters/part2-actor-critic.html#the-main-idea",
+    "title": "10  Actor-Critic Methods",
+    "section": "",
+    "text": "The actor, which represents the policy.\nThe critic, which estimates how good states, actions, or decisions are.\n\n\n\n\nHow to choose actions.\nHow to judge whether those actions were good.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Actor-Critic Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-actor-critic.html#why-add-a-critic",
+    "href": "chapters/part2-actor-critic.html#why-add-a-critic",
+    "title": "10  Actor-Critic Methods",
+    "section": "10.2 Why Add a Critic?",
+    "text": "10.2 Why Add a Critic?\nThe main reason to add a critic is variance reduction and improved learning efficiency.\nInstead of waiting for a full Monte Carlo return as in REINFORCE, the critic can provide a learned estimate of future return. That estimate becomes a stronger, more immediate training signal for the actor.\nIn its simplest form, the actor update may look like:\n\\[\n\\theta \\leftarrow \\theta + \\alpha \\hat{A}_t \\nabla_\\theta \\log \\pi_\\theta(A_t \\mid S_t)\n\\]\nwhere \\(\\hat{A}_t\\) is an estimate of the advantage of the selected action.\nThis already shows the core relationship:\nThe actor changes the policy, and the critic supplies the signal that says whether the chosen action was better or worse than expected.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Actor-Critic Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-actor-critic.html#the-advantage-function",
+    "href": "chapters/part2-actor-critic.html#the-advantage-function",
+    "title": "10  Actor-Critic Methods",
+    "section": "10.3 The Advantage Function",
+    "text": "10.3 The Advantage Function\nThe advantage function is one of the central ideas in actor-critic methods. It is defined as:\n\\[\nA^\\pi(s, a) = Q^\\pi(s, a) - V^\\pi(s)\n\\]\nIt measures how much better or worse an action is relative to the state’s average value under the current policy.\nThis is useful because raw returns alone do not tell us whether an action was surprisingly good. A large return may simply reflect that the state itself was favorable. The advantage function tries to isolate the contribution of the action relative to the baseline expectation.\nThis is precisely the kind of signal that helps reduce variance in policy updates.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Actor-Critic Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-actor-critic.html#temporal-difference-critics",
+    "href": "chapters/part2-actor-critic.html#temporal-difference-critics",
+    "title": "10  Actor-Critic Methods",
+    "section": "10.4 Temporal-Difference Critics",
+    "text": "10.4 Temporal-Difference Critics\nMany actor-critic methods use TD learning for the critic. For example, the critic may update a state-value estimate using:\n\\[\nV(S_t) \\leftarrow V(S_t) + \\alpha \\left(R_{t+1} + \\gamma V(S_{t+1}) - V(S_t)\\right)\n\\]\nThe TD error\n\\[\n\\delta_t = R_{t+1} + \\gamma V(S_{t+1}) - V(S_t)\n\\]\noften serves a dual role:\n\nIt updates the critic.\nIt acts as a policy learning signal for the actor.\n\nThis is elegant because the same one-step surprise signal helps both components learn together.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Actor-Critic Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-actor-critic.html#a-basic-actor-critic-update",
+    "href": "chapters/part2-actor-critic.html#a-basic-actor-critic-update",
+    "title": "10  Actor-Critic Methods",
+    "section": "10.5 A Basic Actor-Critic Update",
+    "text": "10.5 A Basic Actor-Critic Update\nA simple actor-critic algorithm might follow this loop:\n\nObserve state \\(S_t\\).\nSample action \\(A_t\\) from the actor.\nReceive reward \\(R_{t+1}\\) and next state \\(S_{t+1}\\).\nCompute a TD-style target for the critic.\nCompute a TD error or advantage estimate.\nUpdate the critic toward the target.\nUpdate the actor using the advantage-weighted log-probability gradient.\n\nThis structure is one of the cleanest examples of how reinforcement learning combines prediction and control in a single learning system.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Actor-Critic Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-actor-critic.html#synchronous-and-asynchronous-variants",
+    "href": "chapters/part2-actor-critic.html#synchronous-and-asynchronous-variants",
+    "title": "10  Actor-Critic Methods",
+    "section": "10.6 Synchronous and Asynchronous Variants",
+    "text": "10.6 Synchronous and Asynchronous Variants\nHistorically, actor-critic ideas appeared in several forms, including synchronous and asynchronous training.\nOne notable family was A3C (Asynchronous Advantage Actor-Critic), where multiple workers interacted with environments in parallel and updated shared global parameters. This approach helped reduce correlation in experience and made training more efficient at the time.\nOlder repositories often contain A3C-style implementations with threaded workers, local copies of policy and value networks, and periodic synchronization. Even though the software style may look dated, the conceptual lesson remains important:\nParallel data collection and advantage-based policy updates can make actor-critic methods much more practical.\nLater systems often moved toward synchronous batched training, but the actor-critic principle remained intact.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Actor-Critic Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-actor-critic.html#a2c-and-the-simplification-of-a3c",
+    "href": "chapters/part2-actor-critic.html#a2c-and-the-simplification-of-a3c",
+    "title": "10  Actor-Critic Methods",
+    "section": "10.7 A2C and the Simplification of A3C",
+    "text": "10.7 A2C and the Simplification of A3C\nA2C (Advantage Actor-Critic) is often described as a synchronous counterpart to A3C. Instead of many asynchronous workers updating parameters independently, data is often collected in parallel and then used in more coordinated batch updates.\nThis simplification can make implementations easier to reason about and debug. It also aligns better with modern accelerator-based training workflows.\nThe deeper point is not the naming difference between A2C and A3C. The deeper point is that both rely on the same core structure:\n\nA policy network proposes actions.\nA value estimator supplies a baseline or advantage signal.\nThe actor is updated in the direction of actions that appear better than expected.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Actor-Critic Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-actor-critic.html#why-actor-critic-became-central",
+    "href": "chapters/part2-actor-critic.html#why-actor-critic-became-central",
+    "title": "10  Actor-Critic Methods",
+    "section": "10.8 Why Actor-Critic Became Central",
+    "text": "10.8 Why Actor-Critic Became Central\nActor-critic methods became central because they occupy a strong middle ground.\nCompared with pure policy gradients, they usually reduce variance and improve sample efficiency.\nCompared with purely value-based methods, they often handle stochastic or continuous policies more naturally.\nCompared with pure Monte Carlo methods, they can learn incrementally through bootstrapping.\nThis balance explains why so many modern deep reinforcement learning algorithms are actor-critic variants in one form or another.\nIt also explains why actor-critic is harder to implement robustly than its pseudocode may suggest. Once a policy update depends on a learned value signal, the system becomes a coupled optimization problem. The actor depends on the critic for guidance, and the critic depends on data generated by the actor. That feedback loop is powerful, but it is also where many implementation failures come from.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Actor-Critic Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-actor-critic.html#remaining-challenges",
+    "href": "chapters/part2-actor-critic.html#remaining-challenges",
+    "title": "10  Actor-Critic Methods",
+    "section": "10.9 Remaining Challenges",
+    "text": "10.9 Remaining Challenges\nActor-critic methods are powerful, but they are not automatically stable.\nThey inherit complexity from both sides:\n\nThe actor can drift too quickly.\nThe critic can become inaccurate or biased.\nBootstrapping can still create instability.\nOff-policy variants can become especially delicate.\n\nIn practice, a weak critic can damage the actor badly, because the policy update depends on the critic’s signal. This creates a feedback loop similar in spirit to the issues seen in deep value learning.\nThat is why later actor-critic methods often include additional design choices such as clipping, trust-region style constraints, entropy regularization, target networks, replay buffers, or delayed updates.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Actor-Critic Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-actor-critic.html#from-actor-critic-to-modern-drl",
+    "href": "chapters/part2-actor-critic.html#from-actor-critic-to-modern-drl",
+    "title": "10  Actor-Critic Methods",
+    "section": "10.10 From Actor-Critic to Modern DRL",
+    "text": "10.10 From Actor-Critic to Modern DRL\nActor-critic is less a single algorithm than a broad framework. Many influential deep reinforcement learning methods can be understood as actor-critic descendants or refinements.\nExamples include:\n\nA2C and A3C.\nDDPG for continuous control.\nTD3 as a refinement of deterministic actor-critic ideas.\nSAC as an entropy-regularized actor-critic method.\nPPO as a practical policy optimization method built around actor-critic structure.\n\nThis is why actor-critic deserves special attention. It is one of the most fertile templates in the entire field.\nIn the maintained code for this book, actor-critic ideas are currently represented in two different ways.\nFirst, the simplest policy-gradient baseline remains a local self-implementation:\n\nexamples/deep_rl/reinforce_cartpole.py\n\nSecond, the main actor-critic training path is currently represented by stable library-backed LunarLander examples:\n\nexamples/deep_rl/actor_critic_lunarlander.py\nexamples/deep_rl/a2c_lunarlander.py\nexamples/deep_rl/ppo_lunarlander.py\n\nThese files use Stable-Baselines3 rather than local from-scratch implementations. That choice is deliberate. In this project, the actor-critic family proved much more sensitive to implementation details than the value-based DQN family, so the maintained baseline now prioritizes validated training behavior over hand-written minimalism.\nFrom a conceptual perspective, this is still appropriate. The point of this chapter is to understand the actor-critic pattern: policy updates guided by a learned value-based signal. The specific software boundary between “written locally” and “delegated to a stable library” is secondary to that core idea.\nStill, the implementation boundary should be stated explicitly because it affects how the code should be used:\n\nreinforce_cartpole.py is the local conceptual baseline for direct policy gradients.\nppo_lunarlander.py is currently the strongest maintained actor-critic-family baseline in the repository.\nactor_critic_lunarlander.py and a2c_lunarlander.py preserve the algorithmic positions in the codebase, but they should be read with the same practical caution used elsewhere in this book: an algorithm name in the repository is not automatically a claim that every variant is equally validated.\n\nThe next chapter surveys more advanced deep reinforcement learning methods and shows how they extend the ideas introduced so far.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Actor-Critic Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-advanced.html",
+    "href": "chapters/part2-advanced.html",
+    "title": "11  Advanced Deep Reinforcement Learning",
+    "section": "",
+    "text": "11.1 Double DQN\nBy now, the main structural ideas of deep reinforcement learning are in place. We have seen value-based learning through DQN, direct policy optimization through policy gradients, and hybrid learning through actor-critic methods.\nThis chapter surveys several advanced methods that refine those foundations. The goal is not to turn the chapter into a catalog of every algorithm in the literature. Instead, the goal is to show how later methods respond to specific weaknesses in earlier ones.\nThat perspective is important. Most advanced DRL methods are best understood not as isolated inventions, but as answers to concrete problems:\nBasic DQN tends to overestimate action values because the same estimates are used both to select and to evaluate the maximizing action. This issue arises from the max operator in the bootstrap target.\nDouble DQN reduces this bias by decoupling action selection from action evaluation. In one common form, the online network selects the action, while the target network evaluates it.\nThe key idea is not complicated:\nThis helps reduce optimistic value estimates and often improves learning stability.\nDouble DQN is a good example of a broader pattern in DRL: small changes to target construction can matter a great deal.\nIn this repository, that idea is now captured directly by comparing:\nThe architectural skeleton is almost the same. The important change is in the target: the online network selects the next action, while the target network evaluates that action.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Advanced Deep Reinforcement Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-advanced.html#double-dqn",
+    "href": "chapters/part2-advanced.html#double-dqn",
+    "title": "11  Advanced Deep Reinforcement Learning",
+    "section": "",
+    "text": "Choose the best next action using one network.\nEvaluate that chosen action using another network.\n\n\n\n\n\nexamples/deep_rl/dqn_cartpole.py\nexamples/deep_rl/double_dqn_cartpole.py",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Advanced Deep Reinforcement Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-advanced.html#dueling-networks",
+    "href": "chapters/part2-advanced.html#dueling-networks",
+    "title": "11  Advanced Deep Reinforcement Learning",
+    "section": "11.2 Dueling Networks",
+    "text": "11.2 Dueling Networks\nAnother extension of DQN is the dueling network architecture.\nInstead of predicting action values in a single undifferentiated stream, the network separates:\n\nA state-value stream.\nAn advantage stream.\n\nThese are then combined to produce action-value estimates.\nThe motivation is that in many states, it is useful to estimate how good the state is even when the exact choice among similar actions matters less. This architectural decomposition can improve representation learning and make value estimation more efficient in some settings.\nDueling networks also show that progress in DRL often comes not only from new loss functions, but from better structural biases in the function approximator itself.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Advanced Deep Reinforcement Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-advanced.html#prioritized-replay",
+    "href": "chapters/part2-advanced.html#prioritized-replay",
+    "title": "11  Advanced Deep Reinforcement Learning",
+    "section": "11.3 Prioritized Replay",
+    "text": "11.3 Prioritized Replay\nStandard replay buffers sample transitions uniformly. But not all transitions are equally informative. Some contain large prediction errors or learning opportunities that may deserve more attention.\nPrioritized experience replay changes the sampling distribution so that more informative transitions are replayed more often.\nThis can improve learning efficiency, but it also introduces new issues:\n\nThe sample distribution becomes biased.\nImportance weighting or correction terms may be needed.\nThe system becomes more sensitive to replay design.\n\nThis is another recurring DRL lesson: better sample usage often comes at the cost of more complicated training dynamics.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Advanced Deep Reinforcement Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-advanced.html#deterministic-policy-gradients-and-ddpg",
+    "href": "chapters/part2-advanced.html#deterministic-policy-gradients-and-ddpg",
+    "title": "11  Advanced Deep Reinforcement Learning",
+    "section": "11.4 Deterministic Policy Gradients and DDPG",
+    "text": "11.4 Deterministic Policy Gradients and DDPG\nPolicy gradients naturally support continuous action spaces, but stochastic policy methods are not the only option. In some settings, a deterministic policy can be more efficient:\n\\[\na = \\mu_\\theta(s)\n\\]\nThis idea leads to deterministic policy gradient methods and, in deep reinforcement learning, to DDPG (Deep Deterministic Policy Gradient).\nDDPG can be viewed as a continuous-control actor-critic method with several DQN-like ingredients:\n\nA replay buffer.\nTarget networks.\nAn actor network for actions.\nA critic network for action values.\n\nThis hybrid structure made DDPG historically important. It brought together value-based stabilization ideas and actor-critic structure in continuous action settings.\nHowever, DDPG is also known for being sensitive and sometimes brittle in practice. Its importance lies both in what it achieved and in what later methods learned from its weaknesses.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Advanced Deep Reinforcement Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-advanced.html#td3",
+    "href": "chapters/part2-advanced.html#td3",
+    "title": "11  Advanced Deep Reinforcement Learning",
+    "section": "11.5 TD3",
+    "text": "11.5 TD3\nTD3 (Twin Delayed Deep Deterministic Policy Gradient) was designed in part to address weaknesses in DDPG.\nIts main ideas include:\n\nUsing two critics to reduce overestimation bias.\nDelaying actor updates relative to critic updates.\nAdding smoothing noise in target action evaluation.\n\nThe broader lesson is familiar by now: once a method becomes unstable or biased, later work often improves it by adding redundancy, delay, or smoothing to the target-generation process.\nTD3 is a strong example of how practical deep reinforcement learning often advances through careful control of approximation error rather than through entirely new conceptual frameworks.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Advanced Deep Reinforcement Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-advanced.html#sac",
+    "href": "chapters/part2-advanced.html#sac",
+    "title": "11  Advanced Deep Reinforcement Learning",
+    "section": "11.6 SAC",
+    "text": "11.6 SAC\nSoft Actor-Critic (SAC) is one of the most influential modern actor-critic methods for continuous control.\nIts defining idea is to optimize not only expected return, but also policy entropy. Informally, SAC encourages the policy to remain appropriately stochastic while still pursuing reward.\nThis leads to an objective that values both:\n\nHigh reward.\nHigh entropy.\n\nEntropy regularization can improve exploration and make training more robust. SAC also uses off-policy learning and critic-based updates, making it both powerful and relatively sample-efficient compared with many earlier policy-gradient methods.\nSAC is important because it shows that exploration does not always need to be treated as an external add-on like \\(\\epsilon\\)-greedy noise. It can be built directly into the optimization objective.\nIn the current repository, the continuous-control positions for DDPG, TD3, and SAC are represented by local Pendulum scripts. At the time of writing, these files have shown clear learning behavior in manual project runs, so they can now be treated as validated self-implemented references for the continuous-control portion of the codebase. Even so, it is worth keeping the level of the claim precise: this is a practical project-level validation, not a claim of benchmark-grade evaluation across many seeds and configurations.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Advanced Deep Reinforcement Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-advanced.html#ppo",
+    "href": "chapters/part2-advanced.html#ppo",
+    "title": "11  Advanced Deep Reinforcement Learning",
+    "section": "11.7 PPO",
+    "text": "11.7 PPO\nWhile DQN-style methods and deterministic actor-critic methods each solve certain problems well, many practitioners also need a robust and practical policy optimization algorithm that works across a wide range of tasks.\nPPO (Proximal Policy Optimization) became popular largely because it is relatively simple, strong in practice, and easier to implement reliably than some earlier trust-region methods.\nThe core PPO idea is to update the policy while limiting how far it moves in a single step. In practice, this is often done through a clipped objective that discourages excessively large policy changes.\nThe intuition is straightforward:\n\nImprove the policy.\nDo not let the update change behavior too abruptly.\n\nThis helps stabilize training. PPO is often used with actor-critic structure, advantage estimates, and minibatch optimization over collected rollouts.\nAlthough PPO is not the final answer for every problem, it became a practical default in many settings because it sits in a useful balance between sophistication and implementation simplicity.\nIn the maintained code for this project, PPO is currently represented by:\n\nexamples/deep_rl/ppo_lunarlander.py\n\nThis example is backed by Stable-Baselines3 rather than a local from-scratch implementation. That choice reflects a practical lesson from the project: for modern on-policy methods, a mature implementation can be far more reliable than a compact hand-written reimplementation that only looks correct on paper. In other words, the algorithmic idea still belongs in the book, but the maintained code path now favors a verified PPO baseline over a fragile minimal script.\nAt the time of writing, this is also the most reliable maintained policy-optimization baseline in the repository. That does not make PPO universally superior to every other actor-critic-family method. It means only that, in this codebase, PPO on LunarLander is currently the clearest place where the underlying ideas and practical training behavior meet in a way that has actually been checked.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Advanced Deep Reinforcement Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-advanced.html#distributional-and-rainbow-style-ideas",
+    "href": "chapters/part2-advanced.html#distributional-and-rainbow-style-ideas",
+    "title": "11  Advanced Deep Reinforcement Learning",
+    "section": "11.8 Distributional and Rainbow-Style Ideas",
+    "text": "11.8 Distributional and Rainbow-Style Ideas\nAnother important direction in value-based deep reinforcement learning is distributional RL. Instead of predicting only the expected return, distributional methods model a distribution over possible returns.\nThis shift provides richer learning signals and can improve performance in some settings.\nWhen several improvements to DQN are combined, including Double DQN, dueling networks, prioritized replay, multi-step returns, and distributional ideas, the resulting system is often described in the spirit of Rainbow.\nThis is a useful reminder that modern DRL performance often depends on layered combinations of improvements rather than a single trick.\nIn the maintained examples for this project, the DQN refinement path now includes:\n\nexamples/deep_rl/dqn_cartpole.py\nexamples/deep_rl/double_dqn_cartpole.py\nexamples/deep_rl/dueling_dqn_cartpole.py\nexamples/deep_rl/prioritized_dqn_cartpole.py\nexamples/deep_rl/rainbowish_cartpole.py\n\nThe final script is intentionally described as “Rainbow-ish” rather than a full Rainbow reproduction. It combines several major value-based refinements without claiming to be a complete benchmark-grade Rainbow implementation.\nThat naming discipline is important. Advanced reinforcement learning code often accumulates features gradually, and it is easy to overstate what has actually been implemented. In this book, the better habit is to describe an implementation as precisely as possible, even when the precise description is less glamorous than the paper title that inspired it.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Advanced Deep Reinforcement Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-advanced.html#how-to-organize-the-algorithm-landscape",
+    "href": "chapters/part2-advanced.html#how-to-organize-the-algorithm-landscape",
+    "title": "11  Advanced Deep Reinforcement Learning",
+    "section": "11.9 How to Organize the Algorithm Landscape",
+    "text": "11.9 How to Organize the Algorithm Landscape\nAt this stage, the algorithm landscape can start to feel crowded. A useful way to stay organized is to group methods by the question they are trying to answer.\nValue-based refinements:\n\nHow can we estimate action values more accurately and more stably?\n\nPolicy optimization refinements:\n\nHow can we improve the policy without making destructive updates?\n\nActor-critic refinements:\n\nHow can the actor and critic support one another without creating unstable feedback loops?\n\nExploration and regularization refinements:\n\nHow can we encourage useful exploration and robust optimization?\n\nOnce you see methods through those lenses, the field becomes less like a list of names and more like a sequence of design responses to recurring problems.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Advanced Deep Reinforcement Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part2-advanced.html#a-practical-interpretation-of-advanced",
+    "href": "chapters/part2-advanced.html#a-practical-interpretation-of-advanced",
+    "title": "11  Advanced Deep Reinforcement Learning",
+    "section": "11.10 A Practical Interpretation of “Advanced”",
+    "text": "11.10 A Practical Interpretation of “Advanced”\nIn deep reinforcement learning, “advanced” does not simply mean mathematically more complicated. Often it means:\n\nBetter control of bias and variance.\nBetter optimization stability.\nBetter use of data.\nBetter support for large or continuous action spaces.\nBetter robustness to implementation details.\n\nThis is worth emphasizing because the field can otherwise feel too paper-driven. In practice, advanced methods matter when they improve the reliability of training, not only when they introduce new notation.\nThat is also the perspective taken in this repository. An “advanced” method is not automatically promoted to a main reference just because it is newer. It becomes central only when its role in the algorithmic story is clear and its maintained code path is honest about its implementation status.\nThe next chapter turns from algorithm families to practice. There we focus on the engineering and experimental discipline required to train, evaluate, and debug deep reinforcement learning systems responsibly.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Advanced Deep Reinforcement Learning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part3-practice.html",
+    "href": "chapters/part3-practice.html",
+    "title": "12  Deep Reinforcement Learning in Practice",
+    "section": "",
+    "text": "12.1 Why Practice Is Harder Than the Pseudocode\nUnderstanding algorithms is necessary, but it is not sufficient for doing deep reinforcement learning well. In practice, many DRL failures are not caused by misunderstanding the headline idea of an algorithm. They come from unstable training, poor evaluation, weak baselines, reward design mistakes, or incorrect experimental assumptions.\nThis chapter focuses on the practical side of deep reinforcement learning. The goal is to explain what it takes to move from “I know the algorithm name” to “I can train, inspect, and evaluate a DRL system responsibly.”\nThat makes this chapter a fitting conclusion to the book. The earlier chapters introduced the objects, equations, and algorithm families. This chapter asks a stricter question:\nWhat habits are required if we want those ideas to survive contact with real code and real experiments?\nReinforcement learning pseudocode often looks short and clean. A paper may describe an elegant update rule in a few lines. But real training systems contain many moving parts:\nEach of these can influence outcomes. This is why two implementations of the “same” algorithm may perform very differently.\nDeep reinforcement learning is unusually sensitive to hidden details. Good practice begins with respecting that sensitivity. One of the themes of this book has been that reinforcement learning should not be reduced to slogans like “just use DQN” or “just use PPO.” Practice begins when we admit that the result depends on much more than the algorithm name.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Deep Reinforcement Learning in Practice</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part3-practice.html#why-practice-is-harder-than-the-pseudocode",
+    "href": "chapters/part3-practice.html#why-practice-is-harder-than-the-pseudocode",
+    "title": "12  Deep Reinforcement Learning in Practice",
+    "section": "",
+    "text": "Environment wrappers.\nReplay buffers or rollout collectors.\nExploration schedules.\nNetwork architectures.\nNormalization choices.\nLogging and evaluation logic.\nRandom seeds and reproducibility controls.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Deep Reinforcement Learning in Practice</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part3-practice.html#environment-design-and-task-framing",
+    "href": "chapters/part3-practice.html#environment-design-and-task-framing",
+    "title": "12  Deep Reinforcement Learning in Practice",
+    "section": "12.2 Environment Design and Task Framing",
+    "text": "12.2 Environment Design and Task Framing\nBefore training begins, the problem itself must be framed carefully.\nImportant questions include:\n\nWhat is the observation given to the agent?\nWhat actions are available?\nWhat counts as episode termination?\nIs the reward dense, sparse, or shaped?\nWhat behavior actually reflects success?\n\nThese questions matter because reinforcement learning agents optimize what they are given, not what the designer intended implicitly.\nIf the reward is misaligned with the real goal, the agent may learn behavior that looks successful numerically while failing conceptually. This is often described as reward hacking or specification gaming.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Deep Reinforcement Learning in Practice</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part3-practice.html#reward-design",
+    "href": "chapters/part3-practice.html#reward-design",
+    "title": "12  Deep Reinforcement Learning in Practice",
+    "section": "12.3 Reward Design",
+    "text": "12.3 Reward Design\nReward design is one of the most delicate parts of reinforcement learning.\nA reward should encourage the intended long-term behavior, but that is often easier said than done. Rewards that are too sparse may make learning impossible. Rewards that are too dense or overly shaped may teach the wrong shortcut. A badly chosen penalty may dominate the learning signal and suppress useful exploration.\nGood reward design usually involves several habits:\n\nStart with the simplest meaningful objective.\nInspect trajectories rather than relying only on scalar reward curves.\nLook for unintended exploitative behavior.\nDistinguish between progress signals and final objectives.\n\nIn many projects, the reward function is not a small detail. It is the central design decision. A weak reward can make a good algorithm look useless. A misleading reward can make a bad policy look successful.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Deep Reinforcement Learning in Practice</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part3-practice.html#exploration-in-practice",
+    "href": "chapters/part3-practice.html#exploration-in-practice",
+    "title": "12  Deep Reinforcement Learning in Practice",
+    "section": "12.4 Exploration in Practice",
+    "text": "12.4 Exploration in Practice\nExploration is easy to mention and hard to get right.\nDifferent algorithm families handle it differently:\n\nValue-based methods often rely on explicit exploration rules such as \\(\\epsilon\\)-greedy behavior.\nStochastic policy methods explore through action sampling.\nEntropy-regularized methods incorporate exploration pressure into the objective itself.\nContinuous-control methods may inject noise into actions or policy parameters.\n\nThe right exploration strategy depends on the task. Sparse-reward problems are especially sensitive. In such settings, a nominally correct algorithm can fail simply because the agent never encounters informative experience.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Deep Reinforcement Learning in Practice</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part3-practice.html#monitoring-training",
+    "href": "chapters/part3-practice.html#monitoring-training",
+    "title": "12  Deep Reinforcement Learning in Practice",
+    "section": "12.5 Monitoring Training",
+    "text": "12.5 Monitoring Training\nA deep reinforcement learning system should not be judged only by a single reward plot.\nGood monitoring often includes:\n\nEpisode returns over time.\nRunning averages across windows of episodes.\nValue loss and policy loss trends.\nEntropy or exploration-related statistics.\nEpisode length.\nReplay-buffer or rollout statistics.\nPeriodic evaluation returns under a fixed policy.\n\nThese signals help answer different questions. A rising reward curve may still hide critic collapse, policy saturation, or unstable exploration. Logging multiple views of the training process makes it easier to diagnose failure modes early.\nOlder codebases often include only minimal reward plots. They are useful, but modern practice usually needs a richer experimental record.\nThis point is not abstract in this project. Some of the most useful debugging progress came only after separating:\n\ntraining returns under exploratory behavior,\nperiodic evaluation returns under a fixed policy,\nand, in some cases, the best checkpoint seen during training from the final checkpoint at the end.\n\nThat distinction turned out to matter especially in the deep examples. A training curve alone can make an implementation look healthy even when the evaluation policy is weak or unstable.\nThis is one of the practical lessons that is easy to miss in a theory-first presentation. Reinforcement learning logs do not interpret themselves. A curve is evidence, not a verdict.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Deep Reinforcement Learning in Practice</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part3-practice.html#evaluation-and-the-problem-of-random-seeds",
+    "href": "chapters/part3-practice.html#evaluation-and-the-problem-of-random-seeds",
+    "title": "12  Deep Reinforcement Learning in Practice",
+    "section": "12.6 Evaluation and the Problem of Random Seeds",
+    "text": "12.6 Evaluation and the Problem of Random Seeds\nEvaluation in reinforcement learning is harder than many newcomers expect.\nA single training run is rarely enough evidence. Performance can vary substantially across:\n\nRandom initialization.\nEnvironment stochasticity.\nExploration noise.\nReplay-buffer contents.\nHardware and implementation details.\n\nFor this reason, it is good practice to evaluate across multiple random seeds and report summary statistics rather than only the best run.\nThis matters especially when comparing algorithms. A method that looks better in one seed may be worse on average. Without repeated runs, it is easy to over-interpret noise.\nIn this repository, that lesson should be taken literally. Some examples were first judged by a single run and later turned out to be weaker than they appeared. Others looked mediocre early in training and only became convincing after longer runs. So when reading results in this project, it is important to distinguish among three different claims:\n\nthe code is syntactically correct,\nthe code shows a learning trend in one manual run,\nthe code has been manually validated enough to be treated as a recommended baseline.\n\nThose are not the same thing. A foundation text should be especially careful here, because readers often remember the confidence of a statement longer than the conditions under which it was true.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Deep Reinforcement Learning in Practice</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part3-practice.html#hyperparameters-matter-more-than-people-expect",
+    "href": "chapters/part3-practice.html#hyperparameters-matter-more-than-people-expect",
+    "title": "12  Deep Reinforcement Learning in Practice",
+    "section": "12.7 Hyperparameters Matter More Than People Expect",
+    "text": "12.7 Hyperparameters Matter More Than People Expect\nDeep reinforcement learning is highly sensitive to hyperparameters. Important choices may include:\n\nLearning rates.\nDiscount factor.\nReplay-buffer size.\nBatch size.\nTarget update frequency.\nEntropy coefficient.\nExploration schedule.\nNetwork size and normalization strategy.\n\nThis does not mean every project requires an enormous hyperparameter search. But it does mean that weak results are not always conceptual failures. Sometimes the algorithm is fine and the training setup is not.\nOne practical skill in DRL is learning to distinguish “the method is wrong for this task” from “the configuration is preventing the method from learning.” That distinction saves enormous time and prevents many false conclusions.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Deep Reinforcement Learning in Practice</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part3-practice.html#debugging-deep-reinforcement-learning",
+    "href": "chapters/part3-practice.html#debugging-deep-reinforcement-learning",
+    "title": "12  Deep Reinforcement Learning in Practice",
+    "section": "12.8 Debugging Deep Reinforcement Learning",
+    "text": "12.8 Debugging Deep Reinforcement Learning\nDebugging DRL is often a layered process.\nStart with the simplest checks:\n\nDoes the environment return sensible observations, rewards, and termination signals?\nAre actions within the valid range?\nAre rewards exploding, vanishing, or using the wrong sign?\nIs the replay buffer or rollout collector storing the right transitions?\nAre tensor shapes and masks correct?\n\nThen move to algorithmic checks:\n\nAre targets computed as intended?\nIs the actor actually improving according to the critic?\nIs the critic learning anything meaningful?\nIs the entropy collapsing too early?\nAre gradients exploding or becoming zero?\n\nFinally, inspect behavior directly. Watching episodes is often one of the fastest ways to catch errors that are invisible in logs.\nThis is worth emphasizing because deep reinforcement learning can otherwise become too abstract. If an agent’s behavior looks obviously wrong, no amount of elegant notation should persuade us that the system is healthy.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Deep Reinforcement Learning in Practice</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part3-practice.html#reproducibility-and-experiment-discipline",
+    "href": "chapters/part3-practice.html#reproducibility-and-experiment-discipline",
+    "title": "12  Deep Reinforcement Learning in Practice",
+    "section": "12.9 Reproducibility and Experiment Discipline",
+    "text": "12.9 Reproducibility and Experiment Discipline\nGood reinforcement learning practice depends heavily on experiment discipline.\nUseful habits include:\n\nFix random seeds when debugging.\nSave model checkpoints regularly.\nRecord configuration files or command-line arguments.\nKeep training and evaluation settings clearly separated.\nLog software versions and environment variants.\nAvoid changing many variables at once.\n\nThese habits sound mundane, but they save enormous time. In reinforcement learning, a result that cannot be reproduced is often not a result you can trust.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Deep Reinforcement Learning in Practice</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part3-practice.html#choosing-the-right-algorithm-family",
+    "href": "chapters/part3-practice.html#choosing-the-right-algorithm-family",
+    "title": "12  Deep Reinforcement Learning in Practice",
+    "section": "12.10 Choosing the Right Algorithm Family",
+    "text": "12.10 Choosing the Right Algorithm Family\nIn practice, the “best” algorithm depends on the task.\nIf the action space is small and discrete, value-based methods may be attractive.\nIf the action space is continuous, policy-based or actor-critic methods are often more natural.\nIf robustness and practical ease matter, methods such as PPO are often popular.\nIf sample efficiency matters strongly and the task fits off-policy assumptions, methods such as SAC or TD3 may be appealing.\nThis is why algorithm choice should be framed as problem matching rather than prestige ranking. The most advanced method on paper is not automatically the best choice for a given project.\nThis repository itself is a useful case study in that principle.\n\nFor tabular reasoning, the smallest grid-world scripts are the best references.\nFor value-based deep reinforcement learning, the maintained PyTorch DQN family is the cleanest locally implemented path.\nFor policy-gradient methods, the most reliable maintained baseline in the current project is examples/deep_rl/ppo_lunarlander.py, which is backed by Stable-Baselines3 rather than a local from-scratch implementation.\nFor continuous-control actor-critic methods such as DDPG, TD3, and SAC, the repository now contains local implementations that have shown clear learning behavior in manual Pendulum runs, so they can be treated as validated project examples, though not as fully benchmarked final word implementations.\n\nThat last point is important. A method should not be judged better merely because it was reimplemented locally. If a mature third-party implementation is the only version that has currently been validated as reliable in the project, then that is the version that should be treated as the practical reference.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Deep Reinforcement Learning in Practice</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part3-practice.html#working-with-historical-code",
+    "href": "chapters/part3-practice.html#working-with-historical-code",
+    "title": "12  Deep Reinforcement Learning in Practice",
+    "section": "12.11 Working with Historical Code",
+    "text": "12.11 Working with Historical Code\nThis repository includes older reinforcement learning implementations. They are valuable for learning, but they should be handled with care in practice.\nThey often preserve the algorithmic skeleton clearly:\n\nData collection.\nTarget construction.\nPolicy or value updates.\nLogging over episodes.\n\nBut they may also rely on:\n\nOutdated framework APIs.\nOld environment interfaces.\nMinimal safety checks.\nWeak experiment tracking.\nTraining conventions that are no longer standard.\n\nA good way to use such code is to extract the enduring algorithmic logic while updating the software engineering around it.\nThe same principle also applies to comparing local implementations with third-party baselines. In this repository, some actor-critic-family methods were difficult to stabilize as local minimal implementations. Rather than pretending otherwise, the maintained policy-gradient path now distinguishes clearly between:\n\nself-implemented conceptual references, such as examples/deep_rl/reinforce_cartpole.py,\nand third-party-backed practical baselines, such as examples/deep_rl/ppo_lunarlander.py.\n\nThat distinction is not a weakness in the book. It is part of good scientific hygiene. A foundation text should explain principles clearly, but it should also report honestly what has and has not been validated in the actual codebase it accompanies.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Deep Reinforcement Learning in Practice</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part3-practice.html#what-good-drl-practice-looks-like",
+    "href": "chapters/part3-practice.html#what-good-drl-practice-looks-like",
+    "title": "12  Deep Reinforcement Learning in Practice",
+    "section": "12.12 What Good DRL Practice Looks Like",
+    "text": "12.12 What Good DRL Practice Looks Like\nStrong deep reinforcement learning practice is not defined by memorizing many paper names. It is defined by a combination of conceptual clarity and experimental discipline.\nAt a practical level, that usually means:\n\nFraming the environment carefully.\nDesigning the reward thoughtfully.\nMonitoring the right signals.\nEvaluating across multiple runs.\nDebugging systematically.\nMatching the algorithm to the task.\n\nIf those habits are in place, even a relatively simple algorithm can teach a great deal. If they are absent, even a sophisticated method can produce misleading results.\nThis is the final practical message of the book:\n\nlearn the mathematical objects clearly,\nconnect them to code concretely,\nand evaluate claims with discipline rather than enthusiasm.\n\nIf those three habits are maintained, the field becomes much less mysterious. Reinforcement learning is still difficult, but it stops being magical. It becomes a body of ideas, approximations, and engineering decisions that can be studied, tested, and improved honestly.\nThis completes the main arc of the book. We began with the foundations of reinforcement learning, moved through classical methods, then entered deep reinforcement learning through function approximation, DQN, policy gradients, actor-critic methods, advanced DRL variants, and practical training considerations. The intended result is not only familiarity with algorithm names. It is a durable mental model of how the pieces fit together and how to judge real implementations without self-deception.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Deep Reinforcement Learning in Practice</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/part1-overview.html#how-to-read-this-book-with-the-code",
+    "href": "chapters/part1-overview.html#how-to-read-this-book-with-the-code",
+    "title": "2  Reinforcement Learning Overview",
+    "section": "2.9 How to Read This Book with the Code",
+    "text": "2.9 How to Read This Book with the Code\nThis book is meant to be read together with the maintained code in examples/. The goal is not to treat the code as a decorative appendix. The goal is to use the code to make the ideas operational.\nThe structure of the repository mirrors the conceptual arc of the book:\n\nexamples/bandits/ covers the simplest exploration problems.\nexamples/tabular/ covers dynamic programming, Monte Carlo prediction, TD learning, SARSA, and Q-learning.\nexamples/approximation/ shows the bridge from tables to feature-based value approximation.\nexamples/deep_rl/ contains the neural-network-based examples.\n\nThat structure matters for reading. If a chapter introduces a Bellman backup, you should be able to find a concrete loop in the corresponding script where that backup is computed. If a chapter distinguishes on-policy from off-policy learning, you should be able to locate the exact line where one method uses the actually chosen next action and another uses a greedy max.\nThis is also the point where honesty matters. Not every maintained example in this repository has the same status.\n\nSome examples are small, self-contained, and intended as direct principle-first references. The tabular scripts and the PyTorch DQN family mostly fit this category.\nSome examples are useful conceptual bridges but are more sensitive in practice. The function-approximation scripts belong here.\nSome policy-gradient examples use a mature third-party implementation rather than a local from-scratch reimplementation. That is a deliberate choice in this project, because for some actor-critic-family methods the stable engineering recipe matters as much as the headline formula.\n\nThe right way to use this book, then, is not to assume that every chapter points to code of the same kind. The right way is to ask, chapter by chapter:\n\nWhat is the core principle?\nWhere does that principle appear in code?\nIs this code meant as a minimal transparent implementation, a practical baseline, or a maintained third-party-backed reference?\n\nThe next chapter introduces the mathematical framework that organizes these ideas: the Markov decision process.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reinforcement Learning Overview</span>"
+    ]
+  }
+]

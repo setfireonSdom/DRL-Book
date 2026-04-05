@@ -1,0 +1,7 @@
+numpy>=1.26
+matplotlib>=3.8
+scikit-learn>=1.4
+swig>=4.2
+gymnasium[box2d]>=0.29
+torch>=2.2
+stable-baselines3>=2.5
