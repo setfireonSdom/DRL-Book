@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; Classical Control Methods – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
+<title>3&nbsp; Multi-Armed Bandits – From Reinforcement Learning Foundations to Deep Reinforcement Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/part2-function-approx.html" rel="next">
-<link href="../chapters/part1-mc-td.html" rel="prev">
+<link href="../chapters/part1-mdp.html" rel="next">
+<link href="../chapters/part1-overview.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -112,7 +112,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part1-control.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part1-bandits.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multi-Armed Bandits</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -159,7 +159,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/part1-bandits.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/part1-bandits.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multi-Armed Bandits</span></span></a>
   </div>
 </li>
@@ -183,7 +183,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/part1-control.html" class="sidebar-item-text sidebar-link active">
+  <a href="../chapters/part1-control.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></span></a>
   </div>
 </li>
@@ -239,15 +239,14 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#exploration-and-exploitation" id="toc-exploration-and-exploitation" class="nav-link active" data-scroll-target="#exploration-and-exploitation"><span class="header-section-number">7.1</span> Exploration and Exploitation</a></li>
-  <li><a href="#action-value-control" id="toc-action-value-control" class="nav-link" data-scroll-target="#action-value-control"><span class="header-section-number">7.2</span> Action-Value Control</a></li>
-  <li><a href="#on-policy-and-off-policy-learning" id="toc-on-policy-and-off-policy-learning" class="nav-link" data-scroll-target="#on-policy-and-off-policy-learning"><span class="header-section-number">7.3</span> On-Policy and Off-Policy Learning</a></li>
-  <li><a href="#sarsa" id="toc-sarsa" class="nav-link" data-scroll-target="#sarsa"><span class="header-section-number">7.4</span> SARSA</a></li>
-  <li><a href="#q-learning" id="toc-q-learning" class="nav-link" data-scroll-target="#q-learning"><span class="header-section-number">7.5</span> Q-Learning</a></li>
-  <li><a href="#sarsa-vs.-q-learning" id="toc-sarsa-vs.-q-learning" class="nav-link" data-scroll-target="#sarsa-vs.-q-learning"><span class="header-section-number">7.6</span> SARSA vs.&nbsp;Q-Learning</a></li>
-  <li><a href="#convergence-and-practical-assumptions" id="toc-convergence-and-practical-assumptions" class="nav-link" data-scroll-target="#convergence-and-practical-assumptions"><span class="header-section-number">7.7</span> Convergence and Practical Assumptions</a></li>
-  <li><a href="#a-note-on-historical-implementations" id="toc-a-note-on-historical-implementations" class="nav-link" data-scroll-target="#a-note-on-historical-implementations"><span class="header-section-number">7.8</span> A Note on Historical Implementations</a></li>
-  <li><a href="#why-classical-control-still-matters" id="toc-why-classical-control-still-matters" class="nav-link" data-scroll-target="#why-classical-control-still-matters"><span class="header-section-number">7.9</span> Why Classical Control Still Matters</a></li>
+  <li><a href="#why-study-bandits-first" id="toc-why-study-bandits-first" class="nav-link active" data-scroll-target="#why-study-bandits-first"><span class="header-section-number">3.1</span> Why Study Bandits First?</a></li>
+  <li><a href="#the-bandit-setup" id="toc-the-bandit-setup" class="nav-link" data-scroll-target="#the-bandit-setup"><span class="header-section-number">3.2</span> The Bandit Setup</a></li>
+  <li><a href="#action-value-estimates-in-bandits" id="toc-action-value-estimates-in-bandits" class="nav-link" data-scroll-target="#action-value-estimates-in-bandits"><span class="header-section-number">3.3</span> Action-Value Estimates in Bandits</a></li>
+  <li><a href="#epsilon-greedy-exploration" id="toc-epsilon-greedy-exploration" class="nav-link" data-scroll-target="#epsilon-greedy-exploration"><span class="header-section-number">3.4</span> Epsilon-Greedy Exploration</a></li>
+  <li><a href="#optimistic-initial-values" id="toc-optimistic-initial-values" class="nav-link" data-scroll-target="#optimistic-initial-values"><span class="header-section-number">3.5</span> Optimistic Initial Values</a></li>
+  <li><a href="#upper-confidence-bounds" id="toc-upper-confidence-bounds" class="nav-link" data-scroll-target="#upper-confidence-bounds"><span class="header-section-number">3.6</span> Upper Confidence Bounds</a></li>
+  <li><a href="#what-bandits-do-not-capture" id="toc-what-bandits-do-not-capture" class="nav-link" data-scroll-target="#what-bandits-do-not-capture"><span class="header-section-number">3.7</span> What Bandits Do Not Capture</a></li>
+  <li><a href="#the-bridge-to-reinforcement-learning-proper" id="toc-the-bridge-to-reinforcement-learning-proper" class="nav-link" data-scroll-target="#the-bridge-to-reinforcement-learning-proper"><span class="header-section-number">3.8</span> The Bridge to Reinforcement Learning Proper</a></li>
   </ul>
 </nav>
     </div>
@@ -256,7 +255,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classical Control Methods</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multi-Armed Bandits</span></h1>
 </div>
 
 
@@ -273,128 +272,136 @@ window.Quarto = {
 </header>
 
 
-<p>Prediction methods estimate how good a policy is. Control methods go one step further: they try to find a good policy.</p>
-<p>In reinforcement learning, this usually means that the agent must both learn and act at the same time. It cannot wait until all uncertainty disappears. It must make decisions while its estimates are still imperfect. That makes control fundamentally harder than pure policy evaluation.</p>
-<p>This chapter introduces the basic logic of classical model-free control. The key themes are exploration, action-value estimation, and iterative policy improvement through experience.</p>
-<section id="exploration-and-exploitation" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="exploration-and-exploitation"><span class="header-section-number">7.1</span> Exploration and Exploitation</h2>
-<p>One of the first problems in control is the exploration-exploitation trade-off.</p>
-<p>If the agent always chooses the action that currently looks best, it may miss better actions that have not been tried enough. If it explores too much, it may waste reward on poor choices and never settle into strong behavior.</p>
-<p>This trade-off is not a minor technical detail. It is one of the central design problems of reinforcement learning.</p>
-<p>Many classical methods begin with a simple exploration rule such as (<span class="math inline">\(\epsilon\)</span>)-greedy action selection:</p>
+<p>Before introducing full Markov decision processes, it is useful to study the simplest learning problem that still contains one of reinforcement learning’s deepest themes:</p>
+<p>How should an agent balance exploration and exploitation?</p>
+<p>The multi-armed bandit problem isolates that question. There are actions and rewards, but there are no state transitions and no delayed consequences. That makes bandits much simpler than general reinforcement learning, but also very revealing. Many later RL algorithms can be read as increasingly complicated answers to the same exploration problem first seen here.</p>
+<section id="why-study-bandits-first" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="why-study-bandits-first"><span class="header-section-number">3.1</span> Why Study Bandits First?</h2>
+<p>Bandits are worth studying for three reasons.</p>
 <ol type="1">
-<li>With probability (1 - ), choose the action with the highest estimated value.</li>
-<li>With probability (), choose a random action.</li>
+<li>They isolate exploration from long-horizon planning.</li>
+<li>They make action-value estimation easy to see.</li>
+<li>They provide a clean entry point for comparing action-selection strategies.</li>
 </ol>
-<p>This rule is crude, but it is easy to implement and often works well enough in small problems. It also appears in many toy implementations, including classic Q-learning examples.</p>
-<p>In the maintained codebase, the simplest places to see this idea are:</p>
+<p>In a full reinforcement learning problem, a poor decision may be bad because it gives low immediate reward, because it moves the agent into a bad future state, or because it prevents useful information from being collected. In bandits, only the last two ideas remain in very compressed form. There is no evolving environment state to track. The agent simply chooses among uncertain options and tries to learn which ones are best.</p>
+<p>That simplicity is a strength. It lets us see the exploration problem before Bellman equations, bootstrapping, function approximation, and deep networks complicate the picture.</p>
+</section>
+<section id="the-bandit-setup" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="the-bandit-setup"><span class="header-section-number">3.2</span> The Bandit Setup</h2>
+<p>The classic image is a row of slot machines, or “one-armed bandits.” Each arm has an unknown reward distribution. At each step, the agent chooses one arm and receives a reward sampled from that arm’s distribution.</p>
+<p>In the Bernoulli case, each arm has a fixed success probability:</p>
+<p><span class="math display">\[
+p_1, p_2, \dots, p_K
+\]</span></p>
+<p>and each pull returns either 1 or 0.</p>
+<p>The central difficulty is immediate:</p>
 <ol type="1">
-<li><code>examples/tabular/sarsa.py</code></li>
-<li><code>examples/tabular/q_learning.py</code></li>
+<li>To gain reward, the agent should prefer arms that look good.</li>
+<li>To learn which arms are good, the agent must still try uncertain arms.</li>
 </ol>
-<p>Both rely on an <span class="math inline">\(\epsilon\)</span>-greedy action selector in <code>examples/tabular/control_utils.py</code>. This is a good example of a principle worth carrying from theory into code: exploration is not an optional outer wrapper around learning. It is part of what determines the data distribution, and therefore part of what the agent learns.</p>
+<p>That is already the exploration-exploitation trade-off in miniature.</p>
 </section>
-<section id="action-value-control" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="action-value-control"><span class="header-section-number">7.2</span> Action-Value Control</h2>
-<p>For control, action values are often more useful than state values. If we estimate (Q(s, a)), then we can select actions directly by comparing action values within the current state.</p>
-<p>This is the basic value-based control idea:</p>
+<section id="action-value-estimates-in-bandits" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="action-value-estimates-in-bandits"><span class="header-section-number">3.3</span> Action-Value Estimates in Bandits</h2>
+<p>Because there is no state, the main quantity to estimate is simply the value of each action, or arm. If arm <span class="math inline">\(a\)</span> has expected reward <span class="math inline">\(q(a)\)</span>, then the agent would like to learn estimates:</p>
+<p><span class="math display">\[
+\hat{q}(a)
+\]</span></p>
+<p>from repeated interaction.</p>
+<p>The maintained code in this project uses a simple incremental sample-average update:</p>
+<p><span class="math display">\[
+\hat{q}_{n+1}(a) = \hat{q}_n(a) + \frac{1}{N_n(a)}\left(R_n - \hat{q}_n(a)\right)
+\]</span></p>
+<p>where <span class="math inline">\(N_n(a)\)</span> is the number of times arm <span class="math inline">\(a\)</span> has been pulled so far.</p>
+<p>This update matters because it is the simplest example of value estimation from data in the whole book. No table of states is needed. No Bellman backup is needed. The estimate is just the running average of observed rewards.</p>
+<p>In the maintained codebase, the clearest shared reference is:</p>
 <ol type="1">
-<li>Estimate action values.</li>
-<li>Choose actions using those estimates.</li>
-<li>Update the estimates from experience.</li>
-<li>Repeat.</li>
+<li><code>examples/bandits/bandit_utils.py</code></li>
 </ol>
-<p>Once action values become accurate enough, greedy action selection can define a strong policy.</p>
+<p>The <code>BernoulliBandit</code> class stores three things per arm:</p>
+<ol type="1">
+<li>the true success probability <code>p</code>,</li>
+<li>the current estimate <code>estimate</code>,</li>
+<li>and the pull count <code>pulls</code>.</li>
+</ol>
+<p>Its <code>update(...)</code> method performs the incremental averaging step directly. This is a good example of how even very small code can embody a central RL idea.</p>
 </section>
-<section id="on-policy-and-off-policy-learning" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="on-policy-and-off-policy-learning"><span class="header-section-number">7.3</span> On-Policy and Off-Policy Learning</h2>
-<p>Before introducing SARSA and Q-learning, we need one important distinction.</p>
-<p>An <strong>on-policy</strong> method learns about the policy it is currently using to act. An <strong>off-policy</strong> method learns about one policy while following another.</p>
-<p>This distinction matters because the behavior policy may include exploration, while the target policy may be greedy or nearly greedy. Off-policy methods are often more flexible, but they can also become less stable, especially once function approximation is introduced.</p>
-<p>SARSA is the classical on-policy example. Q-learning is the classical off-policy example.</p>
-</section>
-<section id="sarsa" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="sarsa"><span class="header-section-number">7.4</span> SARSA</h2>
-<p>SARSA is named after the sequence of variables used in its update:</p>
-<p><span class="math display">\[ (S_t, A_t, R\_{t+1}, S\_{t+1}, A\_{t+1}) \]</span></p>
-<p>The update rule is:</p>
-<p><span class="math display">\[ Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \left[R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t)\right]\]</span></p>
-<p>This is an on-policy update because the next action (A_{t+1}) is the action actually chosen by the current behavior policy, which may include exploration.</p>
-<p>That detail has an important consequence. SARSA learns the value of behaving according to the exploration-aware policy currently in use. If exploratory actions can be dangerous, SARSA may learn more conservative behavior than a purely greedy method.</p>
-<p>This makes SARSA especially useful for understanding how learning depends not only on the update rule, but also on the behavior policy generating the data.</p>
+<section id="epsilon-greedy-exploration" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="epsilon-greedy-exploration"><span class="header-section-number">3.4</span> Epsilon-Greedy Exploration</h2>
+<p>One of the simplest exploration rules is <span class="math inline">\(\epsilon\)</span>-greedy action selection.</p>
+<p>With probability <span class="math inline">\(1 - \epsilon\)</span>, choose the arm with the highest current estimate. With probability <span class="math inline">\(\epsilon\)</span>, choose a random arm.</p>
+<p>This rule is easy to state and easy to implement:</p>
+<ol type="1">
+<li>Mostly exploit what currently looks best.</li>
+<li>Occasionally explore something else.</li>
+</ol>
 <p>The maintained implementation is:</p>
 <ol type="1">
-<li><code>examples/tabular/sarsa.py</code></li>
+<li><code>examples/bandits/epsilon_greedy.py</code></li>
 </ol>
-<p>If you read <code>run_sarsa(...)</code>, the most important line conceptually is the one that selects <code>next_action</code> from the current exploratory policy before building the TD target. That is the code-level meaning of “on-policy” in this chapter. The target is tied to what the agent actually does next, not to a hypothetical greedy action it did not take.</p>
+<p>The function <code>select_epsilon_greedy_arm(...)</code> captures the rule almost literally. It is also a useful conceptual preview of later RL code. The same basic idea reappears in tabular Q-learning and DQN, except that later the choice is conditioned on a state and the values come from a table or network rather than from one estimate per arm.</p>
+<p>The main weakness of <span class="math inline">\(\epsilon\)</span>-greedy is that its exploration is crude. Random exploration does not distinguish between arms that are nearly understood and arms that are still highly uncertain. It explores, but not intelligently.</p>
 </section>
-<section id="q-learning" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="q-learning"><span class="header-section-number">7.5</span> Q-Learning</h2>
-<p>Q-learning uses a different target:</p>
-<p><span class="math display">\[ Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \left[R_{t+1} + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t)\right]\]</span></p>
-<p>The max over next actions means the update targets the value of the greedy action, regardless of which action is actually taken next by the behavior policy. That is why Q-learning is off-policy.</p>
-<p>Conceptually, Q-learning says:</p>
-<p>Act with exploration if needed, but learn as if you were going to behave greedily from the next state onward.</p>
-<p>This is a powerful idea. It allows exploratory behavior to collect data while still pushing estimates toward the greedy optimal action-value function (Q^*).</p>
-<p>Q-learning is one of the most influential algorithms in reinforcement learning. Its basic structure later reappears in DQN, where the tabular action-value table is replaced by a neural network.</p>
+<section id="optimistic-initial-values" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="optimistic-initial-values"><span class="header-section-number">3.5</span> Optimistic Initial Values</h2>
+<p>Another exploration strategy is to initialize value estimates optimistically.</p>
+<p>The idea is simple:</p>
+<ol type="1">
+<li>Start by pretending every arm is very good.</li>
+<li>Choose greedily according to the current estimates.</li>
+<li>Let disappointing arms reduce their own estimates over time.</li>
+</ol>
+<p>This can produce exploration without explicit random action selection. The agent tries each arm because each one initially looks attractive, and then naturally shifts toward the arms that continue to perform well.</p>
 <p>The maintained implementation is:</p>
 <ol type="1">
-<li><code>examples/tabular/q_learning.py</code></li>
+<li><code>examples/bandits/optimistic_initial_values.py</code></li>
 </ol>
-<p>Here the code-level contrast with SARSA is sharp. In <code>run_q_learning(...)</code>, the target uses <code>max(q_table[next_state].values())</code> rather than the value of the next exploratory action actually chosen. That single difference is the operational meaning of “off-policy” in this setting.</p>
+<p>This method is conceptually useful because it shows that exploration is not always added through randomization. Sometimes it can be induced indirectly through the initial conditions of learning.</p>
+<p>Its limitation is that the strategy depends strongly on the reward scale and on whether optimistic estimates are a sensible assumption. It is elegant in small teaching problems, but less universal than it may first appear.</p>
 </section>
-<section id="sarsa-vs.-q-learning" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="sarsa-vs.-q-learning"><span class="header-section-number">7.6</span> SARSA vs.&nbsp;Q-Learning</h2>
-<p>SARSA and Q-learning often look very similar in code. Both update action-value estimates from one-step transitions. Both are easy to implement in tabular environments. Both can use ()-greedy exploration.</p>
-<p>But their learning targets differ:</p>
+<section id="upper-confidence-bounds" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="upper-confidence-bounds"><span class="header-section-number">3.6</span> Upper Confidence Bounds</h2>
+<p>A more principled exploration strategy is the <strong>upper confidence bound</strong> idea, usually abbreviated <strong>UCB</strong>.</p>
+<p>Instead of exploring randomly, UCB prefers actions that are either:</p>
 <ol type="1">
-<li>SARSA uses the next action actually chosen by the current policy.</li>
-<li>Q-learning uses the best estimated next action, whether or not it is chosen.</li>
+<li>estimated to be good,</li>
+<li>or still uncertain because they have not been tried enough.</li>
 </ol>
-<p>This difference can lead to meaningfully different behavior. In risky environments, SARSA may learn safer policies because it accounts for the exploratory actions that the agent really takes. Q-learning may learn more aggressive policies because it evaluates the greedy target rather than the exploratory behavior policy.</p>
-<p>In this project, both maintained scripts use a negative-grid variant with step cost. That is a sensible foundation example because it makes the behavioral difference easier to see. The point is not only whether the final policy reaches the goal. The point is how the learning target changes the kind of path the agent prefers while exploration is still part of the process.</p>
+<p>The intuition is often written in the form:</p>
+<p><span class="math display">\[
+\hat{q}(a) + c \sqrt{\frac{\log t}{N_t(a)}}
+\]</span></p>
+<p>The first term prefers arms with high estimated reward. The second term is an exploration bonus that is larger when an arm has been sampled only a few times.</p>
+<p>This is an important conceptual step. Exploration is no longer blind randomness. It is driven by uncertainty.</p>
+<p>The maintained implementation is:</p>
+<ol type="1">
+<li><code>examples/bandits/ucb1.py</code></li>
+</ol>
+<p>Bandits are a good place to encounter this idea because the uncertainty bonus is easy to interpret. Later in reinforcement learning, exploration often becomes harder to formalize cleanly, but the same ambition remains: explore where uncertainty may still hide useful information.</p>
 </section>
-<section id="convergence-and-practical-assumptions" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="convergence-and-practical-assumptions"><span class="header-section-number">7.7</span> Convergence and Practical Assumptions</h2>
-<p>In finite tabular settings, classical convergence results are available under assumptions such as:</p>
+<section id="what-bandits-do-not-capture" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="what-bandits-do-not-capture"><span class="header-section-number">3.7</span> What Bandits Do Not Capture</h2>
+<p>Bandits are not full reinforcement learning.</p>
+<p>They omit several central ingredients:</p>
 <ol type="1">
-<li>All relevant state-action pairs are visited sufficiently often.</li>
-<li>Learning rates are chosen appropriately.</li>
-<li>Exploration does not vanish too early.</li>
+<li>There is no state.</li>
+<li>Actions do not change future states.</li>
+<li>Rewards do not have delayed consequences through trajectories.</li>
+<li>There is no Bellman recursion.</li>
 </ol>
-<p>These assumptions matter because reinforcement learning is only as good as the data it sees. If the agent never explores a useful action, it cannot learn its value.</p>
-<p>At the same time, convergence guarantees in the tabular case should not create false confidence about larger problems. Once we move to function approximation and neural networks, many clean guarantees become weaker or disappear entirely.</p>
+<p>This means bandits cannot teach everything. They cannot explain dynamic programming, temporal-difference learning, or planning. They cannot express the difference between immediate reward and long-term return in a stateful environment.</p>
+<p>Still, they teach something extremely important: before an agent can exploit value estimates, it has to decide how those estimates will be learned in the first place.</p>
 </section>
-<section id="a-note-on-historical-implementations" class="level2" data-number="7.8">
-<h2 data-number="7.8" class="anchored" data-anchor-id="a-note-on-historical-implementations"><span class="header-section-number">7.8</span> A Note on Historical Implementations</h2>
-<p>Many older reinforcement learning tutorials implement Q-learning with small lookup tables, simple ()-greedy exploration, and lightweight loops over episodes. Those examples are still excellent for understanding the algorithmic core.</p>
-<p>For example, a compact tabular Q-learning implementation usually contains the following ingredients:</p>
+<section id="the-bridge-to-reinforcement-learning-proper" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="the-bridge-to-reinforcement-learning-proper"><span class="header-section-number">3.8</span> The Bridge to Reinforcement Learning Proper</h2>
+<p>Bandits are best understood as the front door to reinforcement learning, not as the whole house.</p>
+<p>They teach the exploration problem in a setting where value estimation is almost trivial. The next chapter introduces Markov decision processes, where the problem becomes richer:</p>
 <ol type="1">
-<li>A table storing (Q(s, a)).</li>
-<li>An ()-greedy action selector.</li>
-<li>A one-step TD update toward a bootstrap target.</li>
-<li>Repetition over many episodes.</li>
+<li>the agent now has to reason about states,</li>
+<li>actions change future situations,</li>
+<li>and immediate reward is no longer the whole story.</li>
 </ol>
-<p>That structure is still worth studying. The main limitation is not the logic of the algorithm, but the scale of the representation. Once state spaces become large or continuous, lookup tables stop being practical.</p>
-<p>In the maintained code for this book, that compact structure is still present, just cleaned up and reorganized:</p>
-<ol type="1">
-<li><code>examples/tabular/control_utils.py</code></li>
-<li><code>examples/tabular/sarsa.py</code></li>
-<li><code>examples/tabular/q_learning.py</code></li>
-</ol>
-<p>These files are deliberately small enough that you can trace the entire control loop from exploration to update target to policy extraction without jumping across a large framework.</p>
-</section>
-<section id="why-classical-control-still-matters" class="level2" data-number="7.9">
-<h2 data-number="7.9" class="anchored" data-anchor-id="why-classical-control-still-matters"><span class="header-section-number">7.9</span> Why Classical Control Still Matters</h2>
-<p>Classical control methods are not just historical stepping stones. They teach several durable lessons:</p>
-<ol type="1">
-<li>Value estimation and action selection are tightly linked.</li>
-<li>Exploration strategy changes what the agent learns.</li>
-<li>On-policy and off-policy learning are meaningfully different.</li>
-<li>Bootstrapping can support efficient control.</li>
-</ol>
-<p>These lessons carry directly into deep reinforcement learning. DQN inherits the off-policy value-learning structure of Q-learning. Policy-gradient and actor-critic methods respond, in part, to the limitations of value-based control in large or continuous spaces.</p>
-<p>The next chapter makes the bridge explicit by moving from tabular methods to function approximation.</p>
+<p>Once state transitions appear, the focus shifts from “which arm looks best?” to “which action leads to the best long-term return from this state?” That is the point where full reinforcement learning begins.</p>
 
 
 </section>
@@ -802,13 +809,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/part1-mc-td.html" class="pagination-link" aria-label="Monte Carlo Methods and Temporal-Difference Learning">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Monte Carlo Methods and Temporal-Difference Learning</span></span>
+      <a href="../chapters/part1-overview.html" class="pagination-link" aria-label="Reinforcement Learning Overview">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reinforcement Learning Overview</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/part2-function-approx.html" class="pagination-link" aria-label="From Tabular Methods to Function Approximation">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">From Tabular Methods to Function Approximation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/part1-mdp.html" class="pagination-link" aria-label="Markov Decision Processes">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

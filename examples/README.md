@@ -7,7 +7,7 @@ The migration strategy is:
 1. Rebuild the teaching path from simple tabular environments to modern deep RL.
 2. Keep examples small, readable, and executable on a current Python stack.
 3. Standardize the maintained stack on NumPy + Gymnasium + PyTorch.
-4. Separate actively maintained code from archived legacy code in `machine_learning_examples/`.
+4. Keep the maintained code path focused on the examples that are still aligned with the current book and toolchain.
 
 Planned layout:
 
@@ -17,7 +17,7 @@ Planned layout:
 - `deep_rl/`: PyTorch implementations of DQN, policy gradient, actor-critic, continuous control
 - `shared/`: reusable environments, plotting, training utilities, seeding helpers
 
-Until migration is complete, `machine_learning_examples/` remains the legacy reference.
+This directory should be treated as the primary code path for the maintained examples used throughout the book.
 
 ## Setup
 
